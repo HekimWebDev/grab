@@ -15,7 +15,7 @@ class AYClient
 
     public function __construct()
     {
-        $this->url = config('AYConfig.gateways.base_url');
+        $this->url = config('grabconfig.AYConfig.base_url');
         $this->client = new Client();
         $this->response = $this->client->request('GET', $this->url);
         return $this;
@@ -23,12 +23,6 @@ class AYClient
 
     public function getCategories($bool = true): GetCategories|string
     {
-        if ($bool){
-            return 'json';
-        }else{
-            $res = new GetCategories();
-            return $res->getHtmlCategories();
-        }
     }
 
     public function getContent($tag, $return = 'text'): string

@@ -18,8 +18,7 @@ Route::get('/', function () {
 
     $client = new AYClient();
 //    $content = $client->getCategories(false);
-
-    $content = $client->getContent('.section-title',);
+    $content = $client->getContent('.section-title');
     return response($content);
 //    $res = $client->getContent('.section-title');
 
