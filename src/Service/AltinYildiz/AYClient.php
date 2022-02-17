@@ -30,4 +30,12 @@ class AYClient
         return $this->response->filter($tag)->$return();
     }
 
+    /**
+     * @return Crawler
+     */
+    public function getResponse(): Crawler
+    {
+        return $this->response;
+    }
+
 }
