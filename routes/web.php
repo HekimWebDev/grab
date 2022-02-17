@@ -1,7 +1,7 @@
 <?php
 
-use Goutte\Client;
 use Illuminate\Support\Facades\Route;
+use Service\AYClassic\AYClient;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,14 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $client = new Client();
-    $scrawling = $client->request('GET', 'https://www.altinyildizclassics.com');
-    dump($scrawling->filter('.section-title')->text());
+    $client = new AYClient();
+//    $content = $client->getCategories(false);
 
+    $content = $client->getContent('.section-title',);
+    return response($content);
+//    $res = $client->getContent('.section-title');
 
-    /* $scrawling->filter('.section-title')->each(function ($node) {
-        dump($node->text());
-    }); */
-
-    return view('welcome');
+//    return view('welcome', compact('res'));
 });
