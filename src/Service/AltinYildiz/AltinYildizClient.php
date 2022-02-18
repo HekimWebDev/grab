@@ -1,13 +1,13 @@
 <?php
 
-namespace Service\AYClassic;
+namespace Service\AltinYildiz;
 
 use Goutte\Client;
 use JetBrains\PhpStorm\Pure;
 use Service\AYClassic\Requests\GetCategories;
 use Symfony\Component\DomCrawler\Crawler;
 
-class AYClient
+class AltinYildizClient
 {
     protected string $url;
     protected Client $client;
@@ -17,12 +17,7 @@ class AYClient
     {
         $this->url = config('grabconfig.AYConfig.base_url');
         $this->client = new Client();
-        $this->response = $this->client->request('GET', $this->url);
-        return $this;
-    }
-
-    public function getCategories($bool = true): GetCategories|string
-    {
+//        return $this;
     }
 
     public function getContent($tag, $return = 'text'): string
@@ -31,11 +26,14 @@ class AYClient
     }
 
     /**
-     * @return Crawler
+     * @param string $url
+     * @return AltinYildizClient
      */
-    public function getResponse(): Crawler
+    public function getResponse(string $url = ''): AltinYildizClient
     {
-        return $this->response;
+        $url = $this->url.'/'.$url;
+        $this->response = $this->client->request('GET', $url);
+        return $this;
     }
 
 }

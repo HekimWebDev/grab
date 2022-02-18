@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Service\AYClassic\AYClient;
+use Service\AltinYildiz\AltinYildizClient;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +16,8 @@ use Service\AYClassic\AYClient;
 
 Route::get('/', function () {
 
-    $client = new AYClient();
-//    $content = $client->getCategories(false);
-    $content = $client->getContent('.section-title');
+    $client = new AltinYildizClient();
+    $content = $client->getResponse()->getContent('.section-title');
 
     return response($content);
 //    $res = $client->getContent('.section-title');

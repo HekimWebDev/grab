@@ -2,13 +2,13 @@
 
 namespace Service\AYClassic\Requests;
 
-use Service\AYClassic\AYClient;
+use Service\AltinYildiz\AltinYildizClient;
 
-class GetCategories extends AYClient
+class GetCategories extends AltinYildizClient
 {
     public function getHtmlCategories(): string
     {
-        $this->getContent('');
+//        $res = $this->getResponse()
     }
 
 
