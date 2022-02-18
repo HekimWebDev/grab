@@ -2,12 +2,21 @@
 
 namespace Service\AltinYildiz\Requests;
 
-use Service\AltinYildiz\Requests\Categories;
-
 class Products extends Categories
 {
-    public function getProducts()
-    {
+    protected array $result = [];
 
+    public function getProducts(): array
+    {
+        $data = $this->getJsonCategories();
+        $data = json_decode($data);
+        $res = [];
+        foreach ($data as $k => $datum) {
+            $url = $this->url . '/' . $datum;
+            $res = $this->getResponse('.thintitle a', 'desenli-gomlek-c-2741/?dropListingPageSize=5000')->each(function ($node) {
+                return $node->getUri();
+            });
+        }
+        return $res;
     }
 }

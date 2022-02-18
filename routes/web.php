@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Service\AltinYildiz\AltinYildizClient;
+use Service\AltinYildiz\Requests\Products;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +17,10 @@ use Service\AltinYildiz\AltinYildizClient;
 
 Route::get('/', function () {
 
-    $client = new AltinYildizClient();
-    $content = $client->getResponse()->getContent('.section-title');
-
-    return response($content);
-//    $res = $client->getContent('.section-title');
+    $client = new Products();
+    $res = $client->getProducts();
+    return response($res);
+    //    return response($res);
 
 //    return view('welcome', compact('res'));
 });
