@@ -3,8 +3,6 @@
 namespace Service\AltinYildiz;
 
 use Goutte\Client;
-use JetBrains\PhpStorm\Pure;
-use Service\AYClassic\Requests\GetCategories;
 use Symfony\Component\DomCrawler\Crawler;
 
 class AltinYildizClient
@@ -17,7 +15,6 @@ class AltinYildizClient
     {
         $this->url = config('grabconfig.AYConfig.base_url');
         $this->client = new Client();
-//        return $this;
     }
 
     public function getContent($tag, $return = 'text'): string

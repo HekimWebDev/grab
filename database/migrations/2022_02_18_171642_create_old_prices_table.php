@@ -12,6 +12,7 @@ class CreateOldPricesTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedInteger('product_id');
+            $table->string('brand');
 
             $table->decimal('original_price', 10, 2, true);
             $table->decimal('sale_price', 10, 2, true)->nullable();

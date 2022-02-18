@@ -14,6 +14,9 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('product_url')->unique();
             $table->string('product_code')->unique();
+            $table->string('brand');
+
+            $table->unsignedInteger('categories_id')->nullable();
 
             $table->decimal('original_price', 10, 2, true);
             $table->decimal('sale_price', 10, 2, true)->nullable();
