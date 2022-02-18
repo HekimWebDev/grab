@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->decimal('sale_price', 10, 2, true)->nullable();
             $table->decimal('discount', 10, 2, true)->nullable();
 
-
             $table->timestamps();
         });
     }

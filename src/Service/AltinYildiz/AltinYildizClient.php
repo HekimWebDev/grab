@@ -20,11 +20,6 @@ class AltinYildizClient
 //        return $this;
     }
 
-    public function getCategories($bool = true): GetCategories|string
-    {
-        //
-    }
-
     public function getContent($tag, $return = 'text'): string
     {
         return $this->response->filter($tag)->$return();

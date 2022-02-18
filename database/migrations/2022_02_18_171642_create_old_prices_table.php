@@ -8,7 +8,7 @@ class CreateOldPricesTable extends Migration
 {
     public function up()
     {
-        Schema::create('oldprice', function (Blueprint $table) {
+        Schema::create('old_price', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->unsignedInteger('product_id');
@@ -23,6 +23,6 @@ class CreateOldPricesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('oldprice');
+        Schema::dropIfExists('old_price');
     }
 }
