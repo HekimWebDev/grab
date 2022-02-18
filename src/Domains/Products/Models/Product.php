@@ -10,6 +10,7 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
+        'brand',
         'product_code',
         'product_url',
         'original_price',
@@ -21,6 +22,6 @@ class Product extends Model
 
     public function oldPrices(): HasMany
     {
-        return $this->hasMany(OldPrice::class);
+        return $this->hasMany(OldPrice::class, 'product_id');
     }
 }
