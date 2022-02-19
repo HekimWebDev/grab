@@ -12,13 +12,13 @@ class Categories
     public function __construct()
     {
         $this->client = new Client();
-        $this->baseURL = config(grabconfig.AYConfig.base_url);
+        $this->baseURL = config('grabconfig.AYConfig.base_url');
     }
 
-    public function getHtmlCategories(): string
+    protected function getHtmlCategories(): string
     {
 //        return html-den almak (hepde-de alyp durar yaly)
-        return null;
+        return '';
     }
 
     public function getJsonCategories(): bool|string
@@ -32,17 +32,32 @@ class Categories
         // Json formatda gaytaryp bermek (productlary almak ucin)
     }
 
-    public function getClothesCategories():array
+    protected function getCategories($url):array
     {
-        $arr = [];
-        $url = config(grabconfig.AYConfig.parent_categories.Giyim);
-        $crawler = $this->client->request('Get', $this->baseURL . $url);
-
-        $arr[] = $this->client->getResponse('#leftCategoryFilter li a')
+        $data = [];
+        $crawler = $this->client->request('GET', $url);
+        $data[] = $crawler->filter('#leftCategoryFilter li a')
                               ->each(function ($node){
                                   return $node->text() . '   ' . $node->attr('href');
                               });
+        return $data;
+    }
 
-        return $arr;
+    public function getClothesCategories():array
+    {
+        $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Giyim');
+        return $this->getCategories($url);
+    }
+
+    public function getShoesCategories():array
+    {
+        $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Ayakkabı');
+        return $this->getCategories($url);
+    }
+
+    public function getAccessoriesCategories():array
+    {
+        $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Aksesuar');
+        return $this->getCategories($url);
     }
 }
