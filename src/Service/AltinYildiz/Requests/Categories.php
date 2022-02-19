@@ -2,14 +2,23 @@
 
 namespace Service\AltinYildiz\Requests;
 
-use Service\AltinYildiz\AltinYildizClient;
+use Goutte\Client;
 
-class Categories extends AltinYildizClient
+class Categories
 {
+    protected $client;
+    protected $baseURL;
+
+    public function __construct()
+    {
+        $this->client = new Client();
+        $this->baseURL = config(grabconfig.AYConfig.base_url);
+    }
+
     public function getHtmlCategories(): string
     {
-
 //        return html-den almak (hepde-de alyp durar yaly)
+        return null;
     }
 
     public function getJsonCategories(): bool|string
@@ -23,5 +32,17 @@ class Categories extends AltinYildizClient
         // Json formatda gaytaryp bermek (productlary almak ucin)
     }
 
+    public function getClothesCategories():array
+    {
+        $arr = [];
+        $url = config(grabconfig.AYConfig.parent_categories.Giyim);
+        $crawler = $this->client->request('Get', $this->baseURL . $url);
 
+        $arr[] = $this->client->getResponse('#leftCategoryFilter li a')
+                              ->each(function ($node){
+                                  return $node->text() . '   ' . $node->attr('href');
+                              });
+
+        return $arr;
+    }
 }
