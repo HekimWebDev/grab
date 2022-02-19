@@ -1,5 +1,7 @@
 <?php
 
+use Domains\AltinYildiz\Actions\CreateAltinYildizProductsActions;
+use Goutte\Client;
 use Illuminate\Support\Facades\Route;
 use Service\AltinYildiz\AltinYildizClient;
 use Service\AltinYildiz\Requests\Products;
@@ -17,10 +19,14 @@ use Service\AltinYildiz\Requests\Products;
 
 Route::get('/', function () {
 
-    $client = new Products();
-    $res = $client->getProducts();
-    return response($res);
-    //    return response($res);
+    $client = new CreateAltinYildizProductsActions();
+    return $client->createProductions();
+
+
+/*    $client = new Client();
+    return $client->request('GET', 'https://symfony.com/doc/current/components/dom_crawler.html')
+        ->filter('.prose-title')->text();*/
+
 
 //    return view('welcome', compact('res'));
 });

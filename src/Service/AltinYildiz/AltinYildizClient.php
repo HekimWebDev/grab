@@ -17,12 +17,13 @@ class AltinYildizClient
         $this->client = new Client();
     }
 
-    public function getContent($tag): Crawler
+    private function getContent($tag): Crawler
     {
         return $this->response->filter($tag);
     }
 
     /**
+     * @param $tag
      * @param string $url
      * @return Crawler
      */
