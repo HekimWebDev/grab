@@ -1,6 +1,6 @@
 <?php
 
-use Domains\AltinYildiz\Actions\CreateAltinYildizProductsActions;
+use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
 use Goutte\Client;
 use Illuminate\Support\Facades\Route;
 use Service\AltinYildiz\AltinYildizClient;
@@ -19,8 +19,7 @@ use Service\AltinYildiz\Requests\Products;
 
 Route::get('/', function () {
 
-    $client = new CreateAltinYildizProductsActions();
-    return $client->createProductions();
+
 
 
 /*    $client = new Client();
