@@ -17,10 +17,8 @@ use Service\AltinYildiz\Requests\Products;
 
 Route::get('/', function () {
 
-    $client = new Products();
-    $res = $client->getProducts();
-    return response($res);
-    //    return response($res);
-
-//    return view('welcome', compact('res'));
+    $client = new \Service\AltinYildiz\Requests\Categories();
+    $data = $client->getSubCategories('Desenli Ceket ', 'desenli-ceket-c-2743');
+//    $data = $client->getShoesCategories();
+    return $data;
 });
