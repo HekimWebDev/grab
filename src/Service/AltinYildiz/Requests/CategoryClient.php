@@ -5,7 +5,7 @@ namespace Service\AltinYildiz\Requests;
 use Goutte\Client;
 use phpDocumentor\Reflection\Types\Boolean;
 
-class Categories
+class CategoryClient
 {
     protected $client;
     protected $baseURL;
