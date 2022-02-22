@@ -1,5 +1,7 @@
 <?php
 
+use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
+use Goutte\Client;
 use Illuminate\Support\Facades\Route;
 use Service\AltinYildiz\AltinYildizClient;
 use Service\AltinYildiz\Requests\Products;

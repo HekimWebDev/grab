@@ -16,11 +16,11 @@ class CreateProductsTable extends Migration
             $table->string('product_code')->unique();
             $table->string('brand');
 
-            $table->unsignedInteger('categories_id')->nullable();
+            $table->string('category_name')->nullable();
 
             $table->decimal('original_price', 10, 2, true);
-            $table->decimal('sale_price', 10, 2, true)->nullable();
-            $table->decimal('discount', 10, 2, true)->nullable();
+            $table->decimal('sale_price', 10, 2, true)->default(00.0);
+            $table->decimal('discount', 10, 2, true)->default(00.0);
 
             $table->timestamps();
         });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Domains\Products\Models;
 
 use Domains\Price\Models\OldPrice;
 use Illuminate\Database\Eloquent\Model;
@@ -10,12 +10,15 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
-        'brand',
-        'product_code',
         'product_url',
+        'product_code',
+        'brand',
+        'category_name',
         'original_price',
         'sale_price',
         'discount',
+        'created_at',
+        'updated_at',
     ];
 
     protected $table = 'products';
