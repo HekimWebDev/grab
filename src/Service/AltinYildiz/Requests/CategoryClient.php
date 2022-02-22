@@ -65,7 +65,6 @@ class CategoryClient
         $data['url'] = $crawler->filter($filter)->each(function ($node){
             return $node->attr('href');
         });
-        dd($data);
         return $data;
     }
 
