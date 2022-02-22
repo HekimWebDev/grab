@@ -33,43 +33,13 @@ class Categories
         // Json formatda gaytaryp bermek (productlary almak ucin)
     }
 
-    protected function getCategories($url):array
-    {
-        $data = [];
-        $crawler = $this->client->request('GET', $url);
-        $data[] = $crawler->filter('#leftCategoryFilter li a')->each(function ($node){
-                        return $node->text() . '   ' . $node->attr('href');
-                    });
-        return $data;
-    }
-
-    public function getSubCategories(String $name, $url, $tree = false):array
-    {
-        $data = [];
-//        dd(true);
-        if ($tree)
-        {
-            $filter = '#leftCategoryFilter ul .active li.active a';
-        } else {
-            $filter = '#leftCategoryFilter ul li.active a';
-
-        }
-
-        $url = $this->baseURL . '/' . $url;
-
-        $crawler = $this->client->request('GET', $url);
-        $data[] = $crawler->filter($filter)->each(function ($node, $name){
-                           return $node->text() . '   ' . $node->attr('href');
-                    });
-        return $data;
-    }
-
+//    Ysmayyl.dev
 
     public function getClothesCategories():array
     {
         $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Giyim');
             return $this->getCategories($url);
-    }
+     }
 
     public function getShoesCategories():array
     {
@@ -82,4 +52,50 @@ class Categories
         $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Aksesuar');
         return $this->getCategories($url);
     }
+
+    protected function getCategories($url):array
+    {
+        $data = [];
+        $filter = '#leftCategoryFilter li a';
+        $crawler = $this->client->request('GET', $url);
+        $data['name'] = $crawler->filter($filter)->each(function ($node){
+            return $node->text();
+        });
+
+        $data['url'] = $crawler->filter($filter)->each(function ($node){
+            return $node->attr('href');
+        });
+        dd($data);
+        return $data;
+    }
+
+    public function getSubCategories($url):array
+    {
+        $data = [];
+        $filter = '#leftCategoryFilter li.active';
+        $url = $this->baseURL . '/' . $url;
+
+        $crawler = $this->client->request('GET', $url);
+
+//        get names
+        $data['name'] = $crawler->filter($filter)
+            ->last()
+            ->filter('ul a')
+            ->each(function ($node){
+                return $node->text();
+            });
+
+//        get urls
+        $data['url'] = $crawler->filter($filter)
+            ->last()
+            ->filter('ul a')
+            ->each(function ($node){
+                return $node->attr('href');
+            });
+
+        dd($data);
+        return $data;
+    }
+
+//    trait
 }
