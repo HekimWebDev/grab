@@ -2,29 +2,37 @@
 
 namespace Domains\Products\Models;
 
-use Domains\Price\Models\OldPrice;
+use Domains\Prices\Models\Price;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
     protected $fillable = [
         'name',
-        'product_url',
+        'product_id',
+//        'product_url',
         'product_code',
-        'brand',
+        'service_type',
         'category_name',
-        'original_price',
-        'sale_price',
-        'discount',
+//        'original_price',
+//        'sale_price',
+//        'discount',
         'created_at',
         'updated_at',
     ];
 
-    protected $table = 'products';
+    protected $primaryKey = 'product_id';
+    public $incrementing = false;
 
-    public function oldPrices(): HasMany
+    /*public function prices(): HasMany
     {
-        return $this->hasMany(OldPrice::class, 'product_id');
+        return $this->hasMany(Price::class, 'product_id');
+    }*/
+
+    public function price(): HasOne
+    {
+        return $this->hasOne(Price::class, 'product_id')->ofMany()->orderByDesc('created_at');
     }
 }

@@ -1,31 +1,18 @@
 <?php
 
-use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
-use Goutte\Client;
+use App\Http\Controllers\Admin\ProductsController;
 use Illuminate\Support\Facades\Route;
-use Service\AltinYildiz\AltinYildizClient;
 use Service\AltinYildiz\Requests\Products;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
+    dump('front');
+});
 
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', [ProductsController::class, 'index'])->name('admin.index');
 
+    Route::get('/altin-yildiz', [ProductsController::class, 'altinYildiz'])->name('admin.a-y');
+//    Route::get('/altin-yildiz-ajax', [ProductsController::class, 'getProductsAjax'])->name('admin.a-y-ajax');
 
-
-/*    $client = new Client();
-    return $client->request('GET', 'https://symfony.com/doc/current/components/dom_crawler.html')
-        ->filter('.prose-title')->text();*/
-
-
-//    return view('welcome', compact('res'));
 });

@@ -17,7 +17,7 @@ class Categories extends AltinYildizClient
         $data = [
             '/orme-esnek-360-gomlek-c-2802',
             '/atayaka-gomlek-c-2824',
-            'desenli-gomlek-c-2741',
+//            'desenli-gomlek-c-2741',
         ];
         return json_encode($data);
         // Json formatda gaytaryp bermek (productlary almak ucin)

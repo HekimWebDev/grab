@@ -9,7 +9,7 @@ class ParseEveryWeekCommand extends Command
 {
     protected $signature = 'parse:week';
 
-    protected $description = 'Data check every week';
+    protected $description = 'Проверка данных каждую неделю';
 
     public function handle(): void
     {
