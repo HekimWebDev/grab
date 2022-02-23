@@ -6,27 +6,66 @@ use Service\AltinYildiz\Requests\CategoryClient;
 
 class Category
 {
+    private $tree;
+    private $categories;
+
+    public function __construct()
+    {
+        $this->categories = new CategoryClient();
+        $arr = [
+            'Giyim' =>  'giyim-c-2723',
+            'Ayakkabı' => 'ayakkabi-c-2764',
+            'Aksesuar' => 'aksesuar-c-2763',
+        ];
+
+        foreach ($arr as $key => $value){
+            $this->tree[] = [
+                'name'  => $key,
+                'url'   => $value,
+                'sub'   => []
+            ];
+        }
+    }
+
     public function getCategoriesTree():array
     {
-        $arr = [];
         $data = [];
-        $arr[0] = 'Giyim';
-        $arr[1] = 'Ayakkabı';
-        $arr[2] = 'Aksesuar';
-        $categories = new CategoryClient();
 
-        $responses = $categories->getClothesCategories();
+        for ($i=0; $i<1; $i++) {
+            $responses = $this->categories->getCategories($this->tree[$i]['url']);
 
-//        $data[$arr[0]] = [
-//            'url' => 'giyim-c-2723',
-//            'sub' => []
-//        ];
+            foreach ($responses['name'] as $key => $response) {
+                $data[] = [
+                    'name' => $response,
+                    'url' => $responses['url'][$key],
+                    'sub' => $this->getSubs($responses['url'][$key])
+                ];
+            }
 
-//        foreach ($responses as $response){
-//            $data[$arr[0]][$response] = $response;
-//        }
+            $this->tree[$i]['sub'] = $data;
+        }
+
+        return $this->tree;
+    }
+
+    private function getSubs($url)
+    {
+        $data = [];
+        $response = $this->categories->getSubCategories($url);
+
+        if ($response['name'] == null){
+            return null;
+        }
+
+        foreach ($response['name'] as $key => $value) {
+//            dump($value);
+            $data[] = [
+                'name'  =>  $value,
+                'url'   =>  $response['url'][$key],
+                'sub'   =>  $this->getSubs($response['url'][$key])
+            ];
+        }
 
         return $data;
-
     }
 }

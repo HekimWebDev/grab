@@ -35,25 +35,19 @@ class CategoryClient
 
 //    Ysmayyl.dev
 
-    public function getClothesCategories():array
-    {
-        $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Giyim');
-            return $this->getCategories($url);
-     }
+//    public function getClothesCategories():array
+//    {
+//        $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Giyim');
+//            return $this->getCategories($url);
+//     }
 
-    public function getShoesCategories():array
+    public function getCategories($url):array
     {
-        $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Ayakkabı');
-        return $this->getCategories($url);
+        $url = $this->baseURL . '/' .$url;
+        return $this->Grab($url);
     }
 
-    public function getAccessoriesCategories():array
-    {
-        $url = $this->baseURL . '/' . config('grabconfig.AYConfig.parent_categories.Aksesuar');
-        return $this->getCategories($url);
-    }
-
-    protected function getCategories($url):array
+    protected function Grab($url):array
     {
         $data = [];
         $filter = '#leftCategoryFilter li a';
@@ -92,7 +86,7 @@ class CategoryClient
                 return $node->attr('href');
             });
 
-        dd($data);
+//        dd($data);
         return $data;
     }
 

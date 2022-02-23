@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Domains\AltinYildiz\Actions\Category;
+use http\Client\Response;
 use Illuminate\Console\Command;
 
 class CategoryCommand extends Command
@@ -38,7 +39,19 @@ class CategoryCommand extends Command
      */
     public function handle()
     {
+        $begin = time();
         $code = new Category();
-        dump($code->getCategoriesTree());
+        $data = $code->getCategoriesTree();
+//        $data = [
+//            'Ysmayyl',
+//            'Orazgeldiyew'
+//        ];
+//        dd($data);
+        $end = time();
+        $data = mb_convert_encoding($data, "UTF-8", "Windows-1252");
+        $response = new \Service\AltinYildiz\Response($data);
+        \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\AltinYildiz.json', $response->getResponse());
+
+        dump($end - $begin);
     }
 }
