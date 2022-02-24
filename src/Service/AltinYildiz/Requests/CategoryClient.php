@@ -49,6 +49,7 @@ class CategoryClient
 
     protected function Grab($url):array
     {
+//        dump($url);
         $data = [];
         $filter = '#leftCategoryFilter li a';
         $crawler = $this->client->request('GET', $url);

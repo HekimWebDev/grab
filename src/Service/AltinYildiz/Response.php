@@ -12,7 +12,7 @@ class Response
         $this->subs = [];
     }
 
-    public function getJson():json
+    public function getJson()
     {
         return json_encode($this->response);
     }
@@ -29,7 +29,6 @@ class Response
     private function findSubs($data):void
     {
         if ($data['sub'] == null){
-//            $this->subs[] = 'https://www.altinyildizclassics.com' . $data['url'];
             $this->subs[] = $data['url'];
             return;
         } else {

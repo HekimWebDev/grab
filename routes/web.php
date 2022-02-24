@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $action = new \Domains\AltinYildiz\Actions\Category();
-    dd($action->git getSubCategories());
+    dd($action->getSubCategories());
 });

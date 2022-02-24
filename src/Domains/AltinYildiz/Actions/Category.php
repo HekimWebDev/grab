@@ -30,11 +30,11 @@ class Category
 
     public function grabCategoriesTree():array
     {
-        $data = [];
+//        $data = [];
 
         for ($i=0; $i<3; $i++) {
             $responses = $this->categories->getCategories($this->tree[$i]['url']);
-
+            $data = [];
             foreach ($responses['name'] as $key => $response) {
                 $data[] = [
                     'name' => $response,
@@ -56,7 +56,7 @@ class Category
         if ($response['name'] == null){
             return null;
         }
-
+//        dd($response);
         foreach ($response['name'] as $key => $value) {
             $data[] = [
                 'name'  =>  $value,
