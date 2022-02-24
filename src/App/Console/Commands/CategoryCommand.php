@@ -41,17 +41,10 @@ class CategoryCommand extends Command
     {
         $begin = time();
         $code = new Category();
-        $data = $code->getCategoriesTree();
-//        $data = [
-//            'Ysmayyl',
-//            'Orazgeldiyew'
-//        ];
-//        dd($data);
+        $data = $code->grabCategoriesTree();
         $end = time();
-        $data = mb_convert_encoding($data, "UTF-8", "Windows-1252");
         $response = new \Service\AltinYildiz\Response($data);
-        \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\AltinYildiz.json', $response->getResponse());
-
+        \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\AltinYildiz.json', $response->getJson());
         dump($end - $begin);
     }
 }

@@ -1,10 +1,6 @@
 <?php
 
-use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
-use Goutte\Client;
 use Illuminate\Support\Facades\Route;
-use Service\AltinYildiz\AltinYildizClient;
-use Service\AltinYildiz\Requests\Products;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +14,6 @@ use Service\AltinYildiz\Requests\Products;
 */
 
 Route::get('/', function () {
-
-    $client = new \Service\AltinYildiz\Requests\Categories();
-    $data = $client->getSubCategories('Desenli Ceket ', 'desenli-ceket-c-2743');
-//    $data = $client->getShoesCategories();
-    return $data;
+    $action = new \Domains\AltinYildiz\Actions\Category();
+    dd($action->git getSubCategories());
 });

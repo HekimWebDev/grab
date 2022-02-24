@@ -3,6 +3,7 @@
 namespace Domains\AltinYildiz\Actions;
 
 use Service\AltinYildiz\Requests\CategoryClient;
+use Service\AltinYildiz\Response;
 
 class Category
 {
@@ -13,9 +14,9 @@ class Category
     {
         $this->categories = new CategoryClient();
         $arr = [
-            'Giyim' =>  'giyim-c-2723',
-            'Ayakkabı' => 'ayakkabi-c-2764',
-            'Aksesuar' => 'aksesuar-c-2763',
+            'Giyim' =>  '/giyim-c-2723',
+            'Ayakkabı' => '/ayakkabi-c-2764',
+            'Aksesuar' => '/aksesuar-c-2763',
         ];
 
         foreach ($arr as $key => $value){
@@ -27,11 +28,11 @@ class Category
         }
     }
 
-    public function getCategoriesTree():array
+    public function grabCategoriesTree():array
     {
         $data = [];
 
-        for ($i=0; $i<1; $i++) {
+        for ($i=0; $i<3; $i++) {
             $responses = $this->categories->getCategories($this->tree[$i]['url']);
 
             foreach ($responses['name'] as $key => $response) {
@@ -41,7 +42,6 @@ class Category
                     'sub' => $this->getSubs($responses['url'][$key])
                 ];
             }
-
             $this->tree[$i]['sub'] = $data;
         }
 
@@ -58,7 +58,6 @@ class Category
         }
 
         foreach ($response['name'] as $key => $value) {
-//            dump($value);
             $data[] = [
                 'name'  =>  $value,
                 'url'   =>  $response['url'][$key],
@@ -67,5 +66,14 @@ class Category
         }
 
         return $data;
+    }
+
+    public function getSubCategories():array
+    {
+        $path = storage_path('app/public/categories/') . 'AltinYildiz.json';
+        $json = file_get_contents($path);
+        $response = new Response($json);
+
+        return $response->getSubs();
     }
 }
