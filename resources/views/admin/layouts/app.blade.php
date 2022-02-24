@@ -111,7 +111,7 @@
 <script src="{{asset('assets/admin/js/adminlte.min.js')}}"></script>
 
 <!-- Page specific script -->
-<{{--script type="text/javascript">
+{{--<script type="text/javascript">
     $(function () {
 
         var table = $('.yajra-datatable').DataTable({

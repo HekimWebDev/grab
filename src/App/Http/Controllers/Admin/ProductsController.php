@@ -20,12 +20,22 @@ class ProductsController extends Controller
     public function altinYildiz(): Factory|View|Application
     {
         $products = Product::with('price')
+            ->whereInStock(1)
             ->whereServiceType(1)
-            ->select(['product_id', 'name', 'category_name', 'product_code'])
+            ->select(['product_id', 'name', 'category_name', 'product_code', 'old_prices'])
             ->latest()
             ->paginate(50);
 
-        return view('admin.AltinYildiz', compact('products'));
+        return view('admin.altinyildiz.altinyildiz', compact('products'));
+    }
+
+    public function altinYildizSingle($id): Factory|View|Application
+    {
+        $product = Product::with('prices')
+            ->whereProductId($id)
+            ->whereServiceType(1)
+            ->first();
+        return view('admin.altinyildiz.prices', compact('product'));
     }
 
     /* public function getProductsAjax(Request $request)

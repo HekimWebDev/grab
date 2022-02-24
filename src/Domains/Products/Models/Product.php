@@ -12,13 +12,9 @@ class Product extends Model
     protected $fillable = [
         'name',
         'product_id',
-//        'product_url',
         'product_code',
         'service_type',
         'category_name',
-//        'original_price',
-//        'sale_price',
-//        'discount',
         'created_at',
         'updated_at',
     ];
@@ -26,13 +22,26 @@ class Product extends Model
     protected $primaryKey = 'product_id';
     public $incrementing = false;
 
-    /*public function prices(): HasMany
+    public function prices(): HasMany
     {
         return $this->hasMany(Price::class, 'product_id');
-    }*/
+    }
 
     public function price(): HasOne
     {
         return $this->hasOne(Price::class, 'product_id')->ofMany()->orderByDesc('created_at');
+    }
+
+    public function getMagazine($number)
+    {
+        switch ($number) {
+            case 1 :
+                echo "ALTINYILDIZ classics";
+                break;
+            case 2 :
+                echo "COTON";
+                break;
+        }
+
     }
 }
