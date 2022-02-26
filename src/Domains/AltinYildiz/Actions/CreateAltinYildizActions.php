@@ -2,7 +2,9 @@
 
 namespace Domains\AltinYildiz\Actions;
 
+use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
+use GuzzleHttp\Exception\GuzzleException;
 use Service\AltinYildiz\Requests\Products;
 
 class CreateAltinYildizActions
@@ -13,8 +15,27 @@ class CreateAltinYildizActions
         $products = $products->getProducts();
 
         foreach ($products as $product) {
-//            dump($product);
-            Product::upsert($product, ['product_code', 'product_url']);
+            foreach ($product as $k => $item) {
+                Product::firstOrCreate(['product_id' => $item['product_id']], $item);
+                Price::firstOrCreate(['product_id' => $item['product_id']], $item);
+            }
+//            Product::upsert($product, 'product_id');
+        }
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function checkDailyPrices()
+    {
+        $product = new Products();
+        $products = $product->checkPrices();
+
+//        dump($products);
+        if (!empty($products)) {
+            foreach ($products as $index => $product) {
+                Price::create($product);
+            }
         }
     }
 

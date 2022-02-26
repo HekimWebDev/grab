@@ -1,19 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProductsController;
+use Service\AltinYildiz\Requests\Products;
+
+
 
 Route::get('/', function () {
+
     $action = new \Domains\AltinYildiz\Actions\Category();
     dd($action->getSubCategories());
+
+//    dump('front');
+});
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', [ProductsController::class, 'index'])->name('admin.index');
+
+    Route::get('/altin-yildiz', [ProductsController::class, 'altinYildiz'])->name('admin.a-y');
+//    Route::get('/altin-yildiz-ajax', [ProductsController::class, 'getProductsAjax'])->name('admin.a-y-ajax');
+    Route::get('/altin-yildiz/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.a-y-single');
+
 });
