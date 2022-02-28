@@ -15,7 +15,7 @@ class Categories extends AltinYildizClient
     public function getJsonCategories(): bool|string
     {
         $data = [
-            '/orme-esnek-360-gomlek-c-2802',
+//            '/orme-esnek-360-gomlek-c-2802',
             '/atayaka-gomlek-c-2824',
 //            'desenli-gomlek-c-2741',
         ];
