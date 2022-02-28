@@ -2,6 +2,7 @@
 
 namespace Domains\Products\Models;
 
+use Carbon\Carbon;
 use Domains\Prices\Models\Price;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,8 +16,8 @@ class Product extends Model
         'product_code',
         'service_type',
         'category_name',
-        'created_at',
-        'updated_at',
+//        'created_at',
+//        'updated_at',
     ];
 
     protected $primaryKey = 'product_id';
@@ -32,9 +33,9 @@ class Product extends Model
         return $this->hasOne(Price::class, 'product_id')->ofMany()->orderByDesc('created_at');
     }
 
-    public function getMagazine($number)
+    public function getMagazine()
     {
-        switch ($number) {
+        switch ($this->service_type) {
             case 1 :
                 echo "ALTINYILDIZ classics";
                 break;
@@ -43,5 +44,15 @@ class Product extends Model
                 break;
         }
 
+    }
+
+//    public function getDateFormat(): string
+//    {
+//        return Carbon::parse($this->updated_at)->diffForHumans();
+//    }
+
+    public function percent(): float|int
+    {
+        return 100 - (($this->price->sale_price * 100) / $this->price->original_price);
     }
 }
