@@ -47,7 +47,7 @@ class CategoryClient
         return $this->Grab($url);
     }
 
-    protected function Grab($url):array
+    protected function grab($url):array
     {
 //        dump($url);
         $data = [];

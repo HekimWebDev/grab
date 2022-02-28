@@ -31,7 +31,7 @@ class ProductsController extends Controller
 
     public function altinYildizSingle($id): Factory|View|Application
     {
-        $product = Product::with('prices')
+        $product = Product::with('prices', 'price')
             ->whereProductId($id)
             ->whereServiceType(1)
             ->first();

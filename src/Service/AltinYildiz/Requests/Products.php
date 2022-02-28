@@ -2,6 +2,7 @@
 
 namespace Service\AltinYildiz\Requests;
 
+use Domains\AltinYildiz\Actions\Category;
 use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
 use GuzzleHttp\Client;
@@ -35,7 +36,6 @@ class Products extends Categories
                         'product_id' => $id->product_id,
                         'original_price' => $id->price->original_price,
                         'sale_price' => $response_sale_price,
-                        'discount' => $id->price->original_price - $response_sale_price,
                         'created_at' => date('Y-m-d h-i-s'), //2022-01-30 17:03:05
                         'updated_at' => date('Y-m-d h-i-s'),
                     ];
@@ -56,35 +56,46 @@ class Products extends Categories
 
     public function getProducts(): array
     {
-        $action = new \Domains\AltinYildiz\Actions\Category();
-        $categories = $action->getSubCategories();
+
+//        $categories = $this->getJsonCategories();
+//        $categories = json_decode($categories);
+
+        $categories = new Category();
+        $categories = $categories->getSubCategories();
 
         $data = [];
         foreach ($categories as $cat => $page_list) {
             dump($this->url . $page_list);
-            $data[$cat] = $this->getResponse('.listing-list .description', $page_list . $this->suffix_url)->each(function ($node) {
+            $data[$cat.'prod'] = $this->getResponse('.listing-list .description', $page_list . $this->suffix_url)
+                ->each(function ($node) {
                 $product['product_id'] = intval($node->filter('a')->attr('data-id'));
                 $product['name'] = $node->filter('h2')->text();
 //                $product['product_url'] = $node->filter('a')->attr('href');
                 $product['product_code'] = $node->filter('a')->attr('data-code');
 
-                if ($node->filter('.data')->children()->count() < 2) {
-                    $product['original_price'] = $this->replaceStringToFloat($node->filter('.data span')->text());
-                    $product['sale_price'] = null;
-                    $product['discount'] = null;
-                } else {
-                    $product['original_price'] = $this->replaceStringToFloat($node->filter('.data span')->eq(0)->text());
-                    $product['sale_price'] = $this->replaceStringToFloat($node->filter('.data span')->eq(1)->text());
-                    $product['discount'] = $product['original_price'] - $product['sale_price'];
-                }
-
                 $product['category_name'] = 'category_name';
                 $product['service_type'] = 1;
-//                $product['created_at'] = date('Y-m-d h-i-s'); //2022-01-30 17:03:05
-//                $product['updated_at'] = date('Y-m-d h-i-s');
+                $product['created_at'] = date('Y-m-d h-i-s'); //2022-01-30 17:03:05
+                $product['updated_at'] = date('Y-m-d h-i-s');
 
                 return $product;
             });
+            $data[$cat.'price'] = $this->getResponse('.listing-list .description', $page_list . $this->suffix_url)
+                ->each(function ($node) {
+                    $product['product_id'] = intval($node->filter('a')->attr('data-id'));
+                    if ($node->filter('.data')->children()->count() < 2) {
+                        $product['original_price'] = $this->replaceStringToFloat($node->filter('.data span')->text());
+                        $product['sale_price'] = $this->replaceStringToFloat($node->filter('.data span')->text());
+//                    $product['discount'] = null;
+                    } else {
+                        $product['original_price'] = $this->replaceStringToFloat($node->filter('.data span')->eq(0)->text());
+                        $product['sale_price'] = $this->replaceStringToFloat($node->filter('.data span')->eq(1)->text());
+                    }
+                    $product['created_at'] = date('Y-m-d h-i-s'); //2022-01-30 17:03:05
+                    $product['updated_at'] = date('Y-m-d h-i-s');
+
+                    return $product;
+                });
         }
         return $data;
 //        return $this->getProductPage($categories);

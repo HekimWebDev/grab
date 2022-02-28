@@ -36,42 +36,30 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h4>
-                                        <i class="fas fa-globe"> {{ $product->getMagazine($product->service_type) }}</i>
-                                        <small class="float-right">Дата: {{$product->updated_at}}</small>
+                                        <i class="fas fa-globe"> {{ $product->getMagazine() }}</i>
                                     </h4>
                                 </div>
                                 <!-- /.col -->
                             </div>
                             <!-- info row -->
                             <div class="row invoice-info">
-                                <div class="col-sm-4 invoice-col">
-                                    From
+                                <div class="col-sm-6 invoice-col">
                                     <address>
-                                        <strong>Admin, Inc.</strong><br>
-                                        795 Folsom Ave, Suite 600<br>
-                                        San Francisco, CA 94107<br>
-                                        Phone: (804) 123-5432<br>
-                                        Email: info@almasaeedstudio.com
+                                        <strong>Последняя проверка: </strong><br>
+                                        {{ $product->getDate() }}<br>
+                                        <strong>Название продукта:</strong><br>
+                                        {{ $product->name }}<br>
+                                        <strong>Код продукта:</strong>
+                                        {{$product->product_code}}
                                     </address>
                                 </div>
                                 <!-- /.col -->
-                                <div class="col-sm-4 invoice-col">
-                                    To
-                                    <address>
-                                        <strong>John Doe</strong><br>
-                                        795 Folsom Ave, Suite 600<br>
-                                        San Francisco, CA 94107<br>
-                                        Phone: (555) 539-1037<br>
-                                        Email: john.doe@example.com
-                                    </address>
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4 invoice-col">
-                                    <b>Invoice #007612</b><br>
+                                <div class="col-sm-6 invoice-col">
+                                    <b>Product ID: </b>{{$product->product_id}}
                                     <br>
-                                    <b>Order ID:</b> 4F3S8J<br>
-                                    <b>Payment Due:</b> 2/22/2014<br>
-                                    <b>Account:</b> 968-34567
+                                    <b>Первоначальная цена: </b> {{ $product->price->original_price }} TL<br>
+                                    <b>Цена продажи: </b> {{ $product->price->sale_price }} TL<br>
+                                    <b>Скидка: </b>{{ $product->percent() }}
                                 </div>
                                 <!-- /.col -->
                             </div>
