@@ -75,8 +75,8 @@ class Products extends Categories
 
                 $product['category_name'] = 'category_name';
                 $product['service_type'] = 1;
-                $product['created_at'] = date('Y-m-d h-i-s'); //2022-01-30 17:03:05
-                $product['updated_at'] = date('Y-m-d h-i-s');
+                $product['created_at'] = date('Y-m-d H-i-s'); //2022-01-30 17:03:05
+                $product['updated_at'] = date('Y-m-d H-i-s');
 
                 return $product;
             });

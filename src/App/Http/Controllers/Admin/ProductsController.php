@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
 use Illuminate\Contracts\Foundation\Application;
@@ -31,6 +32,8 @@ class ProductsController extends Controller
 
     public function altinYildizSingle($id): Factory|View|Application
     {
+//        $tm = new Carbon();
+//        dump($tm->now());
         $product = Product::with('prices', 'price')
             ->whereProductId($id)
             ->whereServiceType(1)
