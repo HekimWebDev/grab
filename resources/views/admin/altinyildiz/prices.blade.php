@@ -46,7 +46,7 @@
                                 <div class="col-sm-6 invoice-col">
                                     <address>
                                         <strong>Последняя проверка: </strong><br>
-                                        {{ $product->getDateFormat() }}<br>
+                                        {{ $product->getDate() }}<br>
                                         <strong>Название продукта:</strong><br>
                                         {{ $product->name }}<br>
                                         <strong>Код продукта:</strong>

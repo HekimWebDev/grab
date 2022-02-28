@@ -70,6 +70,7 @@ class Category
 
     public function getSubCategories():array
     {
+//        public_path('/categories/')
         $path = storage_path('app/public/categories/') . 'AltinYildiz.json';
         $json = file_get_contents($path);
         $response = new Response($json);

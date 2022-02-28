@@ -16,8 +16,8 @@ class Product extends Model
         'product_code',
         'service_type',
         'category_name',
-//        'created_at',
-//        'updated_at',
+        'created_at',
+        'updated_at',
     ];
 
     protected $primaryKey = 'product_id';
@@ -43,13 +43,12 @@ class Product extends Model
                 echo "COTON";
                 break;
         }
-
     }
 
-//    public function getDateFormat(): string
-//    {
-//        return Carbon::parse($this->updated_at)->diffForHumans();
-//    }
+    public function getDate(): string
+    {
+        return Carbon::parse($this->updated_at)->diffForHumans();
+    }
 
     public function percent(): float|int
     {

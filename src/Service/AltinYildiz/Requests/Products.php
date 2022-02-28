@@ -2,6 +2,7 @@
 
 namespace Service\AltinYildiz\Requests;
 
+use Domains\AltinYildiz\Actions\Category;
 use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
 use GuzzleHttp\Client;
@@ -35,7 +36,6 @@ class Products extends Categories
                         'product_id' => $id->product_id,
                         'original_price' => $id->price->original_price,
                         'sale_price' => $response_sale_price,
-                        'discount' => $id->price->original_price - $response_sale_price,
                         'created_at' => date('Y-m-d h-i-s'), //2022-01-30 17:03:05
                         'updated_at' => date('Y-m-d h-i-s'),
                     ];
@@ -56,8 +56,11 @@ class Products extends Categories
 
     public function getProducts(): array
     {
-        $categories = $this->getJsonCategories();
-        $categories = json_decode($categories);
+//        $categories = $this->getJsonCategories();
+//        $categories = json_decode($categories);
+
+        $categories = new Category();
+        $categories = $categories->getSubCategories();
 
         $data = [];
         foreach ($categories as $cat => $page_list) {
@@ -70,12 +73,11 @@ class Products extends Categories
 
                 if ($node->filter('.data')->children()->count() < 2) {
                     $product['original_price'] = $this->replaceStringToFloat($node->filter('.data span')->text());
-                    $product['sale_price'] = null;
-                    $product['discount'] = null;
+                    $product['sale_price'] = $this->replaceStringToFloat($node->filter('.data span')->text());
+//                    $product['discount'] = null;
                 } else {
                     $product['original_price'] = $this->replaceStringToFloat($node->filter('.data span')->eq(0)->text());
                     $product['sale_price'] = $this->replaceStringToFloat($node->filter('.data span')->eq(1)->text());
-                    $product['discount'] = $product['original_price'] - $product['sale_price'];
                 }
 
                 $product['category_name'] = 'category_name';
