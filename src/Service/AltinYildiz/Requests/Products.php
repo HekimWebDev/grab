@@ -56,8 +56,8 @@ class Products extends Categories
 
     public function getProducts(): array
     {
-        $categories = $this->getJsonCategories();
-        $categories = json_decode($categories);
+        $action = new \Domains\AltinYildiz\Actions\Category();
+        $categories = $action->getSubCategories();
 
         $data = [];
         foreach ($categories as $cat => $page_list) {
