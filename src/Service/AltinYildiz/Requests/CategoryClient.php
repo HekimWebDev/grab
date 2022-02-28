@@ -44,7 +44,7 @@ class CategoryClient
     public function getCategories($url):array
     {
         $url = $this->baseURL . '/' .$url;
-        return $this->Grab($url);
+        return $this->grab($url);
     }
 
     protected function grab($url):array
