@@ -49,7 +49,7 @@ class Products extends Categories
                     'in_stock' => 0
                 ]);
             }
-
+            $id->touch();
         }
         return $data;
     }
@@ -65,46 +65,49 @@ class Products extends Categories
         $data = [];
         foreach ($categories as $cat => $page_list) {
             dump($this->url . $page_list);
-            $data[$cat.'prod'] = $this->getResponse('.listing-list .description', $page_list . $this->suffix_url)
-                ->each(function ($node) {
+            $data[$cat] = $this->getResponse('.listing-list .description', $page_list . $this->suffix_url)->each(function ($node) {
                 $product['product_id'] = intval($node->filter('a')->attr('data-id'));
                 $product['name'] = $node->filter('h2')->text();
-//                $product['product_url'] = $node->filter('a')->attr('href');
+                $product['product_url'] = $node->filter('a')->attr('href');
                 $product['product_code'] = $node->filter('a')->attr('data-code');
+
+                if ($node->filter('.data')->children()->count() < 2) {
+                    $product['original_price'] = $this->toFloat($node->filter('.data span')->text());
+                    $product['sale_price'] = $this->toFloat($node->filter('.data span')->text());
+//                    $product['discount'] = null;
+                } else {
+                    $product['original_price'] = $this->toFloat($node->filter('.data span')->eq(0)->text());
+                    $product['sale_price'] = $this->toFloat($node->filter('.data span')->eq(1)->text());
+                }
 
                 $product['category_name'] = 'category_name';
                 $product['service_type'] = 1;
-                $product['created_at'] = date('Y-m-d h-i-s'); //2022-01-30 17:03:05
-                $product['updated_at'] = date('Y-m-d h-i-s');
+//                $product['created_at'] = date('Y-m-d h-i-s'); //2022-01-30 17:03:05
+//                $product['updated_at'] = date('Y-m-d h-i-s');
 
                 return $product;
             });
-            $data[$cat.'price'] = $this->getResponse('.listing-list .description', $page_list . $this->suffix_url)
-                ->each(function ($node) {
-                    $product['product_id'] = intval($node->filter('a')->attr('data-id'));
-                    if ($node->filter('.data')->children()->count() < 2) {
-                        $product['original_price'] = $this->replaceStringToFloat($node->filter('.data span')->text());
-                        $product['sale_price'] = $this->replaceStringToFloat($node->filter('.data span')->text());
-//                    $product['discount'] = null;
-                    } else {
-                        $product['original_price'] = $this->replaceStringToFloat($node->filter('.data span')->eq(0)->text());
-                        $product['sale_price'] = $this->replaceStringToFloat($node->filter('.data span')->eq(1)->text());
-                    }
-                    $product['created_at'] = date('Y-m-d h-i-s'); //2022-01-30 17:03:05
-                    $product['updated_at'] = date('Y-m-d h-i-s');
-
-                    return $product;
-                });
         }
         return $data;
 //        return $this->getProductPage($categories);
 
     }
 
-    private function replaceStringToFloat($code): float
+    private function toFloat($num): float
     {
-        $code = \Str::before($code, 'TL');
-        return floatval(str_replace(',', '.', $code));
+        $dotPos = strrpos($num, '.');
+        $commaPos = strrpos($num, ',');
+        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
+            ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
+
+        if (!$sep) {
+            return floatval(preg_replace("/[^0-9]/", "", $num));
+        }
+
+        return floatval(
+            preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
+            preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
+        );
     }
 
 }

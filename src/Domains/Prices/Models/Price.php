@@ -22,4 +22,5 @@ class Price extends Model
         $this->belongsTo(Product::class, 'product_product_id', 'product_id');
     }
 
+
 }

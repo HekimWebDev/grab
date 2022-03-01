@@ -9,12 +9,6 @@ use Service\AltinYildiz\Requests\Products;
 
 Route::get('/', function () {
 
-    $products = new Products();
-    $products = $products->getProducts();
-
-    foreach ($products as $product) {
-        dd($product);
-    }
 });
 
 Route::group(['prefix' => 'admin'], function () {

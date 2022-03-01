@@ -17,17 +17,17 @@ class CreateAltinYildizActions
 
 //        dd($products);
         foreach ($products as $key => $product) {
-//            foreach ($product as $k => $item) {
-//                Product::firstOrCreate(['product_id' => $item['product_id']], $item);
-//                Price::firstOrCreate(['product_id' => $item['product_id']], $item);
+            foreach ($product as $k => $item) {
+                Product::firstOrCreate(['product_id' => $item['product_id']], $item);
+                Price::firstOrCreate(['product_id' => $item['product_id']], $item);
+            }
+//            if (Str::contains($key, 'prod')) {
+//                Product::upsert($product, 'product_id');
 //            }
-            if (Str::contains($key, 'prod')) {
-                Product::upsert($product, 'product_id');
-            }
-
-            if (Str::contains($key, 'price')) {
-                Price::upsert($product, 'id');
-            }
+//
+//            if (Str::contains($key, 'price')) {
+//                Price::upsert($product, ['id', 'product_id']);
+//            }
         }
     }
 
