@@ -63,10 +63,9 @@
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->product_code}}</td>
                                         <td>
-                                            <a href="{{route('admin.a-y-single', $product->product_id)}}" class="btn btn-outline-primary position-relative">
-                                                {{$product->price->sale_price != 0
-                                                    ? $product->price->sale_price
-                                                    : $product->price->original_price }}
+                                            <a href="{{route('admin.a-y-single', $product->product_id)}}"
+                                               class="btn btn-outline-primary position-relative">
+                                                {{$product->price->sale_price }}
                                                 @if($product->old_prices != 0)
                                                     <span
                                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">

@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('product_code')->unique();
             $table->integer('service_type');
+            $table->string('product_url')->nullable();
 
             $table->string('category_name')->nullable();
 

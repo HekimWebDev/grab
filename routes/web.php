@@ -9,10 +9,6 @@ use Service\AltinYildiz\Requests\Products;
 
 Route::get('/', function () {
 
-    $action = new \Domains\AltinYildiz\Actions\Category();
-    dd($action->getSubCategories());
-
-//    dump('front');
 });
 
 Route::group(['prefix' => 'admin'], function () {
