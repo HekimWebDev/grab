@@ -82,6 +82,11 @@
                                     <p class="lead">Цены</p>
 
                                     <div class="table-responsive">
+                                        @if(session()->has('message'))
+                                            <div class="alert alert-success">
+                                                {{session()->get('message')}}
+                                            </div>
+                                        @endif
                                         <table class="table">
                                             <tbody>
                                             <tr>
@@ -97,6 +102,7 @@
                                                 <td>{{ $product->percent()}}%</td>
                                             </tr>
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
