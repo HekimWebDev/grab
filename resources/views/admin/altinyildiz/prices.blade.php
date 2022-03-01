@@ -135,9 +135,14 @@
                             <!-- this row will not appear when printing -->
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-success float-right"><i
-                                            class="far fa-credit-card"></i> Проверка цен
-                                    </button>
+                                    <div class="float-right">
+                                        <form action="{{route('admin.a-y-check', $product->product_id)}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success"><i
+                                                    class="far fa-credit-card"></i> Проверка цен
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
