@@ -48,7 +48,7 @@ class Product extends Model
 
     public function getDate(): string
     {
-        return Carbon::parse($this->updated_at)->diffForHumans();
+        return Carbon::parse($this->updated_at)->diffForHumans(null, \Carbon\CarbonInterface::DIFF_RELATIVE_AUTO, false, 2);
     }
 
     public function percent(): float|int

@@ -16,13 +16,21 @@ class Products extends Categories
     /**
      * @throws GuzzleException
      */
-    public function checkPrices(): array
+    public function checkPrices( $product = null): array
     {
+//        dd($product);
         $data = [];
-        $product_id = Product::select('product_id', 'old_prices')->get();
+        $product_id[] = Product::find($product);
+//        dd($product_id);
+        if (!$product){
+            $product_id = Product::select('product_id', 'old_prices')->get();
+        }
+//        dd($product_id);
+
 //        dd($product_id);
         $client = new Client();
         foreach ($product_id as $prod => $id) {
+//            dd($id);
             $request = $client->request('GET', $this->prefix_url . $id->product_id, ['http_errors' => false]);
             if ($request->getStatusCode() == 200) {
                 $response = json_decode($request->getBody());
@@ -56,6 +64,7 @@ class Products extends Categories
 
     public function getProducts(): array
     {
+
 //        $categories = $this->getJsonCategories();
 //        $categories = json_decode($categories);
 
@@ -84,6 +93,7 @@ class Products extends Categories
                 $product['service_type'] = 1;
 //                $product['created_at'] = date('Y-m-d h-i-s'); //2022-01-30 17:03:05
 //                $product['updated_at'] = date('Y-m-d h-i-s');
+
 
                 return $product;
             });
