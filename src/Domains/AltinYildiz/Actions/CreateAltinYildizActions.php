@@ -34,10 +34,15 @@ class CreateAltinYildizActions
     /**
      * @throws GuzzleException
      */
-    public function checkDailyPrices()
+    public function checkDailyPrices($id = null)
     {
+//        dd($id);
         $product = new Products();
-        $products = $product->checkPrices();
+        if ($id){
+            $products = $product->checkPrices($id);
+        } else {
+            $products = $product->checkPrices();
+        }
 
 //        dump($products);
         if (!empty($products)) {

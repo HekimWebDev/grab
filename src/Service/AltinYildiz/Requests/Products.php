@@ -16,13 +16,21 @@ class Products extends Categories
     /**
      * @throws GuzzleException
      */
-    public function checkPrices(): array
+    public function checkPrices( $product = null): array
     {
+//        dd($product);
         $data = [];
-        $product_id = Product::select('product_id', 'old_prices')->get();
+        $product_id[] = Product::find($product);
+//        dd($product_id);
+        if (!$product){
+            $product_id = Product::select('product_id', 'old_prices')->get();
+        }
+//        dd($product_id);
+
 //        dd($product_id);
         $client = new Client();
         foreach ($product_id as $prod => $id) {
+//            dd($id);
             $request = $client->request('GET', $this->prefix_url . $id->product_id, ['http_errors' => false]);
             if ($request->getStatusCode() == 200) {
                 $response = json_decode($request->getBody());
@@ -49,7 +57,7 @@ class Products extends Categories
                     'in_stock' => 0
                 ]);
             }
-
+            $id->touch();
         }
         return $data;
     }
