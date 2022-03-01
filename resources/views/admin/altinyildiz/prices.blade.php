@@ -55,6 +55,8 @@
                                 <div class="col-sm-6 invoice-col">
                                     <b>Product ID: </b>{{$product->product_id}}<br>
                                     <strong>Код продукта: </strong>{{$product->product_code}}<br>
+                                    <strong>URL продукта: </strong><br>
+                                    <a href="{{ 'https://www.altinyildizclassics.com'.$product->product_url }}" target="_blank">{{$product->product_url}}</a>
                                 </div>
                                 <!-- /.col -->
                             </div>

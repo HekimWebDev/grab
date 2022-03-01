@@ -17,8 +17,6 @@ class Product extends Model
         'service_type',
         'category_name',
         'product_url',
-        'created_at',
-        'updated_at',
     ];
 
     protected $primaryKey = 'product_id';
@@ -53,6 +51,6 @@ class Product extends Model
 
     public function percent(): float|int
     {
-        return 100 - (($this->price->sale_price * 100) / $this->price->original_price);
+        return intval(100 - (($this->price->sale_price * 100) / $this->price->original_price));
     }
 }
