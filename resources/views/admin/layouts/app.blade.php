@@ -10,12 +10,6 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('assets/lib/fontawesome-free/css/all.min.css')}}">
-    <!-- DataTables -->
-    {{--<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">--}}
-    {{--<link rel="stylesheet" href="{{asset('assets/lib/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/lib/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/lib/datatables-buttons/css/buttons.bootstrap4.min.css')}}">--}}
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/adminlte.min.css') }}">
 </head>
@@ -86,71 +80,27 @@
 <!-- jQuery -->
 <script src="{{asset('assets/lib/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
-
-<!-- DataTables  & Plugins -->
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>--}}
-{{--<script src="{{asset('assets/lib/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/lib/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('assets/lib/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('assets/lib/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{asset('assets/lib/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('assets/lib/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('assets/lib/jszip/jszip.min.js')}}"></script>
-<script src="{{asset('assets/lib/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('assets/lib/pdfmake/vfs_fonts.js')}}"></script>
-<script src="{{asset('assets/lib/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('assets/lib/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('assets/lib/datatables-buttons/js/buttons.colVis.min.js')}}"></script>--}}
-
 <script src="{{asset('assets/lib/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('assets/admin/js/adminlte.min.js')}}"></script>
 
-<!-- Page specific script -->
-{{--<script type="text/javascript">
+<script>
     $(function () {
+        var url = window.location;
+        // for single sidebar menu
+        $('ul.nav-sidebar a').filter(function () {
+            return this.href == url;
+        }).addClass('active');
 
-        var table = $('.yajra-datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('admin.a-y-ajax') }}",
-            columns: [
-                // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
-                {data: 'product_code', name: 'product_code'},
-                {data: 'original_price', name: 'original_price'},
-                {data: 'sale_price', name: 'sale_price'},
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true
-                },
-            ]
-        });
+        // for sidebar menu and treeview
+        $('ul.nav-treeview a').filter(function () {
+            return this.href == url;
+        }).parentsUntil(".nav-sidebar > .nav-treeview")
+            .css({'display': 'block'})
+            .addClass('menu-open').prev('a')
+            .addClass('active');
+    });
+</script>
 
-    });
-</script>--}}
-{{--<script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-</script>--}}
 </body>
 </html>
