@@ -29,7 +29,7 @@ class Products extends Categories
         $client = new Client();
         foreach ($product_id as $prod => $id) {
 //            dd($id);
-            dump($prod);
+//            dump($prod);
             $request = $client->request('GET', $this->prefix_url . $id->product_id, ['http_errors' => false]);
             if ($request->getStatusCode() == 200) {
                 $response = json_decode($request->getBody());
