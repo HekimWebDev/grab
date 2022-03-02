@@ -12,47 +12,45 @@ class Products extends Categories
 {
     private string $suffix_url = '/?dropListingPageSize=5000';
     private string $prefix_url = 'https://www.altinyildizclassics.com/api/attributeselection/';
+    protected $startTime;
 
     /**
      * @throws GuzzleException
      */
     public function checkPrices( $product = null): array
     {
-//        dd($product);
         $data = [];
-        $product_id[] = Product::find($product);
-//        dd($product_id);
         if (!$product){
             $product_id = Product::select('product_id', 'old_prices')->get();
+        }else{
+            $product_id[] = Product::find($product);
         }
-//        dd($product_id);
 
-//        dd($product_id);
         $client = new Client();
         foreach ($product_id as $prod => $id) {
 //            dd($id);
+            dump($prod);
             $request = $client->request('GET', $this->prefix_url . $id->product_id, ['http_errors' => false]);
             if ($request->getStatusCode() == 200) {
                 $response = json_decode($request->getBody());
 
                 $response_sale_price = $response->SalePrice;
-                $current_sale_price = $id->price->sale_price != null ? $id->price->sale_price : $id->price->original_price;
-//                $data[$prod] = $response_sale_price . ' - ' . $current_sale_price;
+                $current_sale_price = $id->price->sale_price;
 //
                 if ($response_sale_price != $current_sale_price) {
                     $data[$prod] = [
                         'product_id' => $id->product_id,
-                        'original_price' => $id->price->original_price,
+                        'original_price' => $current_sale_price,
                         'sale_price' => $response_sale_price,
-                        'created_at' => date('Y-m-d h-i-s'), //2022-01-30 17:03:05
-                        'updated_at' => date('Y-m-d h-i-s'),
+                        'created_at' => date('Y-m-d H-i-s'), //2022-01-30 17:03:05
+                        'updated_at' => date('Y-m-d H-i-s'),
                     ];
                     $id->update([
                         'old_prices' => $id->old_prices += 1,
                     ]);
                 }
             } else {
-                dump($request->getStatusCode() . ' Osipka');
+                dump($request->getStatusCode() . ' Ошибка');
                 $id->update([
                     'in_stock' => 0
                 ]);
@@ -120,4 +118,16 @@ class Products extends Categories
         );
     }
 
+    private function regTime($status = null)
+    {
+        if ($status) {
+            if (empty($this->startTime)) $this->startTime = new \DateTime('now');
+        } else {
+            $endTime = new \DateTime('now');
+            $interval = $this->startTime->diff($endTime);
+            $this->startTime = '';
+            return dump($interval->format('%i минута, %S секунд, %f  микросекунд'));
+        }
+        return null;
+    }
 }

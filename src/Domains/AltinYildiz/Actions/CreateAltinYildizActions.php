@@ -10,6 +10,8 @@ use Service\AltinYildiz\Requests\Products;
 
 class CreateAltinYildizActions
 {
+    protected $startTime;
+
     public function createProductsEveryWeek()
     {
         $products = new Products();
@@ -18,16 +20,9 @@ class CreateAltinYildizActions
 //        dd($products);
         foreach ($products as $key => $product) {
             foreach ($product as $k => $item) {
-                Product::firstOrCreate(['product_id' => $item['product_id']], $item);
+                Product::firstOrCreate(['product_code' => $item['product_code']], $item);
                 Price::firstOrCreate(['product_id' => $item['product_id']], $item);
             }
-//            if (Str::contains($key, 'prod')) {
-//                Product::upsert($product, 'product_id');
-//            }
-//
-//            if (Str::contains($key, 'price')) {
-//                Price::upsert($product, ['id', 'product_id']);
-//            }
         }
     }
 
@@ -36,20 +31,27 @@ class CreateAltinYildizActions
      */
     public function checkDailyPrices($id = null)
     {
-//        dd($id);
+        $this->regTime(1);
         $product = new Products();
-        if ($id){
-            $products = $product->checkPrices($id);
-        } else {
-            $products = $product->checkPrices();
-        }
+        $products = $product->checkPrices($id);
 
-//        dump($products);
         if (!empty($products)) {
-            foreach ($products as $index => $product) {
-                Price::create($product);
-            }
+            Price::insert($products);
         }
+        $this->regTime();
+    }
+
+    private function regTime($status = null)
+    {
+        if ($status) {
+            if (empty($this->startTime)) $this->startTime = new \DateTime('now');
+        } else {
+            $endTime = new \DateTime('now');
+            $interval = $this->startTime->diff($endTime);
+            $this->startTime = '';
+            return dump($interval->format('%i минута, %S секунд, %f  микросекунд'));
+        }
+        return null;
     }
 
 }

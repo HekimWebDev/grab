@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
-use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
@@ -19,12 +17,11 @@ class ProductsController extends Controller
      * @throws GuzzleException
      */
     public function altinYildizCheck($id){
-//        dd($id);
+
         $client = new CreateAltinYildizActions();
         $client->checkDailyPrices($id);
 
-        return redirect()->route('admin.a-y-single', $id);
-//        $client->checkDailyPrices($id);
+        return redirect()->back();
     }
 
     public function index(): Factory|View|Application
@@ -32,22 +29,23 @@ class ProductsController extends Controller
         return view('admin.index');
     }
 
-    public function altinYildiz(): Factory|View|Application
+    public function altinYildiz(Request $request): Factory|View|Application
     {
         $products = Product::with('price')
-            ->whereInStock(1)
+//            ->when($request->id, fn($q, $v) => $q->whereId($v))
+//            ->when($request->name, fn($q, $v) => $q->where("name", 'like'. "%$v%"))
+//            ->whereInStock(1)
             ->whereServiceType(1)
             ->select(['product_id', 'name', 'category_name', 'product_code', 'old_prices'])
             ->latest()
             ->paginate(50);
+//        $count = Product::count();
 
         return view('admin.altinyildiz.altinyildiz', compact('products'));
     }
 
     public function altinYildizSingle($id): Factory|View|Application
     {
-//        $tm = new Carbon();
-//        dump($tm->now());
         $product = Product::with('prices', 'price')
             ->whereProductId($id)
             ->whereServiceType(1)
