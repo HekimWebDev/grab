@@ -13,7 +13,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/adminlte.min.css') }}">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" style="background-color: #f4f6f9">
 <!-- Site wrapper -->
 <div class="wrapper">
     <!-- Navbar -->
@@ -58,8 +58,17 @@
         </ul>
     </nav>
     <!-- /.navbar -->
+        @if(session()->has('message'))
+            <div class="" style="margin: 35px 15px 0 268px;">
+                @if(session()->get('message'))
+                    <div class="alert alert-success">Есть изменении в ценах</div
+                @else
+                    <div class="alert alert-danger">Нет изменений в ценах</div>
+                @endif
+            </div>
+        @endif
 
-    @yield('content')
+        @yield('content')
 
 
     <footer class="main-footer">
