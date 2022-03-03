@@ -17,20 +17,11 @@ class ProductsController extends Controller
      * @throws GuzzleException
      */
     public function altinYildizCheck($id){
-        $product = Product::find($id);
-        $checkMessage = true;
-        $oldPrice = $product->price;
 
         $client = new CreateAltinYildizActions();
         $client->checkDailyPrices($id);
 
-        $newPrice = $product->price;
-
-        if (($oldPrice->original_price == $newPrice->original_price) && ($oldPrice->sale_price == $newPrice->sale_price )){
-            $checkMessage = false;
-        }
-
-        return redirect()->back()->with('message', $checkMessage);
+        return redirect()->back();
     }
 
     public function index(): Factory|View|Application

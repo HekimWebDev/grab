@@ -31,12 +31,14 @@ class CreateAltinYildizActions
      */
     public function checkDailyPrices($id = null)
     {
+        $this->regTime(1);
         $product = new Products();
         $products = $product->checkPrices($id);
 
         if (!empty($products)) {
             Price::insert($products);
         }
+        $this->regTime();
     }
 
     private function regTime($status = null)
