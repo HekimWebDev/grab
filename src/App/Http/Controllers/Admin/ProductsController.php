@@ -41,6 +41,7 @@ class ProductsController extends Controller
 
     public function altinYildiz(Request $request): Factory|View|Application
     {
+//        dd($request);
         $products = Product::with('price')
 //            ->when($request->id, fn($q, $v) => $q->whereId($v))
 //            ->when($request->name, fn($q, $v) => $q->where("name", 'like'. "%$v%"))
