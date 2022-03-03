@@ -17,7 +17,7 @@ class Products extends Categories
     /**
      * @throws GuzzleException
      */
-    public function checkPrices( $product = null): array
+    public function checkPrices($product = null): array
     {
         $data = [];
         if (!$product){

@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -16,7 +17,8 @@ class ProductsController extends Controller
     /**
      * @throws GuzzleException
      */
-    public function altinYildizCheck($id){
+    public function altinYildizCheck($id): RedirectResponse
+    {
 
         $client = new CreateAltinYildizActions();
         $client->checkDailyPrices($id);
