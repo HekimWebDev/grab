@@ -49,7 +49,7 @@
 
                 <div class="input-group mb-3">
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                           placeholder="Email" required>
+                           placeholder="Email" value="{{ old('email') }}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -59,7 +59,7 @@
                 <div class="input-group mb-3">
                     <input type="password" name="password" id="password-input"
                            class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                           required>
+                           value="{{ old('password') }}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
