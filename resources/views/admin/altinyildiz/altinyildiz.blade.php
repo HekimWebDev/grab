@@ -15,8 +15,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            {{--                            <li class="breadcrumb-item"><a href="#">Home</a></li>--}}
-                            {{--                            <li class="breadcrumb-item active">Blank Page</li>--}}
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Blank Page</li>
                         </ol>
                     </div>
                 </div>
@@ -34,14 +34,24 @@
 
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control float-right"
-                                           placeholder="Search">
+                                    <form action="" method="POST">
+                                        <div class="row">
+                                            <div class="col">
+{{--                                                <input >--}}
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col"></div>
+                                            <div class="col"><div class="input-group-append">
+                                                    <button type="submit" class="btn btn-default">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                </div></div>
+                                        </div>
+                                    </form>
+{{--                                    <input type="text" name="table_search" class="form-control float-right"--}}
+{{--                                           placeholder="Search">--}}
 
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
