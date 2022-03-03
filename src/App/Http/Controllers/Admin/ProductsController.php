@@ -50,7 +50,7 @@ class ProductsController extends Controller
             ->paginate(50);
 //        $count = Product::count();
 
-        return view('admin.altinyildiz.altinyildiz', compact('products'));
+            return view('admin.altinyildiz.altinyildiz', compact('products'));
     }
 
     public function altinYildizSingle($id): Factory|View|Application
