@@ -18,10 +18,20 @@ class ProductsController extends Controller
      */
     public function altinYildizCheck($id){
 
+        $product = Product::find($id);
+        $checkMessage = true;
+        $oldPrice = $product->price;
+
         $client = new CreateAltinYildizActions();
         $client->checkDailyPrices($id);
 
-        return redirect()->back();
+        $newPrice = $product->price;
+
+        if (($oldPrice->original_price == $newPrice->original_price) && ($oldPrice->sale_price == $newPrice->sale_price )){
+            $checkMessage = false;
+        }
+
+        return redirect()->back()->with('message', $checkMessage);
     }
 
     public function index(): Factory|View|Application
