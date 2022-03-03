@@ -93,7 +93,7 @@
 <!-- AdminLTE App -->
 <script src="{{asset('assets/admin/js/adminlte.min.js')}}"></script>
 
-<script>
+{{--<script>
     $(function () {
         var url = window.location;
         // for single sidebar menu
@@ -109,7 +109,7 @@
             .addClass('menu-open').prev('a')
             .addClass('active');
     });
-</script>
+</script>--}}
 
 </body>
 </html>

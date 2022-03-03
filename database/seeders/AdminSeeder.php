@@ -10,21 +10,26 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $users = [
-//            0 => [
-//                'name' => 'Hekim',
-//                'email' => 'user.hekim@gmail.com',
-//                'password' => \Hash::make('hekim'),
-//            ],
-            1 => [
-                'name' => 'Muhammet',
-                'email' => 'user.muhammet@gmail.com',
-                'password' => \Hash::make('muhammet'),
+            0 => [
+                'name' => 'Hekim',
+                'email' => 'user.hekim@gmail.com',
+                'password' => \Hash::make('hekim'),
             ],
-            2 => [
-                'name' => 'Ysmayyl',
-                'email' => 'user.ysmayyl@gmail.com',
-                'password' => \Hash::make('ysmayyl'),
-            ]
+//            1 => [
+//                'name' => 'Muhammet',
+//                'email' => 'user.muhammet@gmail.com',
+//                'password' => \Hash::make('muhammet'),
+//            ],
+//            2 => [
+//                'name' => 'Ysmayyl',
+//                'email' => 'user.ysmayyl@gmail.com',
+//                'password' => \Hash::make('ysmayyl'),
+//            ],
+            3 => [
+                'name' => 'Serdar',
+                'email' => 'user.serdar@gmail.com',
+                'password' => \Hash::make('serdar'),
+            ],
         ];
 
         foreach ($users as $user) {

@@ -40,7 +40,7 @@ class Products extends Categories
                 if ($response_sale_price != $current_sale_price) {
                     $data[$prod] = [
                         'product_id' => $id->product_id,
-                        'original_price' => $current_sale_price,
+                        'original_price' => $id->price->original_price,
                         'sale_price' => $response_sale_price,
                         'created_at' => date('Y-m-d H-i-s'), //2022-01-30 17:03:05
                         'updated_at' => date('Y-m-d H-i-s'),
