@@ -36,30 +36,9 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4">
-
-                        <!-- Profile Image -->
-                        <div class="card card-primary card-outline">
-                            <div class="card-body box-profile">
-                                <h3 class="profile-username text-center">{{ $user->name }}</h3>
-                                <p class="text-muted text-center">{{ $user->email }}</p>
-
-                                <ul class="list-group list-group-unbordered mb-3">
-                                    <li class="list-group-item">
-                                        <b>ALTINYILDIZ classics</b> <a href="{{ route('admin.a-y') }}"
-                                                                       class="float-right">{{ $product_count }}</a>
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-
-                    </div>
+                <div class="row justify-content-center">
                     <!-- /.col -->
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <div class="card">
                             <div class="card-header p-2">
                                 <ul class="nav nav-pills">

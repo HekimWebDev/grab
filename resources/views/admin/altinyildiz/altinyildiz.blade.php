@@ -51,7 +51,8 @@
                                         </button>
                                     </div>
                                     <div class="col-2 d-flex align-items-end">
-                                        <a class="btn btn-primary form-control" href="{{route('admin.a-y')}}">Очистить</a>
+                                        <a class="btn btn-primary form-control"
+                                           href="{{route('admin.a-y')}}">Очистить</a>
                                     </div>
                                 </div>
                             </form>
@@ -64,25 +65,18 @@
                                     <th>ID</th>
                                     <th>Имя товара</th>
                                     <th>Код продукта</th>
-                                    <th>Цены</th>
+                                    <th>Последняя цена</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($products as $product)
                                     <tr>
                                         <td>{{$product->product_id}}</td>
-                                        <td>{{$product->name}}</td>
-                                        <td>{{$product->product_code}}</td>
                                         <td>
-                                            <a href="{{route('admin.a-y-single', $product->product_id)}}"
-                                               class="btn btn-outline-primary position-relative">
-                                                {{$product->price->sale_price }}
-                                                <span
-                                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                    {{$product->prices()->count()}}
-                                                </span>
-                                            </a>
+                                            <a href="{{ route('admin.a-y-single', $product->product_id) }}" class="none-decoration">{{$product->name}}</a>
                                         </td>
+                                        <td>{{$product->product_code}}</td>
+                                        <td>{{$product->price->sale_price }} TL</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
