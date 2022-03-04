@@ -30,30 +30,31 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"></h3>
-
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <form action="" method="POST">
-                                        <div class="row">
-                                            <div class="col">
-{{--                                                <input >--}}
-                                            </div>
-                                            <div class="col"></div>
-                                            <div class="col"></div>
-                                            <div class="col"><div class="input-group-append">
-                                                    <button type="submit" class="btn btn-default">
-                                                        <i class="fas fa-search"></i>
-                                                    </button>
-                                                </div></div>
-                                        </div>
-                                    </form>
-{{--                                    <input type="text" name="table_search" class="form-control float-right"--}}
-{{--                                           placeholder="Search">--}}
-
-
+                            <h2>Фильтр</h2>
+                            <form action="" method="GET" class="mb-3">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <label for="Id">Id:</label>
+                                        <input type="number" class="form-control" name="id" id="Id">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="Name">Имя товара:</label>
+                                        <input type="text" class="form-control" name="name" id="Name">
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="Product_code">Код продукта:</label>
+                                        <input type="text" class="form-control" name="code" id="Product_code">
+                                    </div>
+                                    <div class="col d-flex align-items-end">
+                                        <button type="submit" class="btn btn-secondary form-control">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-2 d-flex align-items-end">
+                                        <a class="btn btn-primary form-control" href="{{route('admin.a-y')}}">Очистить</a>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0">
@@ -75,7 +76,9 @@
                                         <td>
                                             <a href="{{route('admin.a-y-single', $product->product_id)}}"
                                                class="btn btn-outline-primary position-relative">
+                                               @isset($product->price->sale_price)
                                                 {{$product->price->sale_price }}
+                                                @endisset
                                                 @if($product->old_prices != 0)
                                                     <span
                                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -90,7 +93,7 @@
                             </table>
                         </div>
                         <div class="ml-4">
-                            {{ $products->links() }}
+                            {{ $products->withQueryString()->links() }}
                         </div>
                         <!-- /.card-body -->
                     </div>
