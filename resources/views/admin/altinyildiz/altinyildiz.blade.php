@@ -35,23 +35,23 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <label for="Id">Id:</label>
-                                        <input type="number" class="form-control" name="id" id="Id">
+                                        <input type="number" class="form-control" name="id" id="Id" value="{{old('id')}}">
                                     </div>
                                     <div class="col-4">
                                         <label for="Name">Имя товара:</label>
-                                        <input type="text" class="form-control" name="name" id="Name">
+                                        <input type="text" class="form-control" name="name" id="Name" value="{{old('name')}}">
                                     </div>
                                     <div class="col-3">
                                         <label for="Product_code">Код продукта:</label>
-                                        <input type="text" class="form-control" name="code" id="Product_code">
+                                        <input type="text" class="form-control" name="code" id="Product_code" value="{{old('code')}}">
                                     </div>
                                     <div class="col d-flex align-items-end">
-                                        <button type="submit" class="btn btn-secondary form-control">
+                                        <button type="submit" class="btn btn-primary form-control">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
                                     <div class="col-2 d-flex align-items-end">
-                                        <a class="btn btn-primary form-control" href="{{route('admin.a-y')}}">Очистить</a>
+                                        <a class="btn btn-secondary form-control" href="{{route('admin.a-y')}}">Очистить</a>
                                     </div>
                                 </div>
                             </form>
