@@ -12,7 +12,6 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('product_id')->unique()->index();
 
             $table->tinyInteger('in_stock')->default(1);
-            $table->tinyInteger('old_prices')->default(0);
             $table->string('name');
             $table->string('product_code')->unique();
             $table->integer('service_type');

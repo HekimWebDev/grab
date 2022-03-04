@@ -93,6 +93,24 @@
 <!-- AdminLTE App -->
 <script src="{{asset('assets/admin/js/adminlte.min.js')}}"></script>
 
+<script>
+    $('body').on('click', '.password-checkbox', function() {
+        if ($(this).is(':checked')) {
+            // $('#current_password').attr('type', 'text');
+            $('#password1').attr('type', 'text');
+            $('#new-password-confirm').attr('type', 'text');
+        } else {
+            // $('#current_password').attr('type', 'password');
+            $('#password1').attr('type', 'password');
+            $('#new-password-confirm').attr('type', 'password');
+        }
+    });
+</script>
+<script>
+    function resetForm() {
+        document.getElementById("my-form").reset();
+    }
+</script>
 {{--<script>
     $(function () {
         var url = window.location;

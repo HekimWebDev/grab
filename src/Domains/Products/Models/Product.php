@@ -44,11 +44,6 @@ class Product extends Model
         }
     }
 
-    public function getDate(): string
-    {
-        return Carbon::parse($this->updated_at)->diffForHumans(null, \Carbon\CarbonInterface::DIFF_RELATIVE_AUTO, false, 2);
-    }
-
     public function percent(): float|int
     {
         return intval(100 - (($this->price->sale_price * 100) / $this->price->original_price));
