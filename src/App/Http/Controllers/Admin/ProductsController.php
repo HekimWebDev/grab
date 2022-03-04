@@ -3,20 +3,31 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
 use Domains\Products\Models\Product;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+
+    public function index(): Factory|View|Application
+    {
+        $user = User::find(auth()->id());
+        $product_count = Product::count();
+        return view('admin.index', compact('user', 'product_count'));
+    }
+
     /**
      * @throws GuzzleException
      */
-    public function altinYildizCheck($id){
+    public function altinYildizCheck($id): RedirectResponse
+    {
 
         $product = Product::find($id);
         $checkMessage = true;
@@ -34,11 +45,6 @@ class ProductsController extends Controller
         return redirect()->back()->with('message', $checkMessage);
     }
 
-    public function index(): Factory|View|Application
-    {
-        return view('admin.index');
-    }
-
     public function altinYildiz(Request $request): Factory|View|Application
     {
         $products = Product::with('price')
@@ -46,7 +52,7 @@ class ProductsController extends Controller
 //            ->when($request->name, fn($q, $v) => $q->where("name", 'like'. "%$v%"))
 //            ->whereInStock(1)
             ->whereServiceType(1)
-            ->select(['product_id', 'name', 'category_name', 'product_code', 'old_prices'])
+            ->select(['product_id', 'name', 'category_name', 'product_code'])
             ->latest()
             ->paginate(50);
 //        $count = Product::count();
@@ -56,7 +62,7 @@ class ProductsController extends Controller
 
     public function altinYildizSingle($id): Factory|View|Application
     {
-        $product = Product::with('prices', 'price')
+        $product = Product::with('prices')
             ->whereProductId($id)
             ->whereServiceType(1)
             ->first();

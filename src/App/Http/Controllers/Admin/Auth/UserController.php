@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use function auth;
+use function back;
+use function redirect;
 
 class UserController extends Controller
 {
@@ -29,7 +29,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function logout (): Redirector|Application|RedirectResponse
+    public function logout()
     {
         //logout user
         auth()->logout();

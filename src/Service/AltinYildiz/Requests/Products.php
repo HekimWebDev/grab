@@ -21,15 +21,14 @@ class Products extends Categories
     {
         $data = [];
         if (!$product){
-            $product_id = Product::select('product_id', 'old_prices')->get();
+            $product_id = Product::select('product_id')->get();
         }else{
             $product_id[] = Product::find($product);
         }
 
         $client = new Client();
         foreach ($product_id as $prod => $id) {
-//            dd($id);
-//            dump($prod);
+            dump($prod);
             $request = $client->request('GET', $this->prefix_url . $id->product_id, ['http_errors' => false]);
             if ($request->getStatusCode() == 200) {
                 $response = json_decode($request->getBody());
@@ -45,9 +44,6 @@ class Products extends Categories
                         'created_at' => date('Y-m-d H-i-s'), //2022-01-30 17:03:05
                         'updated_at' => date('Y-m-d H-i-s'),
                     ];
-                    $id->update([
-                        'old_prices' => $id->old_prices += 1,
-                    ]);
                 }
             } else {
                 dump($request->getStatusCode() . ' Ошибка');

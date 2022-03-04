@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in (v2)</title>
+    <title>AdminLTE 3 | Log in</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -27,25 +27,6 @@
 
             <form action="{{ route('login.post') }}" method="post">
                 @csrf
-                {{--<div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                           placeholder="Email" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" name="password" id="password-input"
-                           class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                           required>
-                    <div class="input-group-append">
-                        <div class="input-group-text" style="padding-left: 27px">
-                            <a href="#" class="password-control mr-1"></a>
-                        </div>
-                    </div>
-                </div>--}}
 
                 <div class="input-group mb-3">
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"

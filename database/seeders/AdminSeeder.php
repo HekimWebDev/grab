@@ -15,16 +15,16 @@ class AdminSeeder extends Seeder
                 'email' => 'user.hekim@gmail.com',
                 'password' => \Hash::make('hekim'),
             ],
-//            1 => [
-//                'name' => 'Muhammet',
-//                'email' => 'user.muhammet@gmail.com',
-//                'password' => \Hash::make('muhammet'),
-//            ],
-//            2 => [
-//                'name' => 'Ysmayyl',
-//                'email' => 'user.ysmayyl@gmail.com',
-//                'password' => \Hash::make('ysmayyl'),
-//            ],
+            1 => [
+                'name' => 'Muhammet',
+                'email' => 'user.muhammet@gmail.com',
+                'password' => \Hash::make('muhammet'),
+            ],
+            2 => [
+                'name' => 'Ysmayyl',
+                'email' => 'user.ysmayyl@gmail.com',
+                'password' => \Hash::make('ysmayyl'),
+            ],
             3 => [
                 'name' => 'Serdar',
                 'email' => 'user.serdar@gmail.com',

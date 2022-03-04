@@ -48,7 +48,7 @@
                                         <strong>Название продукта:</strong><br>
                                         {{ $product->name }}<br>
                                         <strong>Последняя проверка: </strong>
-                                        {{ $product->getDate() }}
+                                        {{ $product->updated_at->diffForHumans() }}
                                     </address>
                                 </div>
                                 <!-- /.col -->
@@ -60,7 +60,7 @@
                                 </div>
                                 <!-- /.col -->
                             </div>
-                            <!-- /.row -->
+{{--                            <!-- /.row -->
 
                             <div class="row mt-4">
                                 <!-- accepted payments column -->
@@ -103,10 +103,10 @@
                                 </div>
                                 <!-- /.col -->
                             </div>
-                            <!-- /.row -->
+                            <!-- /.row -->--}}
 
                             <!-- Table row -->
-                            <div class="row">
+                            <div class="row mt-5">
                                 <div class="col-12 table-responsive">
                                     <table class="table table-striped">
                                         <thead>
@@ -114,8 +114,9 @@
                                             <th>ID</th>
                                             <th>Имя товара</th>
                                             <th>Код продукта</th>
-                                            <th>Первоначальная цена</th>
+                                            <th>Основная цена</th>
                                             <th>Продажная цена</th>
+                                            <th>Дата</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -126,6 +127,7 @@
                                                 <td>{{ $product->product_code }}</td>
                                                 <td>{{ $prod->original_price }} TL</td>
                                                 <td>{{ $prod->sale_price }} TL</td>
+                                                <td>{{ $prod->created_at->diffForHumans() }}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>

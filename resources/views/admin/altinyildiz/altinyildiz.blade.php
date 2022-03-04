@@ -66,12 +66,10 @@
                                             <a href="{{route('admin.a-y-single', $product->product_id)}}"
                                                class="btn btn-outline-primary position-relative">
                                                 {{$product->price->sale_price }}
-                                                @if($product->old_prices != 0)
                                                     <span
                                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                        {{$product->old_prices}}
+                                                        {{$product->prices()->count()}}
                                                     </span>
-                                                @endif
                                             </a>
                                         </td>
                                     </tr>
