@@ -65,6 +65,7 @@ class ProductsController extends Controller
             ->select(['product_id', 'name', 'category_name', 'product_code'])
             ->latest()
             ->paginate(50);
+        session()->flashInput($request->input());
             return view('admin.altinyildiz.altinyildiz', compact('products'));
     }
 
