@@ -17,7 +17,7 @@ class Products extends Categories
     /**
      * @throws GuzzleException
      */
-    public function checkPrices($product = null): array
+    /*public function checkPrices($product = null): array
     {
         $data = [];
         if (!$product){
@@ -53,6 +53,52 @@ class Products extends Categories
             }
             $id->touch();
         }
+        return $data;
+    }*/
+
+    public function checkPrices2($product = null): array
+    {
+        $data = [];
+
+        $products = $product ? Product::whereProductId($product)->get() : Product::select('product_id')->get();
+
+        $client = new Client();
+
+        foreach ($products as $key => $product) {
+
+            try {
+
+                $request = $client->request('GET', $this->prefix_url . $product->product_id, ['http_errors' => false]);
+                dump($key);
+                $response = json_decode($request->getBody());
+
+                $response_sale_price = $response->SalePrice;
+                $current_sale_price = $product->price->sale_price;
+
+                if ($response_sale_price != $current_sale_price) {
+                    $data[$key] = [
+                        'product_id' => $product->product_id,
+                        'original_price' => $current_sale_price,
+                        'sale_price' => $response_sale_price,
+                        'created_at' => date('Y-m-d H-i-s'), //2022-01-30 17:03:05
+                        'updated_at' => date('Y-m-d H-i-s'),
+                    ];
+
+                    return $data;
+                }
+
+                $product->touch();
+
+            } catch (\GuzzleHttp\Exception\ConnectException $e) {
+                dump('Connect exceptions');
+            } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+                dump('Ошибка');
+                $product->update([
+                    'in_stock' => 0
+                ]);
+            }
+        }
+
         return $data;
     }
 
@@ -110,7 +156,7 @@ class Products extends Categories
 
         return floatval(
             preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
-            preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
+            preg_replace("/[^0-9]/", "", substr($num, $sep + 1, strlen($num)))
         );
     }
 

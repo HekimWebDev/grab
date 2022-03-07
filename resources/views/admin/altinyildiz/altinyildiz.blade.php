@@ -45,22 +45,20 @@
                                         <label for="Product_code">Код продукта:</label>
                                         <input type="text" class="form-control" name="code" id="Product_code" value="{{old('code')}}">
                                     </div>
+                                    <div class="col-2 d-flex align-items-end">
+                                        <a class="btn btn-secondary form-control" href="{{route('admin.a-y')}}">Очистить</a>
+                                    </div>
                                     <div class="col d-flex align-items-end">
-                                        <button type="submit" class="btn btn-primary form-control">
+                                        <button type="submit" class="btn-sm btn-primary form-control">
                                             <i class="fas fa-search"></i>
                                         </button>
-                                    </div>
-                                    <div class="col-2 d-flex align-items-end">
-
-                                        <a class="btn btn-secondary form-control" href="{{route('admin.a-y')}}">Очистить</a>
-
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0">
-                            <table class="table table-hover table-striped">
+                            <table class="table table-hover table-striped table-responsive-sm">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
@@ -83,12 +81,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="ml-4">
-                            {{ $products->withQueryString()->links() }}
-                        </div>
                         <!-- /.card-body -->
+                        <div class="card-footer clearfix">
+                            {{ $products->onEachSide(0)->withQueryString()->links() }}
+                        </div>
                     </div>
-
                     <!-- /.card -->
                 </div>
             </div>
