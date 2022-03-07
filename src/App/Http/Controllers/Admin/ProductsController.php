@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Domains\AltinYildiz\Actions\AltinYildizManager;
 use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
 use Domains\Products\Models\Product;
 use GuzzleHttp\Exception\GuzzleException;
@@ -12,6 +13,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Service\AltinYildiz\AltinYildizClient;
 
 class ProductsController extends Controller
 {
@@ -26,21 +28,23 @@ class ProductsController extends Controller
     /**
      * @throws GuzzleException
      */
-    public function altinYildizCheck($id): RedirectResponse
+    public function updatePrice($id): RedirectResponse
     {
-
         $product = Product::find($id);
+
         $checkMessage = true;
         $oldPrice = $product->price;
 
-        $client = new CreateAltinYildizActions();
-        $client->checkDailyPrices($id);
+        $client = new AltinYildizClient();
+        
+        $priceResult = $client->getPrice($id);
 
         $newPrice = $product->price;
 
         if (($oldPrice->original_price == $newPrice->original_price) && ($oldPrice->sale_price == $newPrice->sale_price )){
             $checkMessage = false;
         }
+
 
         return redirect()->back()->with('message', $checkMessage);
     }

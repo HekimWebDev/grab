@@ -2,19 +2,36 @@
 
 namespace Service\AltinYildiz;
 
-use Goutte\Client;
+use Goutte\Client as GoutteClient;
+use GuzzleHttp\Client as GuzzleClient;
+use Service\AltinYildiz\Requests\CategoryRequests;
+use Service\AltinYildiz\Requests\ProductRequests;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AltinYildizClient
 {
+    use ProductRequests;
+    use CategoryRequests;
+
     protected string $url;
-    protected Client $client;
+
     protected Crawler $response;
+    // protected Response $response;
 
     public function __construct()
     {
-        $this->url = config('grabconfig.AYConfig.base_url');
-        $this->client = new Client();
+        $this->baseUrl = config('grabconfig.AYConfig.base_url');
+    }
+
+    public function goutteClient()
+    {
+        return new GoutteClient();
+    }
+
+    public function guzzleClient()
+    {
+        return new GuzzleClient();
     }
 
     private function getContent($tag): Crawler
@@ -27,11 +44,13 @@ class AltinYildizClient
      * @param string $url
      * @return Crawler
      */
-    public function getResponse($tag, string $url = ''): Crawler
+    public function getFromHTML($tag, string $url = ''): Crawler
     {
-        $url = $this->url.'/'.$url;
-        $this->response = $this->client->request('GET', $url);
-        return $this->getContent($tag);
+        $url = $this->baseUrl.'/'.$url;
+
+        $this->response = $this->goutteClient()->request('GET', $url);
+
+        return $this->response->filter($tag);
     }
 
 }

@@ -6,15 +6,23 @@ class Response
 {
     private $response;
     private $subs;
+
     public function __construct($response)
     {
         $this->response = $response;
         $this->subs = [];
     }
 
-    public function getJson()
+    public function body()
     {
-        return json_encode($this->response);
+        return json_decode(
+            $this->response->getBody(), true, 512, JSON_BIGINT_AS_STRING
+        );
+    }
+
+    public function getRaw()
+    {
+        return $this->response;
     }
 
     public function getSubs():array
@@ -37,5 +45,22 @@ class Response
             }
         }
         return;
+    }
+
+    private function toFloat($num): float
+    {
+        $dotPos = strrpos($num, '.');
+        $commaPos = strrpos($num, ',');
+        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
+            ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
+
+        if (!$sep) {
+            return floatval(preg_replace("/[^0-9]/", "", $num));
+        }
+
+        return floatval(
+            preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
+            preg_replace("/[^0-9]/", "", substr($num, $sep + 1, strlen($num)))
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Domains\AltinYildiz\Actions\AltinYildizManager;
 use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
@@ -17,7 +18,7 @@ class ParseDailyCommand extends Command
      */
     public function handle()
     {
-        $client = new CreateAltinYildizActions();
-        $client->checkDailyPrices();
+        $client = new AltinYildizManager();
+        $client->updatePrices();
     }
 }
