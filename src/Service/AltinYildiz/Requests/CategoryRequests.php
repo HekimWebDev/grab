@@ -2,15 +2,14 @@
 
 namespace Service\AltinYildiz\Requests;
 
-use Goutte\Client;
-use phpDocumentor\Reflection\Types\Boolean;
-
 trait CategoryRequests
 {
     public function getParentCategories($url) : array
     {
         $data = [];
 
+        $url = $this->baseUrl . '/' . $url;
+        dump($url);
         $filter = '#leftCategoryFilter li a';
 
         $crawler = $this->goutteClient()->request('GET', $url);
@@ -30,9 +29,10 @@ trait CategoryRequests
     {
         $data = [];
 
-        $filter = '#leftCategoryFilter li.active';
+        $url = $this->baseUrl . '/' . $url;
+        dump($url);
 
-        $url = $this->baseURL . '/' . $url;
+        $filter = '#leftCategoryFilter li.active';
 
         $crawler = $this->goutteClient()->request('GET', $url);
 

@@ -2,7 +2,6 @@
 
 namespace Domains\AltinYildiz\Actions;
 
-use Service\AltinYildiz\Requests\CategoryClient;
 use Service\AltinYildiz\Response;
 
 class Category
@@ -12,7 +11,7 @@ class Category
 
     public function __construct()
     {
-        $this->categories = new CategoryClient();
+        $this->categories = new CategoryCli;
         $arr = [
             'Giyim' =>  '/giyim-c-2723',
             'Ayakkabı' => '/ayakkabi-c-2764',

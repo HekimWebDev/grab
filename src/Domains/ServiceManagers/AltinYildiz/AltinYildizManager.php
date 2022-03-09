@@ -13,13 +13,13 @@ class AltinYildizManager
     private AltinYildizClient $service;
     private array $tree;
     private $categories;
-
+    private $subs;
     private $startTime;
 
     public function __construct()
     {
         $this->service = new AltinYildizClient();
-
+        $this->subs = [];
         $arr = [
             'Giyim' =>  '/giyim-c-2723',
             'Ayakkabı' => '/ayakkabi-c-2764',
@@ -58,7 +58,7 @@ class AltinYildizManager
     private function getSubs($url): ?array
     {
         $data = [];
-        $response = $this->categories->getSubCategories($url);
+        $response = $this->service->getSubCategories($url);
 
         if ($response['name'] == null){
             return null;
@@ -83,6 +83,29 @@ class AltinYildizManager
 
         return $response->getSubs();
     }
+
+//    public function getSubUrlsFromJson():array
+//    {
+//        $data = Response();
+//        $data = response($this->response, true);
+//        foreach ($data as $item){
+//            $this->findSubsFromJson($item);
+//        }
+//        return $this->subs;
+//    }
+//
+//    private function findSubsFromJson($data):void
+//    {
+//        if ($data['sub'] == null){
+//            $this->subs[] = $data['url'];
+//            return;
+//        } else {
+//            foreach ($data['sub'] as $item){
+//                $this->findSubs($item);
+//            }
+//        }
+//        return;
+//    }
 
     public function createProductsEveryWeek()
     {

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Domains\AltinYildiz\Actions\Category;
+use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use http\Client\Response;
 use Illuminate\Console\Command;
 
@@ -40,7 +41,7 @@ class CategoryCommand extends Command
     public function handle()
     {
         $begin = time();
-        $code = new Category();
+        $code = new AltinYildizManager();
         $data = $code->grabCategoriesTree();
         $end = time();
         $response = new \Service\AltinYildiz\Response($data);
