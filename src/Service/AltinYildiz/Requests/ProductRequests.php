@@ -13,7 +13,7 @@ trait ProductRequests
         $request = $this
                     ->guzzleClient()
                     ->request('GET', $this->baseURL . '/api/attributeselection/' . $id, ['http_errors' => false]);
-        
+
         $result = (new Response($request))->body();
 
         // return clear response or prefilter then returnW
@@ -32,7 +32,7 @@ trait ProductRequests
 
         foreach ($categoriesPageList as $cat => $page_list) {
             $data[$cat] = $this
-                ->getFromHTML('.listing-list .description', $page_list . $this->suffix_url)
+                ->getFromHTML('.listing-list .description', $page_list . '/?dropListingPageSize=5000')
                 ->each(function ($node) {
 
                     $product['product_id'] = intval($node->filter('a')->attr('data-id'));
@@ -43,11 +43,11 @@ trait ProductRequests
                     $product['product_code'] = $node->filter('a')->attr('data-code');
 
                     if ($node->filter('.data')->children()->count() < 2) {
-                        $product['original_price'] = $this->toFloat($node->filter('.data span')->text());
-                        $product['sale_price'] = $this->toFloat($node->filter('.data span')->text());
+                        $product['original_price'] = $node->filter('.data span')->text();
+                        $product['sale_price'] = $node->filter('.data span')->text();
                     } else {
-                        $product['original_price'] = $this->toFloat($node->filter('.data span')->eq(0)->text());
-                        $product['sale_price'] = $this->toFloat($node->filter('.data span')->eq(1)->text());
+                        $product['original_price'] = $node->filter('.data span')->eq(0)->text();
+                        $product['sale_price'] = $node->filter('.data span')->eq(1)->text();
                     }
 
                     $product['category_name'] = 'category_name';

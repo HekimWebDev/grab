@@ -65,6 +65,7 @@
                                     <th>Имя товара</th>
                                     <th>Код продукта</th>
                                     <th>Последняя цена</th>
+                                    <th>История</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -76,6 +77,7 @@
                                         </td>
                                         <td>{{$product->product_code}}</td>
                                         <td>{{$product->price->sale_price }} TL</td>
+                                        <td>{{$product->prices->count() }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -83,7 +85,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
-                            {{ $products->onEachSide(0)->withQueryString()->links() }}
+                            {{ $products->onEachSide(1)->withQueryString()->links() }}
                         </div>
                     </div>
                     <!-- /.card -->

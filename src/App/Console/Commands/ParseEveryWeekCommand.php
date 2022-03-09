@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
+use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Illuminate\Console\Command;
 
 class ParseEveryWeekCommand extends Command
@@ -13,7 +13,7 @@ class ParseEveryWeekCommand extends Command
 
     public function handle(): void
     {
-        $client = new CreateAltinYildizActions();
+        $client = new AltinYildizManager();
         $client->createProductsEveryWeek();
     }
 }

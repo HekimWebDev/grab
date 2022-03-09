@@ -63,7 +63,7 @@
                 @if(session()->get('message'))
                     <div class="alert alert-default-success">Есть изменении в ценах</div
                 @else
-                    <div class="alert alert-default-danger">Нет изменений в ценах</div>
+                    <div class="alert alert-default-warning">Нет изменений в ценах</div>
                 @endif
             </div>
         @endif

@@ -6,15 +6,20 @@ use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use Illuminate\Support\Facades\Route;
 
+use Money\Currency;
+use Money\Currencies\ISOCurrencies;
+use Money\Formatter\DecimalMoneyFormatter;
+use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
+use Money\Parser\IntlLocalizedDecimalParser;
 
 Route::get('/', function () {
 
 });
-Route::group(['middleware' => 'guest'], function (){
+Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', fn() => view('admin.auth.login'))->name('login');
     Route::post('/login', [UserController::class, 'login'])->name('login.post');
 });
-
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
@@ -27,5 +32,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/altin-yildiz/dashboard', fn() => view('admin.altinyildiz.dashboard'))->name('admin.a-y-dashboard');
     Route::get('/altin-yildiz/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.a-y-single');
     Route::post('/altin-yildiz/{id}/check', [ProductsController::class, 'altinYildizCheck'])->name('admin.a-y-check');
+
+});
+
+Route::get('casts', function () {
+    return \Domains\Prices\Models\Price::create([
+        'product_id' => 1111111,
+        'original_price' => '999,99 TL',
+        'sale_price' => '999,99 TL',
+    ]);
 
 });

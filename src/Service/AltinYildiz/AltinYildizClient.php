@@ -17,19 +17,20 @@ class AltinYildizClient
     protected string $url;
 
     protected Crawler $response;
-    // protected Response $response;
+
+    protected mixed $baseUrl;
 
     public function __construct()
     {
         $this->baseUrl = config('grabconfig.AYConfig.base_url');
     }
 
-    public function goutteClient()
+    public function goutteClient(): GoutteClient
     {
         return new GoutteClient();
     }
 
-    public function guzzleClient()
+    public function guzzleClient(): GuzzleClient
     {
         return new GuzzleClient();
     }

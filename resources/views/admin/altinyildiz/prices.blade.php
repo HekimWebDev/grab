@@ -144,7 +144,7 @@
                                         <form action="{{route('admin.a-y-check', $product->product_id)}}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-success"><i
-                                                    class="far fa-credit-card"></i> Проверка цен
+                                                    class="fa fa-redo"></i> Проверка цен
                                             </button>
                                         </form>
                                     </div>

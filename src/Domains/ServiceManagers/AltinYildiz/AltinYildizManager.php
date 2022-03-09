@@ -1,17 +1,20 @@
 <?php
 
-namespace Domains\AltinYildiz\Actions;
+namespace Domains\ServiceManagers\AltinYildiz;
 
+use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
+use GuzzleHttp\Exception\GuzzleException;
 use Service\AltinYildiz\AltinYildizClient;
 use Service\AltinYildiz\Response;
 
 class AltinYildizManager
 {
-    private $service;
-    private $tree;
+    private AltinYildizClient $service;
+    private array $tree;
     private $categories;
+
+    private $startTime;
 
     public function __construct()
     {
@@ -52,7 +55,7 @@ class AltinYildizManager
         return $this->tree;
     }
 
-    private function getSubs($url)
+    private function getSubs($url): ?array
     {
         $data = [];
         $response = $this->categories->getSubCategories($url);
@@ -83,10 +86,12 @@ class AltinYildizManager
 
     public function createProductsEveryWeek()
     {
-        $products = new Products();
-        $products = $products->getProducts();
+//        $categories = $this->getSubCategories();
 
-//        dd($products);
+        $categories = ['kapusonlu-sweatshirt-c-3066'];
+
+        $products = $this->service->getProducts($categories);
+
         foreach ($products as $key => $product) {
             foreach ($product as $k => $item) {
                 Product::firstOrCreate(['product_code' => $item['product_code']], $item);
@@ -96,7 +101,6 @@ class AltinYildizManager
     }
 
     /**
-     * @throws GuzzleException
      */
     public function updatePrices()
     {
@@ -114,10 +118,10 @@ class AltinYildizManager
                 //    if ($product->sale !== ) {
 
                 //    }
-               } catch (\ $th) {
+               } catch (\GuzzleHttp\ConnectException) {
                    //throw $th;
                }
-            
+
             }
         }
     }
