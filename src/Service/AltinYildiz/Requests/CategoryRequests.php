@@ -7,24 +7,6 @@ use phpDocumentor\Reflection\Types\Boolean;
 
 trait CategoryRequests
 {
-    // public function getJsonCategories(): bool|string
-    // {
-    //     $data = [
-    //         '/orme-esnek-360-gomlek-c-2802',
-    //         '/atayaka-gomlek-c-2824',
-    //         'desenli-gomlek-c-2741',
-    //     ];
-
-    //     return json_encode($data);
-    // }
-
-    // public function getCategories($url):array
-    // {
-    //     $url = $this->baseURL . '/' . $url;
-
-    //     return $this->grab($url);
-    // }
-
     public function getParentCategories($url) : array
     {
         $data = [];
