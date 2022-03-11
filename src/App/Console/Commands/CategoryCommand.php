@@ -41,6 +41,7 @@ class CategoryCommand extends Command
     public function handle()
     {
         $begin = time();
+//
         $code = new AltinYildizManager();
         $data = $code->grabCategoriesTree();
         $end = time();
