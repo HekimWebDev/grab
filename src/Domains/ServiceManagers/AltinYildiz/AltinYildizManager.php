@@ -13,7 +13,6 @@ class AltinYildizManager
     private AltinYildizClient $service;
     private array $tree;
     private $categories;
-
     private $startTime;
 
     public function __construct()
@@ -84,11 +83,11 @@ class AltinYildizManager
         return $response->getSubs();
     }
 
-    public function createProductsEveryWeek()
+    public function createProducts()
     {
-//        $categories = $this->getSubCategories();
+        $categories = $this->getSubCategories();
 
-        $categories = ['kapusonlu-sweatshirt-c-3066'];
+//        $categories = ['kapusonlu-sweatshirt-c-3066'];
 
         $products = $this->service->getProducts($categories);
 
@@ -101,6 +100,7 @@ class AltinYildizManager
     }
 
     /**
+     * @throws GuzzleException
      */
     public function updatePrices()
     {

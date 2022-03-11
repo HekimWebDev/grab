@@ -36,10 +36,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 });
 
 Route::get('casts', function () {
-    return \Domains\Prices\Models\Price::create([
-        'product_id' => 1111111,
-        'original_price' => '999,99 TL',
-        'sale_price' => '999,99 TL',
-    ]);
-
+    return 'Casts';
 });

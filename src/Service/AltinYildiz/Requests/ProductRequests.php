@@ -3,24 +3,33 @@
 namespace Service\AltinYildiz\Requests;
 
 use Domains\AltinYildiz\Actions\Category;
+use GuzzleHttp\Exception\GuzzleException;
 use Service\AltinYildiz\Response;
 
 trait ProductRequests
 {
     // array of product ids
+    /**
+     * @throws GuzzleException
+     */
     public function getPrice(int $id) : array
     {
         $request = $this
                     ->guzzleClient()
-                    ->request('GET', $this->baseURL . '/api/attributeselection/' . $id, ['http_errors' => false]);
+                    ->request('GET', 'https://www.altinyildizclassics.com/api/attributeselection/' . $id, ['http_errors' => false]);
 
         $result = (new Response($request))->body();
 
-        // return clear response or prefilter then returnW
+        $responseSalePrice = $result->SalePrice;
+        $currentSale_Price = $result->price->sale_price;
+        // return clear response or prefilter then return
+
         return [
             'product_id'     => $result->id,
-            // 'original_price' => $current_sale_price,
-            // 'sale_price'     => $response_sale_price,
+//             'original_price' => max($currentSale_Price, $responseSalePrice),
+//             'sale_price'     => $currentSale_Price,
+             'original_price' => $result->Sale,
+//             'sale_price'     => $currentSale_Price,
             'created_at'     => date('Y-m-d H-i-s'), //2022-01-30 17:03:05
             'updated_at'     => date('Y-m-d H-i-s'),
         ];
