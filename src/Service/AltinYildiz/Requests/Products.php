@@ -80,8 +80,8 @@ class Products extends Categories
                         'product_id' => $product->product_id,
                         'original_price' => $current_sale_price,
                         'sale_price' => $response_sale_price,
-                        'created_at' => date('Y-m-d H-i-s'), //2022-01-30 17:03:05
-                        'updated_at' => date('Y-m-d H-i-s'),
+                        'created_at' => now(), //2022-01-30 17:03:05
+                        'updated_at' => now(),
                     ];
 
                     return $data;
