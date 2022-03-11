@@ -56,7 +56,7 @@ class Products extends Categories
         return $data;
     }
 
-    public function checkPrices2($product = null): array
+    /*public function checkPrices2($product = null): array
     {
         $data = [];
 
@@ -100,7 +100,7 @@ class Products extends Categories
         }
 
         return $data;
-    }
+    }*/
 
     public function getProducts(): array
     {
