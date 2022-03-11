@@ -17,7 +17,7 @@ class Products extends Categories
     /**
      * @throws GuzzleException
      */
-    /*public function checkPrices($product = null): array
+    public function checkPrices($product = null): array
     {
         $data = [];
         if (!$product){
@@ -41,8 +41,8 @@ class Products extends Categories
                         'product_id' => $id->product_id,
                         'original_price' => $id->price->original_price,
                         'sale_price' => $response_sale_price,
-                        'created_at' => date('Y-m-d H-i-s'), //2022-01-30 17:03:05
-                        'updated_at' => date('Y-m-d H-i-s'),
+                        'created_at' => now(), //2022-01-30 17:03:05
+                        'updated_at' => now(),
                     ];
                 }
             } else {
@@ -54,7 +54,7 @@ class Products extends Categories
             $id->touch();
         }
         return $data;
-    }*/
+    }
 
     public function checkPrices2($product = null): array
     {

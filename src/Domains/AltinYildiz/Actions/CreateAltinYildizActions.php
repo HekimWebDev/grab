@@ -33,7 +33,7 @@ class CreateAltinYildizActions
     {
         $this->regTime(1);
         $product = new Products();
-        $products = $product->checkPrices2($id);
+        $products = $product->checkPrices($id);
 
         if (!empty($products)) {
             Price::insert($products);
