@@ -20,23 +20,23 @@ class AltinYildizManager
         $this->service = new AltinYildizClient();
 
         $arr = [
-            'Giyim' =>  '/giyim-c-2723',
+            'Giyim' => '/giyim-c-2723',
             'Ayakkabı' => '/ayakkabi-c-2764',
             'Aksesuar' => '/aksesuar-c-2763',
         ];
 
-        foreach ($arr as $key => $value){
+        foreach ($arr as $key => $value) {
             $this->tree[] = [
-                'name'  => $key,
-                'url'   => $value,
-                'sub'   => []
+                'name' => $key,
+                'url' => $value,
+                'sub' => []
             ];
         }
     }
 
-    public function grabCategoriesTree():array
+    public function grabCategoriesTree(): array
     {
-        for ($i=0; $i<3; $i++) {
+        for ($i = 0; $i < 3; $i++) {
 
             $responses = $this->service->getParentCategories($this->tree[$i]['url']);
 
@@ -59,22 +59,22 @@ class AltinYildizManager
         $data = [];
         $response = $this->categories->getSubCategories($url);
 
-        if ($response['name'] == null){
+        if ($response['name'] == null) {
             return null;
         }
 
         foreach ($response['name'] as $key => $value) {
             $data[] = [
-                'name'  =>  $value,
-                'url'   =>  $response['url'][$key],
-                'sub'   =>  $this->getSubs($response['url'][$key])
+                'name' => $value,
+                'url' => $response['url'][$key],
+                'sub' => $this->getSubs($response['url'][$key])
             ];
         }
 
         return $data;
     }
 
-    public function getSubCategories() : array
+    public function getSubCategories(): array
     {
         $path = storage_path('app/public/categories/') . 'AltinYildiz.json';
         $json = file_get_contents($path);
@@ -106,23 +106,23 @@ class AltinYildizManager
     {
         $this->regTime(1);
 
-        $products = Product::get();
+        $products = Product::limit(3)->get();
 
-        foreach($products as $product) {
+        foreach ($products as $product) {
 
-            $priceResult = $this->service->getPrice($product->product_id);
+            $responsePriceResult = $this->service->getPrice($product->product_id);
+            if ($responsePriceResult != $product->price->sale_price) {
+                $data = [
+                    'product_id' => $product->product_id,
+                    'original_price' => max($responsePriceResult, $product->price->original_price),
+                    'sale_price' => $responsePriceResult,
+                    'created_at' => now(), //2022-01-30 17:03:05
+                    'updated_at' => now(),
+                ];
 
-            if (!empty($products)) {
-               try {
-
-                //    if ($product->sale !== ) {
-
-                //    }
-               } catch (\GuzzleHttp\ConnectException) {
-                   //throw $th;
-               }
-
+                Product::create($data);
             }
+
         }
     }
 
