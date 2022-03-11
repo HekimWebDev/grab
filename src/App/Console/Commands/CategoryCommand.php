@@ -41,9 +41,8 @@ class CategoryCommand extends Command
     public function handle()
     {
         $begin = time();
-//
         $code = new AltinYildizManager();
-        $data = $code->grabCategoriesTree();
+        $data = $code->grabCategoriesTreeFromHtml();
         $end = time();
         $response = new \Service\AltinYildiz\Response($data);
         \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\AltinYildiz.json', $response->getJson());

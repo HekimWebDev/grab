@@ -14,6 +14,8 @@ use Money\Money;
 use Money\Parser\IntlLocalizedDecimalParser;
 
 Route::get('/', function () {
+    $code = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
+    dd($code->getSubCategoriesForGrab());
 
 });
 Route::group(['middleware' => 'guest'], function () {

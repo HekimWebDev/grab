@@ -30,7 +30,10 @@ class Response
         return $this->response;
     }
 
-
+    public function getArray()
+    {
+        return json_decode($this->response, true);
+    }
 
     private function toFloat($num): float
     {

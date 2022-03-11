@@ -13,7 +13,7 @@ class AltinYildizManager
     private AltinYildizClient $service;
     private array $tree;
     private $categories;
-    private $subs;
+    private $subUrls = [];
     private $startTime;
 
     public function __construct()
@@ -35,7 +35,7 @@ class AltinYildizManager
         }
     }
 
-    public function grabCategoriesTree():array
+    public function grabCategoriesTreeFromHtml():array
     {
         for ($i=0; $i<3; $i++) {
 
@@ -46,7 +46,7 @@ class AltinYildizManager
                 $data[] = [
                     'name' => $response,
                     'url' => $responses['url'][$key],
-                    'sub' => $this->getSubs($responses['url'][$key])
+                    'sub' => $this->getSubsFromHtml($responses['url'][$key])
                 ];
             }
             $this->tree[$i]['sub'] = $data;
@@ -55,7 +55,7 @@ class AltinYildizManager
         return $this->tree;
     }
 
-    private function getSubs($url): ?array
+    private function getSubsFromHtml($url): ?array
     {
         $data = [];
         $response = $this->service->getSubCategories($url);
@@ -75,37 +75,33 @@ class AltinYildizManager
         return $data;
     }
 
-    public function getSubCategories() : array
+    public function getSubCategoriesForGrab() : array
     {
         $path = storage_path('app/public/categories/') . 'AltinYildiz.json';
-        $json = file_get_contents($path);
-        $response = new Response($json);
-
-        return $response->getSubs();
+        $response = new Response(file_get_contents($path));
+//        $data = response($this->response, true);
+        $data = $response->getArray();
+//        dd($data);
+//        return $data;
+        foreach ($data as $item){
+//            dump($item);
+            $this->findSubs($item);
+        }
+        return $this->subUrls;
     }
 
-//    public function getSubUrlsFromJson():array
-//    {
-//        $data = Response();
-//        $data = response($this->response, true);
-//        foreach ($data as $item){
-//            $this->findSubsFromJson($item);
-//        }
-//        return $this->subs;
-//    }
-//
-//    private function findSubsFromJson($data):void
-//    {
-//        if ($data['sub'] == null){
-//            $this->subs[] = $data['url'];
-//            return;
-//        } else {
-//            foreach ($data['sub'] as $item){
-//                $this->findSubs($item);
-//            }
-//        }
-//        return;
-//    }
+    private function findSubs($data)
+    {
+        if ($data['sub'] == null){
+            $this->subUrls[] = $data['url'];
+            return null;
+        } else {
+            foreach ($data['sub'] as $item){
+                $this->findSubs($item);
+            }
+        }
+        return null;
+    }
 
     public function createProductsEveryWeek()
     {
