@@ -14,9 +14,12 @@ use Money\Money;
 use Money\Parser\IntlLocalizedDecimalParser;
 
 Route::get('/', function () {
-    $code = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
-    dd($code->getSubCategoriesForGrab());
 
+//    $code = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
+//    dd($code->getSubCategoriesForGrab());
+
+    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
+    $client->updatePrices();
 });
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', fn() => view('admin.auth.login'))->name('login');
@@ -37,10 +40,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 });
 
 Route::get('casts', function () {
-    return \Domains\Prices\Models\Price::create([
-        'product_id' => 1111111,
-        'original_price' => '999,99 TL',
-        'sale_price' => '999,99 TL',
-    ]);
-
+    return 'Casts';
 });

@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Domains\AltinYildiz\Actions\AltinYildizManager;
-use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
+use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 

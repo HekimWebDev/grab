@@ -7,13 +7,13 @@ use Illuminate\Console\Command;
 
 class ParseEveryWeekCommand extends Command
 {
-    protected $signature = 'parse:week';
+    protected $signature = 'parse:weekly';
 
     protected $description = 'Проверка данных каждую неделю';
 
     public function handle(): void
     {
         $client = new AltinYildizManager();
-        $client->createProductsEveryWeek();
+        $client->createProducts();
     }
 }

@@ -21,23 +21,24 @@ class AltinYildizManager
         $this->service = new AltinYildizClient();
         $this->subs = [];
         $arr = [
-            'Giyim' =>  '/giyim-c-2723',
+            'Giyim' => '/giyim-c-2723',
             'Ayakkabı' => '/ayakkabi-c-2764',
             'Aksesuar' => '/aksesuar-c-2763',
         ];
 
-        foreach ($arr as $key => $value){
+        foreach ($arr as $key => $value) {
             $this->tree[] = [
-                'name'  => $key,
-                'url'   => $value,
-                'sub'   => []
+                'name' => $key,
+                'url' => $value,
+                'sub' => []
             ];
         }
     }
 
     public function grabCategoriesTreeFromHtml():array
+//    public function grabCategoriesTree(): array
     {
-        for ($i=0; $i<3; $i++) {
+        for ($i = 0; $i < 3; $i++) {
 
             $responses = $this->service->getParentCategories($this->tree[$i]['url']);
 
@@ -60,7 +61,7 @@ class AltinYildizManager
         $data = [];
         $response = $this->service->getSubCategories($url);
 
-        if ($response['name'] == null){
+        if ($response['name'] == null) {
             return null;
         }
 
@@ -69,6 +70,7 @@ class AltinYildizManager
                 'name'  =>  $value,
                 'url'   =>  $response['url'][$key],
                 'sub'   =>  $this->getSubsFromHtml($response['url'][$key])
+
             ];
         }
 
@@ -76,15 +78,12 @@ class AltinYildizManager
     }
 
     public function getSubCategoriesForGrab() : array
+//    public function getSubCategories(): array
     {
         $path = storage_path('app/public/categories/') . 'AltinYildiz.json';
         $response = new Response(file_get_contents($path));
-//        $data = response($this->response, true);
         $data = $response->getArray();
-//        dd($data);
-//        return $data;
         foreach ($data as $item){
-//            dump($item);
             $this->findSubs($item);
         }
         return $this->subUrls;
@@ -103,11 +102,11 @@ class AltinYildizManager
         return null;
     }
 
-    public function createProductsEveryWeek()
+    public function createProducts()
     {
-//        $categories = $this->getSubCategories();
+        $categories = $this->getSubCategories();
 
-        $categories = ['kapusonlu-sweatshirt-c-3066'];
+//        $categories = ['kapusonlu-sweatshirt-c-3066'];
 
         $products = $this->service->getProducts($categories);
 
@@ -120,28 +119,29 @@ class AltinYildizManager
     }
 
     /**
+     * @throws GuzzleException
      */
     public function updatePrices()
     {
         $this->regTime(1);
 
-        $products = Product::get();
+        $products = Product::limit(3)->get();
 
-        foreach($products as $product) {
+        foreach ($products as $product) {
 
-            $priceResult = $this->service->getPrice($product->product_id);
+            $responsePriceResult = $this->service->getPrice($product->product_id);
+            if ($responsePriceResult != $product->price->sale_price) {
+                $data = [
+                    'product_id' => $product->product_id,
+                    'original_price' => max($responsePriceResult, $product->price->original_price),
+                    'sale_price' => $responsePriceResult,
+                    'created_at' => now(), //2022-01-30 17:03:05
+                    'updated_at' => now(),
+                ];
 
-            if (!empty($products)) {
-               try {
-
-                //    if ($product->sale !== ) {
-
-                //    }
-               } catch (\GuzzleHttp\ConnectException) {
-                   //throw $th;
-               }
-
+                Product::create($data);
             }
+
         }
     }
 
