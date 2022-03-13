@@ -68,7 +68,7 @@ class AltinYildizManager
             $data[] = [
                 'name'  =>  $value,
                 'url'   =>  $response['url'][$key],
-                'sub'   =>  $this->getSubs($response['url'][$key])
+                'sub'   =>  $this->getSubsFromHtml($response['url'][$key])
             ];
         }
 

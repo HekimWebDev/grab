@@ -36,7 +36,7 @@ class ProductsController extends Controller
         $oldPrice = $product->price;
 
         $client = new AltinYildizClient();
-        
+
         $priceResult = $client->getPrice($id);
 
         $newPrice = $product->price;

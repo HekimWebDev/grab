@@ -30,7 +30,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('/changePassword', [NewPasswordController::class, 'changePassword'])->name('changePassword');
 
     Route::get('/altin-yildiz', [ProductsController::class, 'altinYildiz'])->name('admin.a-y');
-//    Route::get('/altin-yildiz', [ProductsController::class, 'altinYildiz'])->name('admin.a-y');
     Route::get('/altin-yildiz/dashboard', fn() => view('admin.altinyildiz.dashboard'))->name('admin.a-y-dashboard');
     Route::get('/altin-yildiz/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.a-y-single');
     Route::post('/altin-yildiz/{id}/check', [ProductsController::class, 'altinYildizCheck'])->name('admin.a-y-check');
