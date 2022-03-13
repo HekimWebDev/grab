@@ -58,18 +58,8 @@
         </ul>
     </nav>
     <!-- /.navbar -->
-        @if(session()->has('message'))
-            <div class="" style="margin: 35px 15px 0 268px;">
-                @if(session()->get('message'))
-                    <div class="alert alert-default-success">Есть изменении в ценах</div
-                @else
-                    <div class="alert alert-default-warning">Нет изменений в ценах</div>
-                @endif
-            </div>
-        @endif
 
         @yield('content')
-
 
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">

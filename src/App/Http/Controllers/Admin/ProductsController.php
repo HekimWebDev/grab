@@ -32,20 +32,21 @@ class ProductsController extends Controller
     {
         $product = Product::find($id);
 
-        $checkMessage = true;
+        $checkMessage = 'Цена изменена';
         $oldPrice = $product->price;
 
-        $client = new AltinYildizClient();
+//        dd($oldPrice);
 
-        $priceResult = $client->getPrice($id);
+        $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
+        $client->updatePrices($id);
 
         $newPrice = $product->price;
 
+//        dd($newPrice);
+
         if (($oldPrice->original_price == $newPrice->original_price) && ($oldPrice->sale_price == $newPrice->sale_price )){
-            $checkMessage = false;
+            $checkMessage = 'Нет изменений в ценах';
         }
-
-
         return redirect()->back()->with('message', $checkMessage);
     }
 
