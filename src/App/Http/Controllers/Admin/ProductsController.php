@@ -51,11 +51,9 @@ class ProductsController extends Controller
 
     public function altinYildiz(Request $request): Factory|View|Application
     {
-//        dd($request->name);
-//            ->when($request->id, function($q, $v) => $q->whereId($v))
-//            ->when($request->name, fn($q, $v) => $q->where("name", 'like'. "%$v%"))
-//            ->whereInStock(1)
-        $products = Product::whereServiceType(1)
+        $products = Product::when($request->service_type, function ($query, $v) {
+                $query->where('service_type', $v);
+            })
             ->when($request->id, function ($query, $v) {
                 $query->where('product_id', $v);
             })
@@ -69,7 +67,9 @@ class ProductsController extends Controller
             ->select(['product_id', 'name', 'category_name', 'product_code'])
             ->latest()
             ->paginate(50);
-        session()->flashInput($request->input());
+
+            session()->flashInput($request->input());
+
             return view('admin.altinyildiz.altinyildiz', compact('products'));
     }
 

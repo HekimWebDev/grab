@@ -104,8 +104,8 @@ class AltinYildizManager
 
     public function createProducts()
     {
-        $categories = $this->getSubCategories();
-
+        $categories = $this->getSubCategoriesForGrab();
+        dd($categories);
 //        $categories = ['kapusonlu-sweatshirt-c-3066'];
 
         $products = $this->service->getProducts($categories);
@@ -118,6 +118,8 @@ class AltinYildizManager
         }
     }
 
+
+
     /**
      * @throws GuzzleException
      */
@@ -126,7 +128,7 @@ class AltinYildizManager
         $this->regTime(1);
 
         $products = Product::limit(3)->get();
-
+//        dd($products);
         foreach ($products as $product) {
 
             $responsePriceResult = $this->service->getPrice($product->product_id);

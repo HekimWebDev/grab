@@ -37,18 +37,32 @@
                                         <label for="Id">Id:</label>
                                         <input type="number" class="form-control" name="id" id="Id" value="{{old('id')}}">
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <label for="Name">Имя товара:</label>
                                         <input type="text" class="form-control" name="name" id="Name" value="{{old('name')}}">
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-2">
                                         <label for="Product_code">Код продукта:</label>
                                         <input type="text" class="form-control" name="code" id="Product_code" value="{{old('code')}}">
                                     </div>
-                                    <div class="col-2 d-flex align-items-end">
-                                        <a class="btn btn-secondary form-control" href="{{route('admin.a-y')}}">Очистить</a>
+                                    <div class="col-3">
+                                        <label for="brand">Бренд:</label>
+                                        <select class="form-control" name="service_type" id="brand">
+                                            <option value="">Все</option>
+                                            <option @if(old('service_type') == 1) selected @endif value="1">Altinyildiz Classics</option>
+{{--                                            <option @if(old('service_type') == 2) selected @endif value="2"></option>--}}
+{{--                                            <option @if(old('service_type') == 3) selected @endif value="3"></option>--}}
+{{--                                            <option @if(old('service_type') == 4) selected @endif value="4"></option>--}}
+{{--                                            <option @if(old('service_type') == 5) selected @endif value="5"></option>--}}
+                                        </select>
                                     </div>
-                                    <div class="col d-flex align-items-end">
+                                    <div class="col-1 d-flex align-items-end">
+                                        <a class="btn btn-secondary form-control" href="{{route('admin.a-y')}}">
+{{--                                            Очистить--}}
+                                            <i class="fas fa-eraser"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-1 d-flex align-items-end">
                                         <button type="submit" class="btn-sm btn-primary form-control">
                                             <i class="fas fa-search"></i>
                                         </button>

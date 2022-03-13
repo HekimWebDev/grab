@@ -15,9 +15,6 @@ use Money\Parser\IntlLocalizedDecimalParser;
 
 Route::get('/', function () {
 
-//    $code = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
-//    dd($code->getSubCategoriesForGrab());
-
     $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
     $client->updatePrices();
 });
@@ -32,10 +29,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
     Route::post('/changePassword', [NewPasswordController::class, 'changePassword'])->name('changePassword');
 
-    Route::get('/altin-yildiz', [ProductsController::class, 'altinYildiz'])->name('admin.a-y');
-    Route::get('/altin-yildiz/dashboard', fn() => view('admin.altinyildiz.dashboard'))->name('admin.a-y-dashboard');
-    Route::get('/altin-yildiz/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.a-y-single');
-    Route::post('/altin-yildiz/{id}/check', [ProductsController::class, 'altinYildizCheck'])->name('admin.a-y-check');
+    Route::get('/products', [ProductsController::class, 'altinYildiz'])->name('admin.a-y');
+    Route::get('/dashboard', fn() => view('admin.altinyildiz.dashboard'))->name('admin.a-y-dashboard');
+    Route::get('/product/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.a-y-single');
+    Route::post('/product/{id}/check', [ProductsController::class, 'altinYildizCheck'])->name('admin.a-y-check');
 
 });
 
