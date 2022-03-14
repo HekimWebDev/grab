@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CategoryCommand;
+use App\Console\Commands\CategoryCommandd;
 use App\Console\Commands\ParseDailyCommand;
 use App\Console\Commands\ParseEveryWeekCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -16,7 +17,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CategoryCommand::class,
+        CategoryCommandd::class,
         ParseEveryWeekCommand::class,
         ParseDailyCommand::class
     ];
@@ -29,7 +30,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('parse:week')->weeklyOn(5, '2:00');
+         $schedule->command('parse:week')->dailyAt('2:00');
          $schedule->command('parse:daily')->dailyAt('6:00');
     }
 

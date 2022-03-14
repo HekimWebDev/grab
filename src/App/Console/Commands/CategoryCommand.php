@@ -7,7 +7,7 @@ use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use http\Client\Response;
 use Illuminate\Console\Command;
 
-class CategoryCommand extends Command
+class CategoryCommandd extends Command
 {
     /**
      * The name and signature of the console command.

@@ -106,7 +106,7 @@ class AltinYildizManager
     public function createProducts()
     {
         $categories = $this->getSubCategoriesForGrab();
-        dd($categories);
+//        dd($categories);
 //        $categories = ['kapusonlu-sweatshirt-c-3066'];
 
         $products = $this->service->getProducts($categories);
@@ -146,8 +146,8 @@ class AltinYildizManager
                     'updated_at' => now(),
                 ];
 
-//                Price::create($data);
-                DB::table('prices')->insert($data);
+                Price::create($data);
+//                DB::table('prices')->insert($data);
             }
             $product->touch();
 

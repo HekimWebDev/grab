@@ -90,7 +90,7 @@
                                             <a href="{{ route('admin.a-y-single', $product->product_id) }}" class="none-decoration">{{$product->name}}</a>
                                         </td>
                                         <td>{{$product->product_code}}</td>
-                                        <td>{{$product->price->sale_price }} TL</td>
+                                        <td>@isset($product->price->sale_price) {{$product->price->sale_price }} @endisset TL</td>
                                         <td>{{$product->prices->count() }}</td>
                                     </tr>
                                 @endforeach

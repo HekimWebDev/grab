@@ -70,7 +70,7 @@ class ProductsController extends Controller
             ->paginate(50);
 
             session()->flashInput($request->input());
-
+//            dd($products->first()->price);
             return view('admin.altinyildiz.altinyildiz', compact('products'));
     }
 

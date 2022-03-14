@@ -23,13 +23,13 @@ trait ProductRequests
         return $result['SalePrice'];
     }
 
-    public function getProducts(array $categoriesPageList): array
+    public function getProducts(array $categoriesPageList, int $pagzeSize = 5000): array
     {
         $data = [];
 
         foreach ($categoriesPageList as $cat => $page_list) {
             $data[$cat] = $this
-                ->getFromHTML('.listing-list .description', $page_list . '/?dropListingPageSize=5000')
+                ->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pageSize")
                 ->each(function ($node) {
 
                     $product['product_id'] = intval($node->filter('a')->attr('data-id'));
