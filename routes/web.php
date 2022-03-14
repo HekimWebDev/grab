@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Auth\UserController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
 
 use Money\Currency;
 use Money\Currencies\ISOCurrencies;
@@ -14,7 +15,7 @@ use Money\Parser\IntlLocalizedDecimalParser;
 
 Route::get('/', function () {
     $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
-    $client->updatePrices();
+//     $client->updatePrices();
 });
 
 Route::group(['middleware' => 'guest'], function () {
@@ -29,7 +30,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('/changePassword', [NewPasswordController::class, 'changePassword'])->name('changePassword');
 
     Route::get('/products', [ProductsController::class, 'altinYildiz'])->name('admin.a-y');
-    Route::get('/dashboard', fn() => view('admin.altinyildiz.dashboard'))->name('admin.a-y-dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.a-y-dashboard');
     Route::get('/product/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.a-y-single');
     Route::post('/product/{id}/check', [ProductsController::class, 'updatePrice'])->name('admin.a-y-check');
 

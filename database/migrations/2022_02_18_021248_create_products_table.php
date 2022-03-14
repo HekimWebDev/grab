@@ -12,7 +12,7 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('product_id')->unique()->index();
 
             $table->tinyInteger('in_stock')->default(1);
-            $table->string('name');
+            $table->string('name')->default('');
             $table->string('product_code')->unique();
             $table->integer('service_type');
             $table->string('product_url')->nullable();

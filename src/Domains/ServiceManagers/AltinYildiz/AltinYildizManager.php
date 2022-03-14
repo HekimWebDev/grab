@@ -123,13 +123,13 @@ class AltinYildizManager
     /**
      * @throws GuzzleException
      */
-    public function updatePrices($id)
+    public function updatePrices($id = null)
     {
         $this->regTime(1);
 
-        if ($id)
-            $products[] = Product::find($id);
-        else
+//        if ($id)
+//            $products[] = Product::find($id);
+//        else
             $products = Product::limit(3)->get();
 //        dd($products);
         foreach ($products as $product) {
