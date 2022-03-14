@@ -14,7 +14,7 @@ use Money\Money;
 use Money\Parser\IntlLocalizedDecimalParser;
 
 Route::get('/', function () {
-    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
+//    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
 //     $client->updatePrices();
 });
 
