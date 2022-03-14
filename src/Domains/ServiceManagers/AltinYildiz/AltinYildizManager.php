@@ -5,6 +5,7 @@ namespace Domains\ServiceManagers\AltinYildiz;
 use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\DB;
 use Service\AltinYildiz\AltinYildizClient;
 use Service\AltinYildiz\Response;
 
@@ -127,12 +128,14 @@ class AltinYildizManager
     {
         $this->regTime(1);
 
-//        if ($id)
-//            $products[] = Product::find($id);
-//        else
-            $products = Product::limit(3)->get();
-//        dd($products);
-        foreach ($products as $product) {
+        if ($id)
+            $products[] = Product::find($id);
+        else
+            $products = Product::get();
+
+        foreach ($products as $key =>$product) {
+            dump($key);
+
             $responsePriceResult = $this->service->getPrice($product->product_id);
             if ($responsePriceResult != $product->price->sale_price) {
                 $data = [
@@ -143,8 +146,10 @@ class AltinYildizManager
                     'updated_at' => now(),
                 ];
 
-                Product::create($data);
+//                Price::create($data);
+                DB::table('prices')->insert($data);
             }
+            $product->touch();
 
         }
     }
