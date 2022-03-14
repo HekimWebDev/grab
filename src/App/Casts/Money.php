@@ -26,18 +26,22 @@ class Money implements CastsAttributes
 
     public function set($model, string $key, $value, array $attributes): array
     {
-        $currencies = new ISOCurrencies();
+        if (!is_float($value)) {
+            return [$key => $value];
+        } else {
+            $currencies = new ISOCurrencies();
 
-        $numberFormatter = new \NumberFormatter('try_TRY', \NumberFormatter::DECIMAL);
-        $moneyParser = new IntlLocalizedDecimalParser($numberFormatter, $currencies);
+            $numberFormatter = new \NumberFormatter('try_TRY', \NumberFormatter::DECIMAL);
+            $moneyParser = new IntlLocalizedDecimalParser($numberFormatter, $currencies);
 
-        $money = $moneyParser->parse($value, new Currency('TRY'));
+            $money = $moneyParser->parse($value, new Currency('TRY'));
 
-        $moneyFormatter = new DecimalMoneyFormatter($currencies);
+            $moneyFormatter = new DecimalMoneyFormatter($currencies);
 
 //        echo $moneyFormatter->format($money) . '<br>';
-        return [
-            $key => $moneyFormatter->format($money)
-        ];
+            return [
+                $key => $moneyFormatter->format($money)
+            ];
+        }
     }
 }
