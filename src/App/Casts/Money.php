@@ -24,7 +24,7 @@ class Money implements CastsAttributes
 
     public function set($model, string $key, $value, array $attributes): array
     {
-        if (!is_float($value)) {
+        if (is_float($value)) {
             return [$key => $value];
         } else {
             $currencies = new ISOCurrencies();

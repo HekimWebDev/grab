@@ -14,10 +14,9 @@ use Money\Money;
 use Money\Parser\IntlLocalizedDecimalParser;
 
 Route::get('/', function () {
-    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
-    $client->createProducts();
+//    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
+//    $client->createProducts();
 });
-
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', fn() => view('admin.auth.login'))->name('login');
     Route::post('/login', [UserController::class, 'login'])->name('login.post');
