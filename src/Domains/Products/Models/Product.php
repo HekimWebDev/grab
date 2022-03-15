@@ -17,6 +17,7 @@ class Product extends Model
         'service_type',
         'category_name',
         'product_url',
+        'in_stock'
     ];
 
     protected $primaryKey = 'product_id';

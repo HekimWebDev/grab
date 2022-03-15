@@ -16,17 +16,15 @@ class Money implements CastsAttributes
     public function get($model, string $key, $value, array $attributes)
     {
         /*$money =  new \Money\Money($value, new Currency('TRY'));
-
         $currencies = new ISOCurrencies();
         $moneyFormatter = new DecimalMoneyFormatter($currencies);
-
         return $moneyFormatter;*/
         return $value;
     }
 
     public function set($model, string $key, $value, array $attributes): array
     {
-        if (is_float($value)) {
+        if (!is_float($value)) {
             return [$key => $value];
         } else {
             $currencies = new ISOCurrencies();

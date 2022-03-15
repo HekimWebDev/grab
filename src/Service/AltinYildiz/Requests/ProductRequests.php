@@ -23,13 +23,13 @@ trait ProductRequests
         return $result['SalePrice'];
     }
 
-    public function getProducts(array $categoriesPageList, int $pagzeSize = 5000): array
+    public function getProducts(array $categoriesPageList, int $pagezeSize = 5000): array
     {
         $data = [];
 
         foreach ($categoriesPageList as $cat => $page_list) {
             $data[$cat] = $this
-                ->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pageSize")
+                ->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pagezeSize")
                 ->each(function ($node) {
 
                     $product['product_id'] = intval($node->filter('a')->attr('data-id'));
@@ -52,8 +52,10 @@ trait ProductRequests
 
                     return $product;
                 });
-        }
 
+            if ($cat == 0)
+                return $data;
+        }
         return $data;
 
     }

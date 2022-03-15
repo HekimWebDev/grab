@@ -118,12 +118,11 @@ class AltinYildizManager
         foreach ($productsArr as $key => $productsFromEachCategory) {
             foreach ($productsFromEachCategory as $k => $product) {
                 $product['in_stock'] = 1;
+
                 $k = Product::updateOrCreate(
                     ['product_id' => $product['product_id'], 'product_code' => $product['product_code']],
                     $product
                 );
-                dd($product, $k);
-//                Product::firstOrCreate(['product_code' => $product['product_code']], $product);
                 Price::firstOrCreate(['product_id' => $product['product_id']], $product);
             }
         }
