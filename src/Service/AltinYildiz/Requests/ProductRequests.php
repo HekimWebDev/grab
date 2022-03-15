@@ -29,6 +29,7 @@ trait ProductRequests
 
         foreach ($categoriesPageList as $cat => $page_list) {
 //            $data[$cat] = $this
+            dump($cat . ') ' . $page_list);
             $data[$page_list] = $this
                 ->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pagezeSize")
                 ->each(function ($node) {
@@ -54,7 +55,7 @@ trait ProductRequests
                     return $product;
                 });
 
-            if ($cat == 1)
+            if ($cat == 9)
                 return $data;
         }
         return $data;
@@ -63,6 +64,7 @@ trait ProductRequests
 
     public function getProductsPrices(string $categoryUrl, int $pagezeSize = 5000): array
     {
+        dump($categoryUrl);
         $data = $this
             ->getFromHTML('.listing-list .description', $categoryUrl . "/?dropListingPageSize=$pagezeSize")
             ->each(function ($node) {

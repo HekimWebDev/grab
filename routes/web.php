@@ -16,9 +16,13 @@ use Money\Parser\IntlLocalizedDecimalParser;
 Route::get('/', function () {
 //    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
 //    $client->createProducts();
-
+//
     $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
     $client->updatePriceYsmayyl();
+
+//    $money = new \App\Casts\Money();
+//    dd($money->set('', 's', '1999,15 TL', [])['s']);
+
 });
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', fn() => view('admin.auth.login'))->name('login');

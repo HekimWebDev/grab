@@ -65,7 +65,7 @@ class ProductsController extends Controller
                 $query->where('product_code', "like", "%$v%");
             })
             ->with('price')
-            ->select(['product_id', 'name', 'category_name', 'product_code'])
+            ->select(['product_id', 'name', 'product_code'])
             ->latest()
             ->paginate(50);
 

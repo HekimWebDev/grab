@@ -48,7 +48,7 @@ class AltinYildizClient
     public function getFromHTML($tag, string $url = ''): Crawler
     {
         $url = $this->baseUrl.'/'.$url;
-        dump($url);
+
         $this->response = $this->goutteClient()->request('GET', $url);
 
         return $this->response->filter($tag);

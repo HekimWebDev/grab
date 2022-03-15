@@ -125,8 +125,11 @@ class AltinYildizManager
         }
     }
 
-    public function updatePriceYsmayyl()
+    public function updatePrice()
     {
+        $data = [];
+        $money = new \App\Casts\Money();
+
         $products = Product::where('service_type', 1)
             ->where('in_stock', 1)
             ->get()
@@ -137,65 +140,25 @@ class AltinYildizManager
 
         foreach ($products as $categoryUrl => $product){
             $pricesFromHtml = $this->service->getProductsPrices($categoryUrl);
-            foreach ($pricesFromHtml as $newPrices){
-                $oldPrices = $product[$newPrices['product_id']]->price;
-                if ( !($oldPrices->original_price == $newPrices['original_price'] && $oldPrices->sale_price == $newPrices['sale_price']) ){
-                    dd(false);
+            foreach ($pricesFromHtml as $newPrice){
+                $oldPrices = $product[$newPrice['product_id']]->price;
+
+                $nOriginPrice = $money->set('', 'k', $newPrice['original_price'], [])['k'];
+                $nSalePrice = $money->set('', 'k', $newPrice['sale_price'], [])['k'];
+
+                if (empty($oldPrices) || !($oldPrices->original_price == $nOriginPrice && $oldPrices->sale_price == $nSalePrice) ){
+                    $data[] = [
+                        'product_id' => $newPrice['product_id'],
+                        'original_price' => $nOriginPrice,
+                        'sale_price' => $nSalePrice,
+                        'created_at' => now(), //2022-01-30 17:03:05
+                        'updated_at' => now(),
+                    ];
                 }
-//                dd($newPrices, $oldPrices);
+                $product[$newPrice['product_id']]->touch();
             }
-            dd('end');
         }
-//                Price::firstOrCreate(['product_id' => $product['product_id']], $product);
-    }
-
-
-
-    /**
-     * @throws GuzzleException
-     */
-    public function updatePrices($id = null)
-    {
-        $this->regTime(1);
-
-        if ($id)
-            $products[] = Product::find($id);
-        else
-            $products = Product::get();
-
-        foreach ($products as $key =>$product) {
-            dump($key);
-
-            $responsePriceResult = $this->service->getPrice($product->product_id);
-//            dd($responsePriceResult);
-            if ($responsePriceResult != $product->price->sale_price) {
-                $data = [
-                    'product_id' => $product->product_id,
-                    'original_price' => max($responsePriceResult, $product->price->original_price),
-                    'sale_price' => $responsePriceResult,
-                    'created_at' => now(), //2022-01-30 17:03:05
-                    'updated_at' => now(),
-                ];
-
-                Price::create($data);
-//                DB::table('prices')->insert($data);
-            }
-            $product->touch();
-
-        }
-    }
-
-    private function regTime($status = null)
-    {
-        if ($status) {
-            if (empty($this->startTime)) $this->startTime = new \DateTime('now');
-        } else {
-            $endTime = new \DateTime('now');
-            $interval = $this->startTime->diff($endTime);
-            $this->startTime = '';
-            return dump($interval->format('%i минута, %S секунд, %f  микросекунд'));
-        }
-        return null;
+        Price::insert($data);
     }
 
 }
