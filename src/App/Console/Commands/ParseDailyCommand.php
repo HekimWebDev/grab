@@ -18,6 +18,6 @@ class ParseDailyCommand extends Command
     public function handle()
     {
         $client = new AltinYildizManager();
-        $client->updatePrices();
+        $client->updatePriceYsmayyl();
     }
 }

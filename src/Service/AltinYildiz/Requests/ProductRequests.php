@@ -28,7 +28,8 @@ trait ProductRequests
         $data = [];
 
         foreach ($categoriesPageList as $cat => $page_list) {
-            $data[$cat] = $this
+//            $data[$cat] = $this
+            $data[$page_list] = $this
                 ->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pagezeSize")
                 ->each(function ($node) {
 
@@ -47,15 +48,37 @@ trait ProductRequests
                         $product['sale_price'] = $node->filter('.data span')->eq(1)->text();
                     }
 
-                    $product['category_name'] = 'category_name';
+                    $product['category_url'] = 'category_name';
                     $product['service_type'] = 1;
 
                     return $product;
                 });
 
-            if ($cat == 0)
+            if ($cat == 1)
                 return $data;
         }
+        return $data;
+
+    }
+
+    public function getProductsPrices(string $categoryUrl, int $pagezeSize = 5000): array
+    {
+        $data = $this
+            ->getFromHTML('.listing-list .description', $categoryUrl . "/?dropListingPageSize=$pagezeSize")
+            ->each(function ($node) {
+
+                $product['product_id'] = intval($node->filter('a')->attr('data-id'));
+//                $product['product_code'] = $node->filter('a')->attr('data-code');
+
+                if ($node->filter('.data')->children()->count() < 2) {
+                    $product['original_price'] = $node->filter('.data span')->text();
+                    $product['sale_price'] = $node->filter('.data span')->text();
+                } else {
+                    $product['original_price'] = $node->filter('.data span')->eq(0)->text();
+                    $product['sale_price'] = $node->filter('.data span')->eq(1)->text();
+                }
+                return $product;
+            });
         return $data;
 
     }

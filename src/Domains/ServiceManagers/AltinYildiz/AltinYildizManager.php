@@ -37,7 +37,6 @@ class AltinYildizManager
     }
 
     public function grabCategoriesTreeFromHtml():array
-//    public function grabCategoriesTree(): array
     {
         for ($i = 0; $i < 3; $i++) {
 
@@ -79,7 +78,6 @@ class AltinYildizManager
     }
 
     public function getSubCategoriesForGrab() : array
-//    public function getSubCategories(): array
     {
         $path = storage_path('app/public/categories/') . 'AltinYildiz.json';
         $response = new Response(file_get_contents($path));
@@ -106,19 +104,18 @@ class AltinYildizManager
     public function createProducts()
     {
         $categories = $this->getSubCategoriesForGrab();
-//        dd($categories);
 //        $categories = ['kapusonlu-sweatshirt-c-3066'];
 
         $productsArr = $this->service->getProducts($categories);
 
-//        in_stock off
-//        $change = Product::where('in_stock', 1)
-//                            ->update(['in_stock' => 0]);
+        //        in_stock off
+        $change = Product::where('in_stock', 1)
+                            ->update(['in_stock' => 0]);
 
-        foreach ($productsArr as $key => $productsFromEachCategory) {
+        foreach ($productsArr as $categoryUrl => $productsFromEachCategory) {
             foreach ($productsFromEachCategory as $k => $product) {
                 $product['in_stock'] = 1;
-
+                $product['category_url'] = $categoryUrl;
                 $k = Product::updateOrCreate(
                     ['product_id' => $product['product_id'], 'product_code' => $product['product_code']],
                     $product
@@ -126,6 +123,30 @@ class AltinYildizManager
                 Price::firstOrCreate(['product_id' => $product['product_id']], $product);
             }
         }
+    }
+
+    public function updatePriceYsmayyl()
+    {
+        $products = Product::where('service_type', 1)
+            ->where('in_stock', 1)
+            ->get()
+            ->groupBy('category_url')
+            ->map(function ($q){
+                return $q->keyBy('product_id');
+            });
+
+        foreach ($products as $categoryUrl => $product){
+            $pricesFromHtml = $this->service->getProductsPrices($categoryUrl);
+            foreach ($pricesFromHtml as $newPrices){
+                $oldPrices = $product[$newPrices['product_id']]->price;
+                if ( !($oldPrices->original_price == $newPrices['original_price'] && $oldPrices->sale_price == $newPrices['sale_price']) ){
+                    dd(false);
+                }
+//                dd($newPrices, $oldPrices);
+            }
+            dd('end');
+        }
+//                Price::firstOrCreate(['product_id' => $product['product_id']], $product);
     }
 
 
@@ -146,6 +167,7 @@ class AltinYildizManager
             dump($key);
 
             $responsePriceResult = $this->service->getPrice($product->product_id);
+//            dd($responsePriceResult);
             if ($responsePriceResult != $product->price->sale_price) {
                 $data = [
                     'product_id' => $product->product_id,

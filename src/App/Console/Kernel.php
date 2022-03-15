@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CategoryCommandd::class,
+        CategoryCommand::class,
         ParseEveryWeekCommand::class,
         ParseDailyCommand::class
     ];

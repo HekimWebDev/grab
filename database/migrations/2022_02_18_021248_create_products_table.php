@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->integer('service_type');
             $table->string('product_url')->nullable();
 
-            $table->string('category_name')->nullable();
+            $table->string('category_url')->nullable();
 
             $table->timestamps();
         });

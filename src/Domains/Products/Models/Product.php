@@ -15,7 +15,7 @@ class Product extends Model
         'product_id',
         'product_code',
         'service_type',
-        'category_name',
+        'category_url',
         'product_url',
         'in_stock'
     ];
