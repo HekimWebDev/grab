@@ -109,12 +109,22 @@ class AltinYildizManager
 //        dd($categories);
 //        $categories = ['kapusonlu-sweatshirt-c-3066'];
 
-        $products = $this->service->getProducts($categories);
+        $productsArr = $this->service->getProducts($categories);
 
-        foreach ($products as $key => $product) {
-            foreach ($product as $k => $item) {
-                Product::firstOrCreate(['product_code' => $item['product_code']], $item);
-                Price::firstOrCreate(['product_id' => $item['product_id']], $item);
+//        in_stock off
+//        $change = Product::where('in_stock', 1)
+//                            ->update(['in_stock' => 0]);
+
+        foreach ($productsArr as $key => $productsFromEachCategory) {
+            foreach ($productsFromEachCategory as $k => $product) {
+                $product['in_stock'] = 1;
+                $k = Product::updateOrCreate(
+                    ['product_id' => $product['product_id'], 'product_code' => $product['product_code']],
+                    $product
+                );
+                dd($product, $k);
+//                Product::firstOrCreate(['product_code' => $product['product_code']], $product);
+                Price::firstOrCreate(['product_id' => $product['product_id']], $product);
             }
         }
     }
