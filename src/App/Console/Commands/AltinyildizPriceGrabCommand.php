@@ -6,9 +6,9 @@ use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 
-class ParseDailyCommand extends Command
+class AltinyildizPriceGrabCommand extends Command
 {
-    protected $signature = 'parse:daily';
+    protected $signature = 'ay:price:grab';
 
     protected $description = 'Ежедневная проверка цен продуктов';
 

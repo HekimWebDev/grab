@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Illuminate\Console\Command;
 
-class ParseEveryWeekCommand extends Command
+class AltinyildizProductGrabCommand extends Command
 {
-    protected $signature = 'parse:weekly';
+    protected $signature = 'ay:products:grab';
 
     protected $description = 'Проверка данных каждую неделю';
 

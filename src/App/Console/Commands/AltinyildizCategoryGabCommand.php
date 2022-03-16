@@ -7,14 +7,14 @@ use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use http\Client\Response;
 use Illuminate\Console\Command;
 
-class CategoryCommand extends Command
+class AltinyildizCategoryGabCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'category:grab';
+    protected $signature = 'ay:category:grab';
 
     /**
      * The console command description.

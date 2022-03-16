@@ -18,7 +18,7 @@ Route::get('/', function () {
 //    $client->createProducts();
 //
     $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
-    $client->updatePriceYsmayyl();
+    $client->updatePrice();
 
 //    $money = new \App\Casts\Money();
 //    dd($money->set('', 's', '1999,15 TL', [])['s']);

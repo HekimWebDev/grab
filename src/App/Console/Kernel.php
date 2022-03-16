@@ -2,10 +2,9 @@
 
 namespace App\Console;
 
-use App\Console\Commands\CategoryCommand;
-use App\Console\Commands\CategoryCommandd;
-use App\Console\Commands\ParseDailyCommand;
-use App\Console\Commands\ParseEveryWeekCommand;
+use App\Console\Commands\AltinyildizCategoryGabCommand;
+use App\Console\Commands\AltinyildizPriceGrabCommand;
+use App\Console\Commands\AltinyildizProductGrabCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,9 +16,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CategoryCommand::class,
-        ParseEveryWeekCommand::class,
-        ParseDailyCommand::class
+        AltinyildizCategoryGabCommand::class,
+        AltinyildizProductGrabCommand::class,
+        AltinyildizPriceGrabCommand::class
     ];
 
     /**
@@ -30,8 +29,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('parse:week')->dailyAt('2:00');
-         $schedule->command('parse:daily')->dailyAt('5:00');
+         $schedule->command('ay:products:grab')->dailyAt('2:00');
+         $schedule->command('ay:price:grab')->dailyAt('5:00');
     }
 
     /**
