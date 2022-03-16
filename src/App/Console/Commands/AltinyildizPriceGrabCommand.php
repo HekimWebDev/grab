@@ -10,7 +10,7 @@ class AltinyildizPriceGrabCommand extends Command
 {
     protected $signature = 'ay:price:grab';
 
-    protected $description = 'Ежедневная проверка цен продуктов';
+    protected $description = 'Grab prices from HTML';
 
     /**
      * @throws GuzzleException
@@ -19,5 +19,7 @@ class AltinyildizPriceGrabCommand extends Command
     {
         $client = new AltinYildizManager();
         $client->updatePrice();
+
+        $this->info('Grabing prices was successful!');
     }
 }

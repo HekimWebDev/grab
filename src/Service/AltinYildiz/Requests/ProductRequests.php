@@ -55,8 +55,8 @@ trait ProductRequests
                     return $product;
                 });
 
-//            if ($cat == 9)
-//                return $data;
+            if ($cat == 19)
+                return $data;
         }
         return $data;
 
@@ -64,13 +64,10 @@ trait ProductRequests
 
     public function getProductsPrices(string $categoryUrl, int $pagezeSize = 5000): array
     {
-        dump($categoryUrl);
         $data = $this
             ->getFromHTML('.listing-list .description', $categoryUrl . "/?dropListingPageSize=$pagezeSize")
             ->each(function ($node) {
-
                 $product['product_id'] = intval($node->filter('a')->attr('data-id'));
-//                $product['product_code'] = $node->filter('a')->attr('data-code');
 
                 if ($node->filter('.data')->children()->count() < 2) {
                     $product['original_price'] = $node->filter('.data span')->text();
@@ -79,9 +76,10 @@ trait ProductRequests
                     $product['original_price'] = $node->filter('.data span')->eq(0)->text();
                     $product['sale_price'] = $node->filter('.data span')->eq(1)->text();
                 }
+
                 return $product;
             });
-        return $data;
 
+        return $data;
     }
 }

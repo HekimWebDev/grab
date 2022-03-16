@@ -140,24 +140,29 @@ class AltinYildizManager
 
         foreach ($products as $categoryUrl => $product){
             $pricesFromHtml = $this->service->getProductsPrices($categoryUrl);
+
             foreach ($pricesFromHtml as $newPrices){
-                $oldPrices = $product[$newPrices['product_id']]->price;
 
-                $nOriginPrice = $money->set('', 'k', $newPrices['original_price'], [])['k'];
-                $nSalePrice = $money->set('', 'k', $newPrices['sale_price'], [])['k'];
+                if( isset($product[$newPrices['product_id']]) ){
+                    $oldPrices = $product[$newPrices['product_id']]->price;
+                    $nOriginPrice = $money->set('', 'k', $newPrices['original_price'], [])['k'];
+                    $nSalePrice = $money->set('', 'k', $newPrices['sale_price'], [])['k'];
 
-                if (empty($oldPrices) || !($oldPrices->original_price == $nOriginPrice && $oldPrices->sale_price == $nSalePrice) ){
-                    $data[] = [
-                        'product_id' => $newPrices['product_id'],
-                        'original_price' => $nOriginPrice,
-                        'sale_price' => $nSalePrice,
-                        'created_at' => now(), //2022-01-30 17:03:05
-                        'updated_at' => now(),
-                    ];
+                    if (empty($oldPrices) || !($oldPrices->original_price == $nOriginPrice && $oldPrices->sale_price == $nSalePrice) ){
+                        $data[] = [
+                            'product_id' => $newPrices['product_id'],
+                            'original_price' => $nOriginPrice,
+                            'sale_price' => $nSalePrice,
+                            'created_at' => now(), //2022-01-30 17:03:05
+                            'updated_at' => now(),
+                        ];
+                    }
+
+                    $product[$newPrices['product_id']]->touch();
                 }
-                $product[$newPrices['product_id']]->touch();
             }
         }
+
         Price::insert($data);
     }
 

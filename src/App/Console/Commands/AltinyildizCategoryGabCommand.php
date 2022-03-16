@@ -21,7 +21,7 @@ class AltinyildizCategoryGabCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Grab urls of categories from HTML';
 
     /**
      * Create a new command instance.
@@ -40,12 +40,13 @@ class AltinyildizCategoryGabCommand extends Command
      */
     public function handle()
     {
-        $begin = time();
+//        $begin = time();
         $code = new AltinYildizManager();
         $data = $code->grabCategoriesTreeFromHtml();
-        $end = time();
+//        $end = time();
         $response = new \Service\AltinYildiz\Response($data);
         \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\AltinYildiz.json', $response->getJson());
-        dump($end - $begin);
+
+        $this->info('Grabing category tree was successful!');
     }
 }

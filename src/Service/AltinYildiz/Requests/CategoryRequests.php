@@ -9,7 +9,7 @@ trait CategoryRequests
         $data = [];
 
         $url = $this->baseUrl . '/' . $url;
-        dump($url);
+//        dump($url);
         $filter = '#leftCategoryFilter li a';
 
         $crawler = $this->goutteClient()->request('GET', $url);
@@ -30,7 +30,7 @@ trait CategoryRequests
         $data = [];
 
         $url = $this->baseUrl . '/' . $url;
-        dump($url);
+//        dump($url);
 
         $filter = '#leftCategoryFilter li.active';
 

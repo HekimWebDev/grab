@@ -9,11 +9,13 @@ class AltinyildizProductGrabCommand extends Command
 {
     protected $signature = 'ay:products:grab';
 
-    protected $description = 'Проверка данных каждую неделю';
+    protected $description = 'Grab products from HTML';
 
     public function handle(): void
     {
         $client = new AltinYildizManager();
         $client->createProducts();
+
+        $this->info('Grabing products was successful!');
     }
 }
