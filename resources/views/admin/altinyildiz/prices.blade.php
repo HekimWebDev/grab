@@ -63,7 +63,7 @@
                                 </div>
                                 <!-- /.col -->
                             </div>
-                            <!-- /.row -->--}}
+                            <!-- /.row -->
 
                             <!-- Table row -->
                             <div class="row mt-5">

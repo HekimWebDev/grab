@@ -40,13 +40,13 @@
 {{--                    <ul class="nav nav-treeview">--}}
                         <li class="nav-item">
                             <a href="{{ route('admin.a-y-dashboard') }}" class="nav-link">
-                                <i class="fas fa-angle-right ml-1"></i>
+                                <i class="fas fa-chart-line"></i>
                                 <p class="ml-1">Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admin.a-y')}}" class="nav-link">
-                                <i class="fas fa-angle-right ml-1"></i>
+                                <i class="fas fa-table"></i>
                                 <p class="ml-1">Продукты</p>
                             </a>
                         </li>
