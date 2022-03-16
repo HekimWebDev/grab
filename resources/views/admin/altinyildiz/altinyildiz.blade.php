@@ -30,8 +30,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h2>Фильтр</h2>
-                            <form action="" method="GET" class="mb-3">
+                            <form action="" method="GET" class="mb-3 pt-2">
                                 <div class="row">
                                     <div class="col-2">
                                         <label for="Id">Id:</label>
