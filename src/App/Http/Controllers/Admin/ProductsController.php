@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Domains\AltinYildiz\Actions\AltinYildizManager;
-use Domains\AltinYildiz\Actions\CreateAltinYildizActions;
+use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Domains\Products\Models\Product;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
@@ -28,23 +27,16 @@ class ProductsController extends Controller
     /**
      * @throws GuzzleException
      */
-    public function updatePrice($id): RedirectResponse
+    public function checkPrice($id, $serviceType): RedirectResponse
     {
-        $product = Product::find($id);
-
         $checkMessage = 'Цена изменена';
-        $oldPrice = $product->price;
+        $product = Product::whereProductId($id)
+            ->whereServiceType($serviceType)
+            ->first();
+        dd($product);
+        $maneger = new AltinYildizManager();
 
-//        dd($oldPrice);
-
-        $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
-        $client->updatePrices($id);
-
-        $newPrice = $product->price;
-
-//        dd($newPrice);
-
-        if (($oldPrice->original_price == $newPrice->original_price) && ($oldPrice->sale_price == $newPrice->sale_price )){
+        if (0){
             $checkMessage = 'Нет изменений в ценах';
         }
         return redirect()->back()->with('message', $checkMessage);
@@ -83,19 +75,4 @@ class ProductsController extends Controller
         return view('admin.altinyildiz.prices', compact('product'));
     }
 
-    /* public function getProductsAjax(Request $request)
-     {
-         if ($request->ajax()) {
-             $data = Product::latest()->get();
-             return \DataTables::of($data)
-                 ->addIndexColumn()
-                 ->addColumn('action', function ($row) {
-                     $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Смотреть</a>';
-                     return $actionBtn;
-                 })
-                 ->rawColumns(['action'])
-                 ->make(true);
-         }
-         return null;
-     }*/
 }

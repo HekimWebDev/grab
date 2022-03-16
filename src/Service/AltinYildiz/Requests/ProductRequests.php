@@ -55,8 +55,8 @@ trait ProductRequests
                     return $product;
                 });
 
-            if ($cat == 9)
-                return $data;
+//            if ($cat == 9)
+//                return $data;
         }
         return $data;
 

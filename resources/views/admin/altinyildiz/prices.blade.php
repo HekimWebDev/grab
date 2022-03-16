@@ -63,49 +63,6 @@
                                 </div>
                                 <!-- /.col -->
                             </div>
-{{--                            <!-- /.row -->
-
-                            <div class="row mt-4">
-                                <!-- accepted payments column -->
-                                <div class="col-6">
-                                    <p class="lead">Информация о продукте</p>
-                                    <img src="" alt="IMG">
-
-                                    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae cumque dolorum
-                                        eius expedita hic inventore iste itaque, iusto modi, nihil nulla omnis sint. Ad
-                                        aliquid aperiam architecto blanditiis consequuntur eius et ex in inventore
-                                        minima nemo nisi, obcaecati quam quia quo vero voluptate, voluptatem. Assumenda
-                                        cum, eius eos labore laudantium magni necessitatibus obcaecati quasi sunt
-                                        tenetur, totam unde veritatis voluptatem!
-                                    </p>
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-6">
-                                    <p class="lead">Цены</p>
-
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <tbody>
-                                            <tr>
-                                                <th style="width:50%">Первоначальная цена:</th>
-                                                <td>{{ $product->price->original_price }} TL</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Цена продажи:</th>
-                                                <td>{{ $product->price->sale_price }} TL</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Скидка: </th>
-                                                <td>{{ $product->percent()}}%</td>
-                                            </tr>
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
-                                <!-- /.col -->
-                            </div>
                             <!-- /.row -->--}}
 
                             <!-- Table row -->
@@ -144,7 +101,7 @@
                             <div class="row no-print">
                                 <div class="col-12">
                                     <div class="float-right">
-                                        <form action="{{route('admin.a-y-check', $product->product_id)}}" method="POST">
+                                        <form action="{{route('check-price', [$product->product_id, $product->service_type])}}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-success"><i
                                                     class="fa fa-redo"></i> Проверка цен

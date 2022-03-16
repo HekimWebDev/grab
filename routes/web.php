@@ -38,7 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/products', [ProductsController::class, 'altinYildiz'])->name('admin.a-y');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.a-y-dashboard');
     Route::get('/product/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.a-y-single');
-    Route::post('/product/{id}/check', [ProductsController::class, 'updatePrice'])->name('admin.a-y-check');
+    Route::post('/product/id-{id}/serv-{sid}/check', [ProductsController::class, 'checkPrice'])->name('check-price');
 
 });
 
