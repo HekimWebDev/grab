@@ -12,9 +12,8 @@ class DashboardController extends Controller
     {
         for ($i = 1; $i < 6; $i++){
             $counts[$i] = Product::where('service_type', $i)
-                                    ->count();
+                ->count();
         }
-//        dd($counts[1]);
         return view('admin.altinyildiz.dashboard', compact('counts'));
     }
 }
