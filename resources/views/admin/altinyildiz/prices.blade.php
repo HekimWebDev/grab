@@ -64,17 +64,6 @@
 
                             <!-- Table row -->
                             <div class="row mt-5">
-                                <div class="col-12 mt-4 mb-3 d-flex justify-content-end">
-                                    <form method="POST" action="{{route('product.export', $product->product_id)}}">
-
-                                        @csrf
-
-                                        <button type="submit" class="btn btn-success">
-                                            <i class="fas fa-file-excel mr-1"></i>
-                                            <span>Export to Excel</span>
-                                        </button>
-                                    </form>
-                                </div>
                                 <div class="col-12 table-responsive">
                                     <table class="table table-striped">
                                         <thead>

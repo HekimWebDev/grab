@@ -2,13 +2,11 @@
 
 namespace Service\AltinYildiz\Requests;
 
-use Domains\AltinYildiz\Actions\Category;
 use GuzzleHttp\Exception\GuzzleException;
 use Service\AltinYildiz\Response;
 
 trait ProductRequests
 {
-    // array of product ids
     /**
      * @throws GuzzleException
      */
@@ -28,8 +26,9 @@ trait ProductRequests
         $allProducts = [];
 
         foreach ($categoriesPageList as $cat => $page_list) {
-//            dump($cat . ') ' . $page_list);
+
             $query = $this->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pagezeSize");
+
             $data[] = $query
                 ->each(function ($node) {
                     $product['product_id'] = intval($node->filter('a')->attr('data-id'));
@@ -41,34 +40,26 @@ trait ProductRequests
                     $product['category_url'] = null;
                     $product['created_at'] = null;
                     $product['updated_at'] = null;
-//                    if ($node->filter('.data')->children()->count() < 2) {
-//                        $product['original_price'] = $node->filter('.data span')->text();
-//                        $product['sale_price'] = $node->filter('.data span')->text();
-//                    } else {
-//                        $product['original_price'] = $node->filter('.data span')->eq(0)->text();
-//                        $product['sale_price'] = $node->filter('.data span')->eq(1)->text();
-//                    }
+
                     return $product;
                 });
+
             $arrSize = count($data);
+
             foreach ($data[$arrSize - 1] as $key => $item){
                 $data[$arrSize - 1][$key]['category_url'] = $page_list;
                 $data[$arrSize - 1][$key]['created_at'] = now();
                 $data[$arrSize - 1][$key]['updated_at'] = now();
             }
-            $allProducts = array_merge($allProducts, $data[$arrSize - 1]);
-//            if ($cat == 3) {
-//                dd($allProducts, $data);
-//                return $allProducts;
-//            }
-        }
-        return $allProducts;
 
+            $allProducts = array_merge($allProducts, $data[$arrSize - 1]);
+        }
+
+        return $allProducts;
     }
 
     public function getProductsPrices(string $categoryUrl, int $pagezeSize = 5000): array
     {
-//        dump($categoryUrl);
         $data = $this
             ->getFromHTML('.listing-list .description', $categoryUrl . "/?dropListingPageSize=$pagezeSize")
             ->each(function ($node) {
@@ -87,6 +78,7 @@ trait ProductRequests
 
         return $data;
     }
+
     public function getOneProductPrices(string $categoryUrl, int $pagezeSize = 5000)
     {
         $data = $this
@@ -105,9 +97,6 @@ trait ProductRequests
                 return $product;
             });
 
-//        return collect($data)->groupBy('product_id')->map(function ($q){
-//            return $q->keyBy('product_id');
-//        });
         return collect($data)->keyBy('product_id');
     }
 }

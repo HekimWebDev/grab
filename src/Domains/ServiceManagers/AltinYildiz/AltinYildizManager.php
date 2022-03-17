@@ -81,8 +81,9 @@ class AltinYildizManager
     public function getSubCategoriesForGrab() : array
     {
         $path = storage_path('app/public/categories/') . 'AltinYildiz.json';
-        $response = new Response(file_get_contents($path));
-        $data = $response->getArray();
+
+        $data = json_decode(file_get_contents($path), true);
+
         foreach ($data as $item){
             $this->findSubs($item);
         }
@@ -105,12 +106,11 @@ class AltinYildizManager
     public function createProducts()
     {
         $productUpSert = [];
+
         $categories = $this->getSubCategoriesForGrab();
-//        $categories = ['kapusonlu-sweatshirt-c-3066'];
 
         $productsArr = $this->service->getProducts($categories);
 
-        //        in_stock off
         $change = Product::where('in_stock', 1)
                             ->update(['in_stock' => 0]);
 
@@ -123,9 +123,8 @@ class AltinYildizManager
             'product_url',
             'in_stock'
         ];
-        Product::upsert($productsArr, ['product_id'], $productFillables);
 
-//        Price::firstOrCreate(['product_id' => $product['product_id']], $product);
+        Product::upsert($productsArr, ['product_id'], $productFillables);
     }
 
     public function updatePrice()
@@ -140,11 +139,13 @@ class AltinYildizManager
             ->map(function ($q){
                 return $q->keyBy('product_id');
             });
-//        dd($products);
+
         $i = 0;
+
         foreach ($products as $categoryUrl => $product){
+
             $i++;
-//            dump("$i) $categoryUrl");
+
             $pricesFromHtml = $this->service->getProductsPrices($categoryUrl);
 
             foreach ($pricesFromHtml as $newPrices){
@@ -175,6 +176,7 @@ class AltinYildizManager
     public function checkPrice(Product $product):Bool
     {
         $respone = false;
+
         $money = new \App\Casts\Money();
 
         $pricesFromHtml = $this->service->getOneProductPrices($product->category_url);
@@ -192,10 +194,13 @@ class AltinYildizManager
                     'original_price' => $newPrices['original_price'],
                     'sale_price' => $newPrices['sale_price'],
                 ]);
+
                 $respone = true;
             }
         }
+
         $product->touch();
+
         return $respone;
     }
 }
