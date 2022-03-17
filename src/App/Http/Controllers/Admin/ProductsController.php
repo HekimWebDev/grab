@@ -34,10 +34,10 @@ class ProductsController extends Controller
         $product = Product::whereProductId($id)
             ->whereServiceType($serviceType)
             ->first();
-        dd($product);
+//        dd($product);
         $maneger = new AltinYildizManager();
-
-        if (0){
+        $check = $maneger->checkPrice($product);
+        if (!$check){
             $checkMessage = 'Нет изменений в ценах';
         }
         return redirect()->back()->with('message', $checkMessage);

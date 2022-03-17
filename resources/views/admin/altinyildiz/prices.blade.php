@@ -87,18 +87,20 @@
                                             <th>Дата</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        @foreach($product->prices as $prod)
-                                            <tr>
-                                                <td>{{ $prod->product_id }}</td>
-                                                <td>{{ $product->name }}</td>
-                                                <td>{{ $product->product_code }}</td>
-                                                <td>{{ $prod->original_price }} TL</td>
-                                                <td>{{ $prod->sale_price }} TL</td>
-                                                <td>{{ $prod->created_at->diffForHumans() }}</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
+                                        @isset($product->prices)
+                                            <tbody>
+                                            @foreach($product->prices as $prod)
+                                                <tr>
+                                                    <td>{{ $prod->product_id }}</td>
+                                                    <td>{{ $product->name }}</td>
+                                                    <td>{{ $product->product_code }}</td>
+                                                    <td>{{ $prod->original_price }} TL</td>
+                                                    <td>{{ $prod->sale_price }} TL</td>
+                                                    <td>{{ $prod->created_at->diffForHumans() }}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        @endisset
                                     </table>
                                 </div>
                                 <!-- /.col -->

@@ -22,6 +22,10 @@ class Product extends Model
 
     protected $primaryKey = 'product_id';
     public $incrementing = false;
+    /**
+     * @var mixed
+     */
+    private $price;
 
     public function prices(): HasMany
     {

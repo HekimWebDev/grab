@@ -25,45 +25,50 @@ trait ProductRequests
 
     public function getProducts(array $categoriesPageList, int $pagezeSize = 5000): array
     {
-        $data = [];
+        $allProducts = [];
 
         foreach ($categoriesPageList as $cat => $page_list) {
-//            $data[$cat] = $this
             dump($cat . ') ' . $page_list);
-            $data[$page_list] = $this
-                ->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pagezeSize")
+            $query = $this->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pagezeSize");
+            $data[] = $query
                 ->each(function ($node) {
-
                     $product['product_id'] = intval($node->filter('a')->attr('data-id'));
-
+                    $product['in_stock'] = 1;
                     $product['name'] = $node->filter('h2')->text();
-
-                    $product['product_url'] = $node->filter('a')->attr('href');
                     $product['product_code'] = $node->filter('a')->attr('data-code');
-
-                    if ($node->filter('.data')->children()->count() < 2) {
-                        $product['original_price'] = $node->filter('.data span')->text();
-                        $product['sale_price'] = $node->filter('.data span')->text();
-                    } else {
-                        $product['original_price'] = $node->filter('.data span')->eq(0)->text();
-                        $product['sale_price'] = $node->filter('.data span')->eq(1)->text();
-                    }
-
-                    $product['category_url'] = 'category_name';
                     $product['service_type'] = 1;
-
+                    $product['product_url'] = $node->filter('a')->attr('href');
+                    $product['category_url'] = null;
+                    $product['created_at'] = null;
+                    $product['updated_at'] = null;
+//                    if ($node->filter('.data')->children()->count() < 2) {
+//                        $product['original_price'] = $node->filter('.data span')->text();
+//                        $product['sale_price'] = $node->filter('.data span')->text();
+//                    } else {
+//                        $product['original_price'] = $node->filter('.data span')->eq(0)->text();
+//                        $product['sale_price'] = $node->filter('.data span')->eq(1)->text();
+//                    }
                     return $product;
                 });
-
-            if ($cat == 19)
-                return $data;
+            $arrSize = count($data);
+            foreach ($data[$arrSize - 1] as $key => $item){
+                $data[$arrSize - 1][$key]['category_url'] = $page_list;
+                $data[$arrSize - 1][$key]['created_at'] = now();
+                $data[$arrSize - 1][$key]['updated_at'] = now();
+            }
+            $allProducts = array_merge($allProducts, $data[$arrSize - 1]);
+//            if ($cat == 3) {
+//                dd($allProducts, $data);
+//                return $allProducts;
+//            }
         }
-        return $data;
+        return $allProducts;
 
     }
 
     public function getProductsPrices(string $categoryUrl, int $pagezeSize = 5000): array
     {
+//        dump($categoryUrl);
         $data = $this
             ->getFromHTML('.listing-list .description', $categoryUrl . "/?dropListingPageSize=$pagezeSize")
             ->each(function ($node) {
@@ -81,5 +86,28 @@ trait ProductRequests
             });
 
         return $data;
+    }
+    public function getOneProductPrices(string $categoryUrl, int $pagezeSize = 5000)
+    {
+        $data = $this
+            ->getFromHTML('.listing-list .description', $categoryUrl . "/?dropListingPageSize=$pagezeSize")
+            ->each(function ($node) {
+                $product['product_id'] = intval($node->filter('a')->attr('data-id'));
+
+                if ($node->filter('.data')->children()->count() < 2) {
+                    $product['original_price'] = $node->filter('.data span')->text();
+                    $product['sale_price'] = $node->filter('.data span')->text();
+                } else {
+                    $product['original_price'] = $node->filter('.data span')->eq(0)->text();
+                    $product['sale_price'] = $node->filter('.data span')->eq(1)->text();
+                }
+
+                return $product;
+            });
+
+//        return collect($data)->groupBy('product_id')->map(function ($q){
+//            return $q->keyBy('product_id');
+//        });
+        return collect($data)->keyBy('product_id');
     }
 }

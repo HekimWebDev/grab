@@ -14,13 +14,13 @@ use Money\Money;
 use Money\Parser\IntlLocalizedDecimalParser;
 
 Route::get('/', function () {
-    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
-    $client->createProducts();
+//    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
+//    $client->createProducts();
 
 //    \Domains\Prices\Models\Price::where('original_price', '>', 0)->delete();
 
-//    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
-//    $client->updatePrice();
+    $client = new \Domains\ServiceManagers\AltinYildiz\AltinYildizManager();
+    $client->updatePrice();
 
 //    $money = new \App\Casts\Money();
 //    dd($money->set('', 's', '1999,15 TL', [])['s']);

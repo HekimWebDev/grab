@@ -6,6 +6,7 @@ use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Boolean;
 use Service\AltinYildiz\AltinYildizClient;
 use Service\AltinYildiz\Response;
 
@@ -103,6 +104,7 @@ class AltinYildizManager
 
     public function createProducts()
     {
+        $productUpSert = [];
         $categories = $this->getSubCategoriesForGrab();
 //        $categories = ['kapusonlu-sweatshirt-c-3066'];
 
@@ -112,17 +114,18 @@ class AltinYildizManager
         $change = Product::where('in_stock', 1)
                             ->update(['in_stock' => 0]);
 
-        foreach ($productsArr as $categoryUrl => $productsFromEachCategory) {
-            foreach ($productsFromEachCategory as $k => $product) {
-                $product['in_stock'] = 1;
-                $product['category_url'] = $categoryUrl;
-                $k = Product::updateOrCreate(
-                    ['product_id' => $product['product_id'], 'product_code' => $product['product_code']],
-                    $product
-                );
-                Price::firstOrCreate(['product_id' => $product['product_id']], $product);
-            }
-        }
+        $productFillables = [
+            'name',
+            'product_id',
+            'product_code',
+            'service_type',
+            'category_url',
+            'product_url',
+            'in_stock'
+        ];
+        Product::upsert($productsArr, ['product_id'], $productFillables);
+
+//        Price::firstOrCreate(['product_id' => $product['product_id']], $product);
     }
 
     public function updatePrice()
@@ -137,8 +140,11 @@ class AltinYildizManager
             ->map(function ($q){
                 return $q->keyBy('product_id');
             });
-
+//        dd($products);
+        $i = 0;
         foreach ($products as $categoryUrl => $product){
+            $i++;
+            dump("$i) $categoryUrl");
             $pricesFromHtml = $this->service->getProductsPrices($categoryUrl);
 
             foreach ($pricesFromHtml as $newPrices){
@@ -166,4 +172,31 @@ class AltinYildizManager
         Price::insert($data);
     }
 
+    public function checkPrice(Product $product):Bool
+    {
+        $respone = false;
+        $money = new \App\Casts\Money();
+
+        $pricesFromHtml = $this->service->getOneProductPrices($product->category_url);
+
+//        dd($pricesFromHtml[$product->product_id]);
+        if( isset($pricesFromHtml[$product->product_id]) ) {
+
+            $newPrices = $pricesFromHtml[$product->product_id];
+            $oldPrices = $product->price;
+            $nOriginPrice = $money->set('', 'k', $newPrices['original_price'], [])['k'];
+            $nSalePrice = $money->set('', 'k', $newPrices['sale_price'], [])['k'];
+
+            if (empty($oldPrices) || !($oldPrices->original_price == $nOriginPrice && $oldPrices->sale_price == $nSalePrice)) {
+                Price::create([
+                    'product_id' => $product->product_id,
+                    'original_price' => $newPrices['original_price'],
+                    'sale_price' => $newPrices['sale_price'],
+                ]);
+                $respone = true;
+            }
+            $product->touch();
+        }
+        return $respone;
+    }
 }
