@@ -28,7 +28,7 @@ trait ProductRequests
         $allProducts = [];
 
         foreach ($categoriesPageList as $cat => $page_list) {
-            dump($cat . ') ' . $page_list);
+//            dump($cat . ') ' . $page_list);
             $query = $this->getFromHTML('.listing-list .description', $page_list . "/?dropListingPageSize=$pagezeSize");
             $data[] = $query
                 ->each(function ($node) {

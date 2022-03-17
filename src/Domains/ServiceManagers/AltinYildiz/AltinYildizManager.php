@@ -38,6 +38,7 @@ class AltinYildizManager
     }
 
     public function grabCategoriesTreeFromHtml():array
+    public function grabCategoriesTreeFromHtml():array
     {
         for ($i = 0; $i < 3; $i++) {
 
@@ -144,7 +145,7 @@ class AltinYildizManager
         $i = 0;
         foreach ($products as $categoryUrl => $product){
             $i++;
-            dump("$i) $categoryUrl");
+//            dump("$i) $categoryUrl");
             $pricesFromHtml = $this->service->getProductsPrices($categoryUrl);
 
             foreach ($pricesFromHtml as $newPrices){
