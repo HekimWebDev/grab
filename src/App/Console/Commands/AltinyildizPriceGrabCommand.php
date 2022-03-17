@@ -58,6 +58,8 @@ class AltinyildizPriceGrabCommand extends Command
                         'product_id'     => $newPrices['product_id'],
                         'original_price' => $origin,
                         'sale_price'     => $sale,
+                        'created_at'     => now(), //2022-01-30 17:03:05
+                        'updated_at'     => now(),
                     ];
                 }
 
