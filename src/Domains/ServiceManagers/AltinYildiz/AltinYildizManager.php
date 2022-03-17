@@ -179,24 +179,23 @@ class AltinYildizManager
 
         $pricesFromHtml = $this->service->getOneProductPrices($product->category_url);
 
-//        dd($pricesFromHtml[$product->product_id]);
         if( isset($pricesFromHtml[$product->product_id]) ) {
 
             $newPrices = $pricesFromHtml[$product->product_id];
             $oldPrices = $product->price;
-            $nOriginPrice = $money->set('', 'k', $newPrices['original_price'], [])['k'];
-            $nSalePrice = $money->set('', 'k', $newPrices['sale_price'], [])['k'];
+            $newOriginPrice = $money->set('', 'k', $newPrices['original_price'], [])['k'];
+            $newSalePrice = $money->set('', 'k', $newPrices['sale_price'], [])['k'];
 
-            if (empty($oldPrices) || !($oldPrices->original_price == $nOriginPrice && $oldPrices->sale_price == $nSalePrice)) {
+            if (empty($oldPrices) || !($oldPrices->original_price == $newOriginPrice && $oldPrices->sale_price == $newSalePrice)) {
                 Price::create([
-                    'product_id' => $product->product_id,
+                    'product_id' => $newPrices['product_id'],
                     'original_price' => $newPrices['original_price'],
                     'sale_price' => $newPrices['sale_price'],
                 ]);
                 $respone = true;
             }
-            $product->touch();
         }
+        $product->touch();
         return $respone;
     }
 }
