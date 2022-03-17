@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.a-y-dashboard');
     Route::get('/product/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.a-y-single');
     Route::post('/product/id-{id}/serv-{sid}/check', [ProductsController::class, 'checkPrice'])->name('check-price');
+    Route::post('/product/{id}/export', [ProductsController::class, 'export'])->name('product.export');
 
 });
 
