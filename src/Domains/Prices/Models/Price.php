@@ -2,7 +2,7 @@
 
 namespace Domains\Prices\Models;
 
-use App\Casts\Money;
+use Domains\Prices\Casts\Money;
 use Domains\Products\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,9 +18,6 @@ class Price extends Model
         'original_price',
         'sale_price',
     ];
-
-//    protected $primaryKey = 'product_id';
-//    public $incrementing = false;
 
     public function product()
     {

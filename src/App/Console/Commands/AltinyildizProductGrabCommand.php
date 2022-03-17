@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use Domains\Products\Models\Product;
 use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Illuminate\Console\Command;
-use Service\AltinYildiz\AltinYildizClient;
 
 class AltinyildizProductGrabCommand extends Command
 {
@@ -15,7 +14,6 @@ class AltinyildizProductGrabCommand extends Command
 
     public function handle(): void
     {
-        $service = new AltinYildizClient();
         $manager = new AltinYildizManager();
         
         $categories = $manager->getSubCategoriesForGrab();
@@ -27,7 +25,7 @@ class AltinyildizProductGrabCommand extends Command
 
             $this->info("Grabing products from - $category");
 
-            $products = $service->getProducts([$category]);
+            $products = $manager->getProducts([$category]);
                 
             Product::upsert($products, ['product_id']);
 

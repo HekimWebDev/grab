@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Casts;
+namespace Domains\Prices\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Money\Currency;
@@ -12,7 +12,6 @@ use NumberFormatter;
 
 class Money implements CastsAttributes
 {
-
     public function get($model, string $key, $value, array $attributes)
     {
         /*$money =  new \Money\Money($value, new Currency('TRY'));
@@ -26,20 +25,19 @@ class Money implements CastsAttributes
     {
         if (is_float($value)) {
             return [$key => $value];
-        } else {
-            $currencies = new ISOCurrencies();
+        } 
 
-            $numberFormatter = new \NumberFormatter('try_TRY', \NumberFormatter::DECIMAL);
-            $moneyParser = new IntlLocalizedDecimalParser($numberFormatter, $currencies);
+        $currencies = new ISOCurrencies();
 
-            $money = $moneyParser->parse($value, new Currency('TRY'));
+        $numberFormatter = new \NumberFormatter('try_TRY', \NumberFormatter::DECIMAL);
+        $moneyParser = new IntlLocalizedDecimalParser($numberFormatter, $currencies);
 
-            $moneyFormatter = new DecimalMoneyFormatter($currencies);
+        $money = $moneyParser->parse($value, new Currency('TRY'));
 
-//        echo $moneyFormatter->format($money) . '<br>';
-            return [
-                $key => $moneyFormatter->format($money)
-            ];
-        }
+        $moneyFormatter = new DecimalMoneyFormatter($currencies);
+
+        return [
+            $key => $moneyFormatter->format($money)
+        ];
     }
 }

@@ -4,19 +4,13 @@ namespace Domains\ServiceManagers\AltinYildiz;
 
 use Domains\Prices\Models\Price;
 use Domains\Products\Models\Product;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Boolean;
 use Service\AltinYildiz\AltinYildizClient;
-use Service\AltinYildiz\Response;
 
 class AltinYildizManager
 {
     private AltinYildizClient $service;
     private array $tree;
-    private $categories;
     private $subUrls = [];
-    private $startTime;
 
     public function __construct()
     {
@@ -37,24 +31,17 @@ class AltinYildizManager
         }
     }
 
-    public function grabCategoriesTreeFromHtml():array
+    private function findSubs($data)
     {
-        for ($i = 0; $i < 3; $i++) {
-
-            $responses = $this->service->getParentCategories($this->tree[$i]['url']);
-
-            $data = [];
-            foreach ($responses['name'] as $key => $response) {
-                $data[] = [
-                    'name' => $response,
-                    'url' => $responses['url'][$key],
-                    'sub' => $this->getSubsFromHtml($responses['url'][$key])
-                ];
+        if ($data['sub'] == null){
+            $this->subUrls[] = $data['url'];
+            return null;
+        } else {
+            foreach ($data['sub'] as $item){
+                $this->findSubs($item);
             }
-            $this->tree[$i]['sub'] = $data;
         }
-
-        return $this->tree;
+        return null;
     }
 
     private function getSubsFromHtml($url): ?array
@@ -78,6 +65,26 @@ class AltinYildizManager
         return $data;
     }
 
+    public function grabCategoriesTreeFromHtml():array
+    {
+        for ($i = 0; $i < 3; $i++) {
+
+            $responses = $this->service->getParentCategories($this->tree[$i]['url']);
+
+            $data = [];
+            foreach ($responses['name'] as $key => $response) {
+                $data[] = [
+                    'name' => $response,
+                    'url' => $responses['url'][$key],
+                    'sub' => $this->getSubsFromHtml($responses['url'][$key])
+                ];
+            }
+            $this->tree[$i]['sub'] = $data;
+        }
+
+        return $this->tree;
+    }
+
     public function getSubCategoriesForGrab() : array
     {
         $path = storage_path('app/public/categories/') . 'AltinYildiz.json';
@@ -87,116 +94,44 @@ class AltinYildizManager
         foreach ($data as $item){
             $this->findSubs($item);
         }
+        
         return $this->subUrls;
     }
 
-    private function findSubs($data)
+    public function getProducts(array $categories)
     {
-        if ($data['sub'] == null){
-            $this->subUrls[] = $data['url'];
-            return null;
-        } else {
-            foreach ($data['sub'] as $item){
-                $this->findSubs($item);
-            }
-        }
-        return null;
+        return $this->service->getProducts($categories);
     }
 
-    public function createProducts()
+    public function getPrices(string $category)
     {
-        $productUpSert = [];
-
-        $categories = $this->getSubCategoriesForGrab();
-
-        $productsArr = $this->service->getProducts($categories);
-
-        $change = Product::where('in_stock', 1)
-                            ->update(['in_stock' => 0]);
-
-        $productFillables = [
-            'name',
-            'product_id',
-            'product_code',
-            'service_type',
-            'category_url',
-            'product_url',
-            'in_stock'
-        ];
-
-        Product::upsert($productsArr, ['product_id'], $productFillables);
+        return $this->service->getProductsPrices($category);
     }
 
-    public function updatePrice()
-    {
-        $data = [];
-        $money = new \App\Casts\Money();
-
-        $products = Product::where('service_type', 1)
-            ->where('in_stock', 1)
-            ->get()
-            ->groupBy('category_url')
-            ->map(function ($q){
-                return $q->keyBy('product_id');
-            });
-
-        $i = 0;
-
-        foreach ($products as $categoryUrl => $product){
-
-            $i++;
-
-            $pricesFromHtml = $this->service->getProductsPrices($categoryUrl);
-
-            foreach ($pricesFromHtml as $newPrices){
-
-                if( isset($product[$newPrices['product_id']]) ){
-                    $oldPrices = $product[$newPrices['product_id']]->price;
-                    $nOriginPrice = $money->set('', 'k', $newPrices['original_price'], [])['k'];
-                    $nSalePrice = $money->set('', 'k', $newPrices['sale_price'], [])['k'];
-
-                    if (empty($oldPrices) || !($oldPrices->original_price == $nOriginPrice && $oldPrices->sale_price == $nSalePrice) ){
-                        $data[] = [
-                            'product_id' => $newPrices['product_id'],
-                            'original_price' => $nOriginPrice,
-                            'sale_price' => $nSalePrice,
-                            'created_at' => now(), //2022-01-30 17:03:05
-                            'updated_at' => now(),
-                        ];
-                    }
-
-                    $product[$newPrices['product_id']]->touch();
-                }
-            }
-        }
-
-        Price::insert($data);
-    }
-
-    public function checkPrice(Product $product):Bool
+    public function checkPrice(Product $product) : Bool
     {
         $respone = false;
 
-        $money = new \App\Casts\Money();
-
         $pricesFromHtml = $this->service->getOneProductPrices($product->category_url);
 
-        if( isset($pricesFromHtml[$product->product_id]) ) {
+        if( !isset($pricesFromHtml[$product->product_id]) ) {
+            return false;
+        }
 
-            $newPrices = $pricesFromHtml[$product->product_id];
-            $oldPrices = $product->price;
-            $newOriginPrice = $money->set('', 'k', $newPrices['original_price'], [])['k'];
-            $newSalePrice = $money->set('', 'k', $newPrices['sale_price'], [])['k'];
+        $newPrices = $pricesFromHtml[$product->product_id];
+        $oldPrices = $product->price;
+        $newOriginPrice = liraCast($newPrices['original_price']);
+        $newSalePrice = liraCast($newPrices['sale_price']);
 
-            if (empty($oldPrices) || !($oldPrices->original_price == $newOriginPrice && $oldPrices->sale_price == $newSalePrice)) {
-                Price::create([
-                    'product_id' => $newPrices['product_id'],
-                    'original_price' => $newPrices['original_price'],
-                    'sale_price' => $newPrices['sale_price'],
-                ]);
+        if (empty($oldPrices) || !($oldPrices->original_price == $newOriginPrice && $oldPrices->sale_price == $newSalePrice)) {
+            
+            Price::create([
+                'product_id'     => $newPrices['product_id'],
+                'original_price' => $newPrices['original_price'],
+                'sale_price'     => $newPrices['sale_price'],
+            ]);
 
-                $respone = true;
-            }
+            $respone = true;
         }
 
         $product->touch();
