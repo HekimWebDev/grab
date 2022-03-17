@@ -43,16 +43,16 @@ class AltinyildizPriceGrabCommand extends Command
                     return;
                 }
 
-                $oldPrices = $product[$newPrices['product_id']]->price;
+                $latestPrice = $product[$newPrices['product_id']]->price;
 
-                $nOriginPrice = liraCast($newPrices['original_price']);
-                $nSalePrice = liraCast($newPrices['sale_price']);
+                $origin = liraCast($newPrices['original_price']);
+                $sale = liraCast($newPrices['sale_price']);
 
-                if (empty($oldPrices) || !($oldPrices->original_price == $nOriginPrice && $oldPrices->sale_price == $nSalePrice) ){
+                if (empty($latestPrice) || $latestPrice->original_price !== $origin || $latestPrice->sale_price == $sale){
                     $data[] = [
                         'product_id'     => $newPrices['product_id'],
-                        'original_price' => $nOriginPrice,
-                        'sale_price'     => $nSalePrice,
+                        'original_price' => $origin,
+                        'sale_price'     => $sale,
                         'created_at'     => now(), //2022-01-30 17:03:05
                         'updated_at'     => now(),
                     ];
