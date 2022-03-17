@@ -53,7 +53,7 @@ class AltinyildizPriceGrabCommand extends Command
                 $origin = liraCast($newPrices['original_price']);
                 $sale = liraCast($newPrices['sale_price']);
 
-                if (empty($latestPrice) || $latestPrice->original_price !== $origin || $latestPrice->sale_price == $sale){
+                if (empty($latestPrice) || $latestPrice->original_price !== $origin || $latestPrice->sale_price !== $sale){
                     $data[] = [
                         'product_id'     => $newPrices['product_id'],
                         'original_price' => $origin,
