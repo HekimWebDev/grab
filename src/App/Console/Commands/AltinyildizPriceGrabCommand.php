@@ -34,10 +34,7 @@ class AltinyildizPriceGrabCommand extends Command
                 ->where('in_stock', 1)
                 ->whereCategoryUrl($categoryUrl)
                 ->get()
-                ->groupBy('category_url')
-                ->map(function ($q){
-                    return $q->keyBy('product_id');
-                });
+                ->keyBy('product_id');
 
             $data = [];
 
@@ -46,7 +43,7 @@ class AltinyildizPriceGrabCommand extends Command
             $pricesFromHtml = $manager->getPrices($categoryUrl);
             
             foreach ($pricesFromHtml as $newPrices){
-
+         
                 if( !isset($products[$newPrices['product_id']]) ) {
                     continue;
                 }
@@ -61,8 +58,6 @@ class AltinyildizPriceGrabCommand extends Command
                         'product_id'     => $newPrices['product_id'],
                         'original_price' => $origin,
                         'sale_price'     => $sale,
-                        // 'created_at'     => now(), //2022-01-30 17:03:05
-                        // 'updated_at'     => now(),
                     ];
                 }
 
