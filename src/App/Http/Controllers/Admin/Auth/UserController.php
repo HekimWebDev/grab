@@ -13,7 +13,6 @@ class UserController extends Controller
 {
     public function login(Request $request)
     {
-//        dd($request->all());
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -21,7 +20,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         return back()->withErrors([

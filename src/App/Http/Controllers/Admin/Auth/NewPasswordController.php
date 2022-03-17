@@ -12,7 +12,6 @@ class NewPasswordController extends Controller
 {
     public function changePassword(Request $request): RedirectResponse
     {
-//        dd($request->all());
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
             return redirect()->back()->with("error", "Ваш текущий пароль не совпадает с паролем.");
         }

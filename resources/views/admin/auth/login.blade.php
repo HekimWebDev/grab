@@ -20,7 +20,7 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a class="h1"><b>Admin</b>LTE</a>
+            <a class="h1"><b>Asman</b></a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Войдите, чтобы начать сеанс</p>

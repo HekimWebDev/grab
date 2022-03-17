@@ -3,7 +3,7 @@
     <a href="{{route('admin.index')}}" class="brand-link">
         <img src="{{ asset('assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
              class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Asman</span>
     </a>
 
     <!-- Sidebar -->
@@ -39,13 +39,13 @@
 {{--                    </a>--}}
 {{--                    <ul class="nav nav-treeview">--}}
                         <li class="nav-item">
-                            <a href="{{ route('admin.a-y-dashboard') }}" class="nav-link">
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link">
                                 <i class="fas fa-chart-line"></i>
                                 <p class="ml-1">Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.a-y')}}" class="nav-link">
+                            <a href="{{route('admin.products')}}" class="nav-link">
                                 <i class="fas fa-table"></i>
                                 <p class="ml-1">Продукты</p>
                             </a>

@@ -56,7 +56,7 @@
                                         </select>
                                     </div>
                                     <div class="col-1 d-flex align-items-end">
-                                        <a class="btn btn-secondary form-control" href="{{route('admin.a-y')}}">
+                                        <a class="btn btn-secondary form-control" href="{{route('admin.products')}}">
 {{--                                            Очистить--}}
                                             <i class="fas fa-eraser"></i>
                                         </a>
@@ -86,7 +86,7 @@
                                     <tr>
                                         <td>{{$product->product_id}}</td>
                                         <td>
-                                            <a href="{{ route('admin.a-y-single', $product->product_id) }}" class="none-decoration">{{$product->name}}</a>
+                                            <a href="{{ route('admin.product', $product->product_id) }}" class="none-decoration">{{$product->name}}</a>
                                         </td>
                                         <td>{{$product->product_code}}</td>
                                         <td>@isset($product->price->sale_price) {{$product->price->sale_price }} @endisset TL</td>
