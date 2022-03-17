@@ -161,7 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
@@ -177,6 +176,8 @@ return [
 
         Yajra\DataTables\DataTablesServiceProvider::class,
         Yajra\DataTables\ButtonsServiceProvider::class,
+
+        \Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -232,6 +233,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+
+        'Exel' => \Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

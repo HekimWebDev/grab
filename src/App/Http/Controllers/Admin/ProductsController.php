@@ -12,7 +12,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Service\AltinYildiz\AltinYildizClient;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PricesExport;
 
 class ProductsController extends Controller
 {
@@ -73,6 +74,12 @@ class ProductsController extends Controller
             ->whereServiceType(1)
             ->first();
         return view('admin.altinyildiz.prices', compact('product'));
+    }
+
+    public function export($id)
+    {
+        $product = Product::find($id);
+        return Excel::download(new PricesExport($product), "product_$product->product_id.xlsx");
     }
 
 }

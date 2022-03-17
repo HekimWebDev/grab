@@ -6,17 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-intl": "*",
         "cviebrock/eloquent-sluggable": "^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "maatwebsite/excel": "^3.1",
         "moneyphp/money": "^4.0",
         "weidner/goutte": "^2.1",
         "yajra/laravel-datatables-buttons": "^4.0",
-        "yajra/laravel-datatables-oracle": "~9.0",
-      "ext-intl": "*"
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
