@@ -58,10 +58,10 @@ trait ProductRequests
         return $allProducts;
     }
 
-    public function getProductsPrices(string $categoryUrl, int $pagezeSize = 5000): array
+    public function getProductsPrices(string $categoryUrl, int $pageSize = 5000): array
     {
         $data = $this
-            ->getFromHTML('.listing-list .description', $categoryUrl . "/?dropListingPageSize=$pagezeSize")
+            ->getFromHTML('.listing-list .description', $categoryUrl . "/?dropListingPageSize=$pageSize")
             ->each(function ($node) {
                 $product['product_id'] = intval($node->filter('a')->attr('data-id'));
 
