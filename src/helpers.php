@@ -9,8 +9,10 @@ function liraCast($value)
 {
     $currencies = new ISOCurrencies();
 
-    $numberFormatter = new \NumberFormatter('try_TRY', \NumberFormatter::DECIMAL);
+    $numberFormatter = new \NumberFormatter('en_EN', \NumberFormatter::DECIMAL);
     $moneyParser = new IntlLocalizedDecimalParser($numberFormatter, $currencies);
+
+    $value = str_replace(',', '.', $value);
 
     $money = $moneyParser->parse($value, new Currency('TRY'));
 
