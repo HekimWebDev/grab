@@ -40,6 +40,7 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithColumnFormat
             ->when($this->request->code, function ($query, $v) {
                 $query->where('product_code', "like", "%$v%");
             })
+            ->whereInStock(1)
             ->select(['product_id', 'name', 'product_code', 'service_type', 'updated_at'])
             ->with('price')
             ->get();

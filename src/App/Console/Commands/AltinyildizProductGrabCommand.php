@@ -15,15 +15,18 @@ class AltinyildizProductGrabCommand extends Command
     public function handle(): void
     {
         $manager = new AltinYildizManager();
-        
+
         $categories = $manager->getSubCategoriesForGrab();
+//        dd($categories);
+        Product::where('in_stock', 1)
+            ->update(['in_stock' => 0]);
 
         foreach ( $categories as $category) {
 
             $this->info("Grabing products from - $category");
 
             $products = $manager->getProducts([$category]);
-                
+
             Product::upsert($products, ['product_id']);
 
             $count = count($products);

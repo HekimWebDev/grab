@@ -123,6 +123,7 @@
                             <table class="table table-hover table-striped table-responsive-sm">
                                 <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>ID</th>
                                     <th>Имя товара</th>
                                     <th>Код продукта</th>
@@ -133,6 +134,7 @@
                                 <tbody>
                                 @foreach($products as $product)
                                     <tr>
+                                        <td>{{$loop->index}}</td>
                                         <td>{{$product->product_id}}</td>
                                         <td>
                                             <a href="{{ route('admin.product', $product->product_id) }}" class="none-decoration">{{$product->name}}</a>

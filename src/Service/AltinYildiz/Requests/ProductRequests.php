@@ -54,7 +54,7 @@ trait ProductRequests
 
             $allProducts = array_merge($allProducts, $data[$arrSize - 1]);
         }
-
+//        dd($allProducts);
         return $allProducts;
     }
 

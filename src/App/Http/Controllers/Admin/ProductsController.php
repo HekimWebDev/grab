@@ -35,6 +35,7 @@ class ProductsController extends Controller
             ->whereServiceType($serviceType)
             ->first();
 //        dd($product);
+//        dd($product);
         $maneger = new AltinYildizManager();
         $check = $maneger->checkPrice($product);
         if (!$check){
@@ -57,6 +58,7 @@ class ProductsController extends Controller
             ->when($request->code, function ($query, $v) {
                 $query->where('product_code', "like", "%$v%");
             })
+            ->whereInStock(1)
             ->with('price')
             ->select(['product_id', 'name', 'product_code'])
             ->latest()
