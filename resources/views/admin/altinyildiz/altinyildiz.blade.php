@@ -28,6 +28,55 @@
 
             <div class="row">
                 <div class="col-12">
+
+                    <div class="p-3 mb-4 expor" style="background-color: #3bff5c52; border-radius: 3px;">
+                        <form action="{{route('product.export')}}" method="post" class="mb-3 pt-2">
+
+                            @csrf
+
+                            <div class="row">
+                                <div class="col">
+                                    <label for="Id">Id:</label>
+                                    <input type="number" class="form-control" name="id" id="Id" value="{{old('id')}}">
+                                </div>
+                                <div class="col">
+                                    <label for="Name">Имя товара:</label>
+                                    <input type="text" class="form-control" name="name" id="Name" value="{{old('name')}}">
+                                </div>
+                                <div class="col">
+                                    <label for="Product_code">Код продукта:</label>
+                                    <input type="text" class="form-control" name="code" id="Product_code" value="{{old('code')}}">
+                                </div>
+                                <div class="col">
+                                    <label for="brand">Бренд:</label>
+                                    <select class="form-control" name="service_type" id="brand">
+                                        <option value="">Все</option>
+                                        <option @if(old('service_type') == 1) selected @endif value="1">Altinyildiz Classics</option>
+{{--                                        <option @if(old('service_type') == 2) selected @endif value="2"></option>--}}
+{{--                                        <option @if(old('service_type') == 3) selected @endif value="3"></option>--}}
+{{--                                        <option @if(old('service_type') == 4) selected @endif value="4"></option>--}}
+{{--                                        <option @if(old('service_type') == 5) selected @endif value="5"></option>--}}
+                                    </select>
+                                </div>
+                                <div class="col-1 d-flex align-items-end">
+                                    <button type="reset" class="btn btn-light form-control" href="{{route('admin.products')}}">
+                                        <i class="fas fa-eraser"></i>
+                                    </button>
+                                </div>
+                                <div class="col d-flex align-items-end">
+                                    <button type="submit" class="btn-sm btn-success form-control">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="d-flex align-items-center">
+                                                <h6 class="mb-0 mr-2" style="display: inline">Export to</h6>
+                                                <i class="fas fa-file-excel fa-2x"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="card">
                         <div class="card-header">
                             <form action="" method="GET" class="mb-3 pt-2">

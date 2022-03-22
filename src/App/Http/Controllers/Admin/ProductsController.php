@@ -13,7 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\PricesExport;
+use App\Exports\ProductsExport;
 
 class ProductsController extends Controller
 {
@@ -62,6 +62,8 @@ class ProductsController extends Controller
             ->latest()
             ->paginate(50);
 
+//        dd($products);
+
             session()->flashInput($request->input());
 //            dd($products->first()->price);
             return view('admin.altinyildiz.altinyildiz', compact('products'));
@@ -76,10 +78,16 @@ class ProductsController extends Controller
         return view('admin.altinyildiz.prices', compact('product'));
     }
 
-    public function export($id)
+    public function export(Request $request)
     {
-        $product = Product::find($id);
-        return Excel::download(new PricesExport($product), "product_$product->product_id.xlsx");
+        $header = [
+            '#',
+            'name',
+            'code',
+            'updated_at'
+        ];
+        return Excel::download(new ProductsExport($request), 'exported at ' . now() . '.xlsx');
+//        return (new ProductsExport($request))->download('exported at ' . now() . '.xlsx');
     }
 
 }

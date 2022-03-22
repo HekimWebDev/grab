@@ -20,12 +20,22 @@ class Product extends Model
         'in_stock'
     ];
 
+    private $brands = [
+        1   => 'Altinyildiz Classik',
+        2   => 'Ramsey',
+    ];
+
     protected $primaryKey = 'product_id';
     public $incrementing = false;
     /**
      * @var mixed
      */
     private $price;
+
+    public function serviceType()
+    {
+        return $this->brands[$this->service_type];
+    }
 
     public function prices(): HasMany
     {
