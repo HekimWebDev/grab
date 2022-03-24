@@ -43,6 +43,7 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithColumnFormat
             ->whereInStock(1)
             ->with('price')
             ->select(['product_id', 'name', 'product_code', 'service_type', 'updated_at'])
+            ->orderBy('product_id')
             ->get();
 
         $products = $products->reject(fn($v) => !isset($v->price));
