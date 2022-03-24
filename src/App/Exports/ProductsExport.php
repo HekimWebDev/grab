@@ -41,9 +41,11 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithColumnFormat
                 $query->where('product_code', "like", "%$v%");
             })
             ->whereInStock(1)
-            ->select(['product_id', 'name', 'product_code', 'service_type', 'updated_at'])
             ->with('price')
+            ->select(['product_id', 'name', 'product_code', 'service_type', 'updated_at'])
             ->get();
+
+        $products = $products->reject(fn($v) => !isset($v->price));
 
         return $products;
     }
@@ -55,6 +57,7 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithColumnFormat
             $product->name,
             $product->product_code,
             $product->serviceType(),
+            $product->price->original_price . ' TL',
             $product->price->sale_price . ' TL',
             $product->updated_at,
         ];
@@ -85,7 +88,8 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithColumnFormat
             'Name',
             'Code',
             'Brand',
-            'Price',
+            'Original_Price',
+            'Sale_Price',
             'Date',
         ];
     }

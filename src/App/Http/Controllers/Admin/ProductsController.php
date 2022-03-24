@@ -61,10 +61,15 @@ class ProductsController extends Controller
             ->whereInStock(1)
             ->with('price')
             ->select(['product_id', 'name', 'product_code'])
+            ->orderBy('product_id')
             ->latest()
             ->paginate(50);
 
-//        dd($products);
+       // dd($products);
+        // $products = $products->reject(function($v){
+        //     return !isset($v->price);
+        // });
+       // dd($products);
 
             session()->flashInput($request->input());
 //            dd($products->first()->price);
@@ -82,12 +87,7 @@ class ProductsController extends Controller
 
     public function export(Request $request)
     {
-        $header = [
-            '#',
-            'name',
-            'code',
-            'updated_at'
-        ];
+        // 29655
         return Excel::download(new ProductsExport($request), 'exported at ' . now() . '.xlsx');
 //        return (new ProductsExport($request))->download('exported at ' . now() . '.xlsx');
     }
