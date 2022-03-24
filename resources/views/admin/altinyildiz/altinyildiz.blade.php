@@ -106,7 +106,7 @@
                                 <tbody>
                                 @foreach($products as $product)
                                     <tr>
-                                        <td>{{$loop->index}}</td>
+                                        <td>{{($products->currentPage() - 1)*50 + $loop->index + 1}}</td>
                                         <td>{{$product->product_id}}</td>
                                         <td>
                                             <a href="{{ route('admin.product', $product->product_id) }}" class="none-decoration">{{$product->name}}</a>
