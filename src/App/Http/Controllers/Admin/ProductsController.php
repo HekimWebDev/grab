@@ -64,9 +64,10 @@ class ProductsController extends Controller
             ->paginate(50);
 
 //        dd(url()->full());
-            session()->flashInput($request->input());
-//            dd($products->first()->price);
-            return view('admin.altinyildiz.altinyildiz', compact('products'));
+        session()->put(['prevUrl' => url()->full()]);
+        session()->flashInput($request->input());
+//        dd($products->first()->price);
+        return view('admin.altinyildiz.altinyildiz', compact('products'));
     }
 
     public function altinYildizSingle($id): Factory|View|Application
@@ -76,7 +77,6 @@ class ProductsController extends Controller
             ->whereServiceType(1)
             ->first();
 
-        session()->put(['prevUrl' => url()->previous()]);
         return view('admin.altinyildiz.prices', compact('product'));
     }
 
