@@ -63,12 +63,7 @@ class ProductsController extends Controller
             ->latest()
             ->paginate(50);
 
-//        dd($products);
-//         $products = $products->reject(function($v){
-//             return ($v->price->sale_price < 1000);
-//         });
-//        dd($products);
-
+//        dd(url()->full());
             session()->flashInput($request->input());
 //            dd($products->first()->price);
             return view('admin.altinyildiz.altinyildiz', compact('products'));
@@ -80,6 +75,8 @@ class ProductsController extends Controller
             ->whereProductId($id)
             ->whereServiceType(1)
             ->first();
+
+        session()->put(['prevUrl' => url()->previous()]);
         return view('admin.altinyildiz.prices', compact('product'));
     }
 

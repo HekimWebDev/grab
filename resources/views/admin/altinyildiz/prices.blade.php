@@ -5,17 +5,16 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-
-
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1></h1>
-                    </div>
-                    <div class="col-sm-6">
-
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb float-sm-left">
+                            <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{session('prevUrl')}}">Product</a></li>
+                            <li class="breadcrumb-item active">{{$product->product_id}}</li>
+                        </ol>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
