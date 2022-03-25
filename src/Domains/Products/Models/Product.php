@@ -39,7 +39,8 @@ class Product extends Model
 
     public function prices(): HasMany
     {
-        return $this->hasMany(Price::class, 'product_id');
+        return $this->hasMany(Price::class, 'product_id')
+            ->orderBy('updated_at', 'desc');
     }
 
     public function price(): HasOne
