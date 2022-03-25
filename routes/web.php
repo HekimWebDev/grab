@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', [ProductsController::class, 'index'])->name('admin.index');
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
     Route::post('/changePassword', [NewPasswordController::class, 'changePassword'])->name('changePassword');
-    Route::get('/products', [ProductsController::class, 'altinYildiz'])->name('admin.products');
+    Route::get('/products', [ProductsController::class, 'products'])->name('admin.products');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/product/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.product');
     Route::post('/product/id-{id}/serv-{sid}/check', [ProductsController::class, 'checkPrice'])->name('check-price');

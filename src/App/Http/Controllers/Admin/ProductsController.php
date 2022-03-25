@@ -44,7 +44,7 @@ class ProductsController extends Controller
         return redirect()->back()->with('message', $checkMessage);
     }
 
-    public function altinYildiz(Request $request): Factory|View|Application
+    public function products(Request $request): Factory|View|Application
     {
         $products = Product::when($request->service_type, function ($query, $v) {
                 $query->where('service_type', $v);
@@ -65,11 +65,11 @@ class ProductsController extends Controller
             ->latest()
             ->paginate(50);
 
-       // dd($products);
-        // $products = $products->reject(function($v){
-        //     return !isset($v->price);
-        // });
-       // dd($products);
+//        dd($products);
+//         $products = $products->reject(function($v){
+//             return ($v->price->sale_price < 1000);
+//         });
+//        dd($products);
 
             session()->flashInput($request->input());
 //            dd($products->first()->price);
