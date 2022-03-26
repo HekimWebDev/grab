@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\DB;
 use Domains\Products\Models\Product;
 use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Illuminate\Console\Command;
@@ -14,26 +15,29 @@ class AltinyildizProductGrabCommand extends Command
 
     public function handle(): void
     {
-        $manager = new AltinYildizManager();
+        DB::transaction(function (){
 
-        $categories = $manager->getSubCategoriesForGrab();
-//        dd($categories);
-        Product::where('in_stock', 1)
-            ->update(['in_stock' => 0]);
+            $manager = new AltinYildizManager();
 
-        foreach ( $categories as $category) {
+            $categories = $manager->getSubCategoriesForGrab();
 
-            $this->info("Grabing products from - $category");
+            Product::where('in_stock', 1)
+                ->update(['in_stock' => 0]);
 
-            $products = $manager->getProducts([$category]);
+            foreach ( $categories as $category) {
 
-            Product::upsert($products, ['product_id']);
+                $this->info("Grabing products from - $category");
 
-            $count = count($products);
+                $products = $manager->getProducts([$category]);
 
-            $this->info("$count upserted");
-        }
+                Product::upsert($products, ['product_id']);
 
-        $this->info('Grabing products was successful!');
+                $count = count($products);
+
+                $this->info("$count upserted");
+            }
+
+            $this->info('Grabing products was successful!');
+        });
     }
 }
