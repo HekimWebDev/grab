@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\AltinyildizGrabJob;
 use App\Models\User;
 use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Domains\Products\Models\Product;
@@ -30,16 +31,13 @@ class ProductsController extends Controller
      */
     public function checkPrice($id, $serviceType): RedirectResponse
     {
-        $checkMessage = 'Цена изменена';
         $product = Product::whereProductId($id)
             ->whereServiceType($serviceType)
             ->first();
-        $maneger = new AltinYildizManager();
-        $check = $maneger->checkPrice($product);
-        if (!$check){
-            $checkMessage = 'Нет изменений в ценах';
-        }
-        return redirect()->back()->with('message', $checkMessage);
+
+        AltinyildizGrabJob::dispatch($product);
+
+        return redirect()->back()->with('message', 'Цена проверяется');
     }
 
     public function products(Request $request): Factory|View|Application
