@@ -58,8 +58,8 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithColumnFormat
             $product->name,
             $product->product_code,
             $product->serviceType(),
-            $product->price->original_price . ' TL',
-            $product->price->sale_price . ' TL',
+            round($product->price->original_price) . ' TL',
+            round($product->price->sale_price) . ' TL',
             $product->updated_at,
         ];
     }
