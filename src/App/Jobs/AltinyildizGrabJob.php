@@ -54,6 +54,7 @@ class AltinyildizGrabJob implements ShouldQueue
             $salePrice = ayLiraFormatter($newPrices['sale_price']);
 
             if (empty($oldPrices) || !($oldPrices->original_price == $originPrice && $oldPrices->sale_price == $salePrice)) {
+
                 Price::create([
                     'product_id' => $newPrices['product_id'],
                     'original_price' => $originPrice,
