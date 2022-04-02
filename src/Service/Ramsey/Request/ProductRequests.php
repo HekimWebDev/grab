@@ -1,15 +1,17 @@
 <?php
 
-namespace Service\AltinYildiz\Requests;
+namespace Service\Ramsey\Requests;
 
-trait CategoryRequests
+trait ProductRequests
 {
-    public function getProducts(array $categoriesPageList = array('/yeni-sezon/#o=3&g=2&ct=455&u=48&p=100')): array
+    public function getProducts(array $categoriesPageList = null): array
     {
+        $categoriesPageList[] = '/yeni-sezon/#o=3&g=2&ct=455&u=48&p=100';
         $allProducts = [];
         foreach ($categoriesPageList as $cat => $page_list) {
-
-            $query = $this->getFromHTML('.ProductList .Prd', $page_list);
+            dd($page_list);
+            
+            $query = $this->getFromHTML('.Products .ProductList .Prd', $page_list);
             dd($query);
             $data[] = $query
                 ->each(function ($node) {
@@ -30,7 +32,7 @@ trait CategoryRequests
 
             foreach ($data[$arrSize - 1] as $key => $item){
                 $data[$arrSize - 1][$key]['category_url'] = $page_list;
-                $data[$arrSize - 1][$key]['created_at'] = now();-
+                $data[$arrSize - 1][$key]['created_at'] = now();
                 $data[$arrSize - 1][$key]['updated_at'] = now();
             }
 
