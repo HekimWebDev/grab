@@ -26,7 +26,7 @@ class AltinyildizProductGrabCommand extends Command
 
             foreach ( $categories as $category) {
 
-                $this->info("Grabing products from - $category");
+                $this->info("Altinyildiz: Grabing products from - $category");
 
                 $products = $manager->getProducts([$category]);
 
@@ -36,8 +36,8 @@ class AltinyildizProductGrabCommand extends Command
 
                 $this->info("$count upserted");
             }
-
-            $this->info('Grabing products was successful!');
         });
+
+        $this->info('Altinyildiz: Grabing products was successful!');
     }
 }
