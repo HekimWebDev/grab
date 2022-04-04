@@ -8,6 +8,7 @@
 
 namespace Domains\ServiceManagers\Ramsey;
 
+use phpDocumentor\Reflection\Types\Collection;
 use Service\Ramsey\RamseyClient;
 
 class RamseyManager
@@ -37,22 +38,26 @@ class RamseyManager
 
     public function getProducts(string $url = null): array
     {
-        $url = '/tr/p/Home/GetProductList?o=3&g=2&ct=455&u=2000';
-
         $data = $this->service->getProducts($url);
 
-        $arrSize = count($data);
+        $arrSize = count($data[0]);
 
-        for($key = 0; $key < $arrSize; $key++){
+        for ($key = 0; $key < $arrSize; $key++){
             $data[0][$key]['category_url'] = $url;
             $data[0][$key]['created_at'] = now();
             $data[0][$key]['updated_at'] = now();
-
-//            $data[1][$key]['created_at'] = now();
-//            $data[1][$key]['updated_at'] = now();
         }
 
-        return $data;
+        return $data[0];
+    }
+
+    public function getPrices(string $url = null)
+    {
+//        $url = '/special-lines/sartoria/ceket/';
+
+        $data = $this->service->getPrices($url);
+
+        return $data[0];
     }
 
 }
