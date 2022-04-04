@@ -14,14 +14,14 @@ class RamseyProductGrabCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'rs:product:grab';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Get products form HTML';
 
     /**
      * Create a new command instance.
@@ -40,18 +40,23 @@ class RamseyProductGrabCommand extends Command
      */
     public function handle(): void
     {
-        DB::transaction(function (){
+        DB::transaction(function () {
+
             $manager = new RamseyManager();
 
             $categories = $manager->getUrlsForGrab();
 
-            foreach ($categories as $category){
+            Product::whereServiceType(2)
+                ->where('in_stock', 1)
+                ->update(['in_stock' => 0]);
+
+            foreach ($categories as $key => $category) {
 
                 $this->info("Ramsey: Grabing products from - $category");
 
                 $products = $manager->getProducts($category);
 
-                Product::upsert($products, ['product_id']);
+                Product::upsert($products, ['product_id', 'service_type']);
 
                 $count = count($products);
 
