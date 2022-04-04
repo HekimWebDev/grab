@@ -21,11 +21,12 @@ class AltinyildizPriceGrabCommand extends Command
     {
         $manager = new AltinYildizManager();
 
-        $categories = Product::select('category_url')
-                        ->groupBy('category_url')
-                        ->get()
-                        ->map(fn($p) => $p->category_url)
-                        ->toArray();
+        $categories = Product::whereServiceType(1)
+            ->select('category_url')
+            ->groupBy('category_url')
+            ->get()
+            ->map(fn($p) => $p->category_url)
+            ->toArray();
 
         foreach ($categories as $categoryUrl) {
 
@@ -38,7 +39,7 @@ class AltinyildizPriceGrabCommand extends Command
 
             $data = [];
 
-            $this->info("getting prices from - $categoryUrl");
+            $this->info("Altinyildiz: getting prices from - $categoryUrl");
 
             $pricesFromHtml = $manager->getPrices($categoryUrl);
 
