@@ -55,27 +55,31 @@ class ProductsController extends Controller
                 $query->where('product_code', "like", "%$v%");
             })
             ->whereInStock(1)
+            ->orderBy('service_type', 'desc')
             ->with('price')
             ->select(['product_id', 'name', 'product_code'])
             ->orderBy('product_id')
             ->latest()
             ->paginate(50);
 
-//        dd(url()->full());
         session()->put(['prevUrl' => url()->full()]);
         session()->flashInput($request->input());
-//        dd($products->first()->price);
+
         return view('admin.altinyildiz.altinyildiz', compact('products'));
     }
 
-    public function altinYildizSingle($id): Factory|View|Application
+    public function productSingle($id): Factory|View|Application
     {
         $product = Product::with('prices')
             ->whereProductId($id)
-            ->whereServiceType(1)
             ->first();
 
-        return view('admin.altinyildiz.prices', compact('product'));
+        $base_urls = [
+            1 => 'https://www.altinyildizclassics.com',
+            2 => 'https://www.ramsey.com.tr/'
+        ];
+
+        return view('admin.altinyildiz.prices', compact('product','base_urls'));
     }
 
     public function export(Request $request)
