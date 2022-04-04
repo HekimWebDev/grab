@@ -49,7 +49,7 @@
                             <div class="inner">
                                 <h3>{{$counts[2]}}</h3>
 
-                                <p>Koton</p>
+                                <p>Ramsey</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
@@ -79,7 +79,7 @@
                             <div class="inner">
                                 <h3>{{$counts[4]}}</h3>
 
-                                <p>Ramsey</p>
+                                <p>Koton</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
