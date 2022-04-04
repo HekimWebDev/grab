@@ -21,7 +21,8 @@ class AltinyildizProductGrabCommand extends Command
 
             $categories = $manager->getSubCategoriesForGrab();
 
-            Product::where('in_stock', 1)
+            Product::whereServiceType(1)
+                ->where('in_stock', 1)
                 ->update(['in_stock' => 0]);
 
             foreach ( $categories as $category) {
