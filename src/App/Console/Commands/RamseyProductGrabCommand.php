@@ -56,7 +56,7 @@ class RamseyProductGrabCommand extends Command
 
                 $products = $manager->getProducts($category);
 
-                Product::upsert($products, ['product_id', 'service_type']);
+                Product::upsert($products, ['product_id', 'service_type'], ['name', 'category_url', 'product_url', 'in_stock']);
 
                 $count = count($products);
 
