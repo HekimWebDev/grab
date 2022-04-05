@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateMigrationsTable extends Migration
+class AddInternalCodeToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class UpdateMigrationsTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('products', function (Blueprint $table) {
+            $table->string('internal_code')->index();
+        });
     }
 
     /**
@@ -24,7 +26,7 @@ class UpdateMigrationsTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unique('product_code');
+            $table->dropColumn('internal_code');
         });
     }
 }
