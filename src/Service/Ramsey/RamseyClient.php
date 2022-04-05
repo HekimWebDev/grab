@@ -90,4 +90,13 @@ class RamseyClient
 
         return $data;
     }
+
+    public function getProductCode ($url): string
+    {
+        $query = $this->getFromHtml('.panel-body p', $url);
+
+        $product_code = $query->first()->text();
+
+        return $product_code;
+    }
 }
