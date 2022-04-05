@@ -21,6 +21,9 @@ class RamseyManager
         $this->service = new RamseyClient();
     }
 
+    /**
+     * @return array
+     */
     public function getUrlsForGrab()
     {
         $path = storage_path('app/public/categories/') . 'Ramsey.json';
@@ -53,11 +56,16 @@ class RamseyManager
 
     public function getPrices(string $url = null)
     {
-//        $url = '/special-lines/sartoria/ceket/';
-
         $data = $this->service->getPrices($url);
 
         return $data[0];
+    }
+
+    public function getProductCode(string $url)
+    {
+        $code = $this->service->getProductCode($url);
+
+        return substr($code, strpos($code, ': ') + 2);
     }
 
 }
