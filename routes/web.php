@@ -21,7 +21,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('/changePassword', [NewPasswordController::class, 'changePassword'])->name('changePassword');
     Route::get('/products', [ProductsController::class, 'products'])->name('admin.products');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/product/{id}', [ProductsController::class, 'altinYildizSingle'])->name('admin.product');
+    Route::get('/product/{id}', [ProductsController::class, 'productSingle'])->name('admin.product');
     Route::post('/product/id-{id}/serv-{sid}/check', [ProductsController::class, 'checkPrice'])->name('check-price');
     Route::post('/products/export', [ProductsController::class, 'export'])->name('product.export');
 });

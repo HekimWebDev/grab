@@ -40,6 +40,7 @@ class Product extends Model
     public function prices(): HasMany
     {
         return $this->hasMany(Price::class, 'product_id')
+//        return $this->hasMany(Price::class, 'product_id', 'id')
             ->orderBy('updated_at', 'desc');
     }
 
@@ -55,7 +56,7 @@ class Product extends Model
                 echo "ALTINYILDIZ classics";
                 break;
             case 2 :
-                echo "COTON";
+                echo "Ramsey";
                 break;
         }
     }
