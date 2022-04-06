@@ -73,8 +73,8 @@ class RamseyPriceGrabCommand extends Command
                 if (empty($latestPrice) || $latestPrice->original_price != $origin || $latestPrice->sale_price != $sale){
 
                     $data[] = [
-                        'product_id'        => $newPrices['product_id'],
-                        'internal_code'     => $products[$newPrices['product_id']]->inaaternal_code,
+                        'product_id'        => $products[$newPrices['product_id']]->id,
+                        'internal_code'     => $products[$newPrices['product_id']]->internal_code,
                         'original_price'    => $origin,
                         'sale_price'        => $sale,
                         'created_at'        => now(),

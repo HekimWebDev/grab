@@ -50,7 +50,7 @@ class RamseyClient
 
                 $product['product_id'] = $idMerge;
 
-                $product['product_code'] = null;
+                $product['product_code'] = 'ramsey';
 
                 $product['service_type'] = 2;
 
@@ -100,5 +100,15 @@ class RamseyClient
         $product_code = $query->first()->text();
 
         return $product_code;
+    }
+
+    public function getOnePrice($url): array
+    {
+        $query = $this->getFromHtml('.Prices', $url);
+
+        $prices['original_price'] = $query->filter('.Price')->first()->text();
+        $prices['sale_price'] = $query->filter('.Price')->last()->text();
+
+        return $prices;
     }
 }

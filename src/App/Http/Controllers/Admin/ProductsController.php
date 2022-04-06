@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Jobs\AltinyildizGrabJob;
 use App\Models\User;
+use Domains\Prices\Models\Price;
 use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Domains\Products\Models\Product;
+use Domains\ServiceManagers\Ramsey\RamseyManager;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -15,6 +17,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductsExport;
+use Service\AltinYildiz\AltinYildizClient;
+use Service\Ramsey\RamseyClient;
 
 class ProductsController extends Controller
 {
@@ -35,9 +39,52 @@ class ProductsController extends Controller
             ->whereServiceType($serviceType)
             ->first();
 
-        AltinyildizGrabJob::dispatch($product);
+        $message = 'Нет изменений в ценах.';
 
-        return redirect()->back()->with('message', 'Цена проверяется');
+        switch ($product->service_type){
+            case 1:
+                $response = $this->altinyildizPrice($product->product_url);
+                break;
+            case 2:
+                $response = $this->ramseyPrice($product->product_url);
+                break;
+        }
+
+        $oldPrices = $product->price;
+
+        $originPrice = ayLiraFormatter($response['original_price']);
+
+        $salePrice = ayLiraFormatter($response['sale_price']);
+
+        if (empty($oldPrices) || !($oldPrices->original_price == $originPrice && $oldPrices->sale_price == $salePrice)) {
+
+            Price::create([
+                'product_id'        => $product->id,
+                'original_price'    => $originPrice,
+                'sale_price'        => $salePrice,
+                'internal_code'     => $product->internal_code
+            ]);
+
+            $message = 'Цена изменена!';
+        }
+
+        $product->touch();
+
+        return redirect()->back()->with('message', $message);
+    }
+
+    private function altinyildizPrice($url): array
+    {
+        $service = new AltinYildizClient();
+
+        return $service->getOnePrice($url);
+    }
+
+    private function ramseyPrice($url): array
+    {
+        $service = new RamseyClient();
+
+        return $service->getOnePrice($url);
     }
 
     public function products(Request $request): Factory|View|Application

@@ -23,7 +23,7 @@ class UpdateMigrationsTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unique('product_code');
+            $table->dropUnique('products_product_code_unique');
         });
     }
 }

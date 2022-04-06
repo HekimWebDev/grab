@@ -12,6 +12,7 @@ class Price extends Model
         'product_id',
         'original_price',
         'sale_price',
+        'internal_code'
     ];
 
     public function product()

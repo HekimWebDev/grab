@@ -42,7 +42,8 @@ class RamseyProductCodeCommand extends Command
         $manager = new RamseyManager();
 
         $products = Product::whereServiceType(2)
-            ->whereProductCode('ramsey')
+            ->where('product_code', 'like', '%ramsey%')
+//            ->whereProductCode('%ramsey%')
             ->select('id', 'product_id', 'product_code', 'product_url')
             ->get();
 

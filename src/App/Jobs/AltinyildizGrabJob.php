@@ -56,7 +56,7 @@ class AltinyildizGrabJob implements ShouldQueue
             if (empty($oldPrices) || !($oldPrices->original_price == $originPrice && $oldPrices->sale_price == $salePrice)) {
 
                 Price::create([
-                    'product_id' => $newPrices['product_id'],
+                    'product_id' => $this->product->id,
                     'original_price' => $originPrice,
                     'sale_price' => $salePrice
                 ]);
