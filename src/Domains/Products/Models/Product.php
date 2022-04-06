@@ -25,8 +25,8 @@ class Product extends Model
         2   => 'Ramsey',
     ];
 
-    protected $primaryKey = 'product_id';
-    public $incrementing = false;
+//    protected $primaryKey = 'product_id';
+//    public $incrementing = false;
     /**
      * @var mixed
      */
@@ -39,14 +39,13 @@ class Product extends Model
 
     public function prices(): HasMany
     {
-        return $this->hasMany(Price::class, 'product_id')
-//        return $this->hasMany(Price::class, 'product_id', 'id')
-            ->orderBy('updated_at', 'desc');
+        return $this->hasMany(Price::class)
+            ->orderBy('id', 'desc');
     }
 
     public function price(): HasOne
     {
-        return $this->hasOne(Price::class, 'product_id')->ofMany()->orderByDesc('created_at');
+        return $this->hasOne(Price::class, 'product_id', 'id')->ofMany()->orderByDesc('created_at');
     }
 
     public function getMagazine()

@@ -81,7 +81,7 @@
                                             <tbody>
                                             @foreach($product->prices as $prod)
                                                 <tr>
-                                                    <td>{{ $prod->product_id }}</td>
+                                                    <td>{{ $product->product_id }}</td>
                                                     <td>{{ $product->name }}</td>
                                                     <td>{{ $product->product_code }}</td>
                                                     <td>{{ $prod->original_price }} TL</td>

@@ -16,6 +16,6 @@ class Price extends Model
 
     public function product()
     {
-        $this->belongsTo(Product::class, 'product_product_id', 'product_id');
+        $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
 }

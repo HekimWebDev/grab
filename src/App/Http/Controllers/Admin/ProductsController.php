@@ -57,7 +57,7 @@ class ProductsController extends Controller
             ->whereInStock(1)
             ->orderBy('service_type', 'desc')
             ->with('price')
-            ->select(['product_id', 'name', 'product_code'])
+            ->select(['id', 'product_id', 'name', 'product_code'])
             ->orderBy('product_id')
             ->latest()
             ->paginate(50);
