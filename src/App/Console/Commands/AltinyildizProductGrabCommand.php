@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 
 class AltinyildizProductGrabCommand extends Command
 {
-    protected $signature = 'ay:products:grab';
+    protected $signature = 'ay:product:grab';
 
     protected $description = 'Grab products from HTML';
 

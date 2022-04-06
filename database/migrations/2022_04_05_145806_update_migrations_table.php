@@ -15,7 +15,6 @@ class UpdateMigrationsTable extends Migration
     {
         //
     }
-
     /**
      * Reverse the migrations.
      *

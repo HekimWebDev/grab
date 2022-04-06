@@ -50,7 +50,7 @@ class RamseyClient
 
                 $product['product_id'] = $idMerge;
 
-                $product['product_code'] = '#ramsey#' . Str::random(20);
+                $product['product_code'] = null;
 
                 $product['service_type'] = 2;
 
@@ -59,6 +59,8 @@ class RamseyClient
                 $product['product_url'] = $node->filter('a')->attr('href');
 
                 $product['in_stock'] = 1;
+
+                $product['internal_code'] = "rs_$product_id" . "_$color_id";
 
                 return $product;
             });
