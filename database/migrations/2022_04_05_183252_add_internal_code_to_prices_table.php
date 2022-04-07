@@ -14,7 +14,7 @@ class AddInternalCodeToPricesTable extends Migration
     public function up()
     {
         Schema::table('prices', function (Blueprint $table) {
-            $table->string('internal_code')->default(null)->index();
+            $table->string('internal_code')->nullable()->index();
         });
     }
 

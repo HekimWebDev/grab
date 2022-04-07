@@ -14,7 +14,7 @@ class AddInternalCodeToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('internal_code')->default(null)->index();
+            $table->string('internal_code')->nullable()->unique();
         });
     }
 

@@ -13,7 +13,10 @@ class UpdateMigrationsTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropUnique('products_product_id_unique');
+            $table->dropUnique('products_product_code_unique');
+        });
     }
     /**
      * Reverse the migrations.
@@ -23,7 +26,9 @@ class UpdateMigrationsTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropUnique('products_product_code_unique');
+            $table->unique('product_id');
+            $table->unique('product_code');
+
         });
     }
 }

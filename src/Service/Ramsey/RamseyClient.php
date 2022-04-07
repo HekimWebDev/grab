@@ -44,11 +44,9 @@ class RamseyClient
 
                 $product_id = intval($node->filter('button')->attr('data-productid'));
 
-                $idMerge = $product_id * pow(10, strlen( (string)$color_id )) + $color_id;
-
                 $product['name'] = $node->filter('.PName')->text();
 
-                $product['product_id'] = $idMerge;
+                $product['product_id'] = $product_id;
 
                 $product['product_code'] = 'ramsey';
 
@@ -79,9 +77,7 @@ class RamseyClient
 
                 $product_id = intval($node->filter('button')->attr('data-productid'));
 
-                $idMerge = $product_id * pow(10, strlen( (string)$color_id )) + $color_id;
-
-                $product['product_id'] = $idMerge;
+                $product['internal_code'] = "rs_$product_id" . "_$color_id";
 
                 $product['original_price'] = $node->filter('a .PriceArea span.PPrice')->first()->text();
 
