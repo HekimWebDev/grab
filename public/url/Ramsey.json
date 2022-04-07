@@ -1,0 +1,98 @@
+[
+    {
+        "name": "Yeni-sezon",
+        "url": "/tr/p/Home/GetProductList?o=3&g=2&ct=455&u=2000"
+    },
+    {
+        "name": "Tum-urunler",
+        "url" : "/tr/p/Home/GetProductList?o=3&g=2&ct=493&u=2000"
+    },
+    {
+        "name": "Damatlik-takim",
+        "url" : "/damatlik/smokin-takim-elbise"
+    },
+    {
+        "name": "Damatlik-gomlek",
+        "url" : "/damatlik/smokin-gomlek"
+    },
+    {
+        "name": "Damatlik-ceket",
+        "url" : "/damatlik/smokin-ceket"
+    },
+    {
+        "name": "Damatlik-yelek",
+        "url" : "/damatlik/smokin-yelek"
+    },
+    {
+        "name": "Damatlik-ayakkabi",
+        "url" : "/damatlik/smokin-ayakkabi"
+    },
+    {
+        "name": "Ayakkabi",
+        "url" : "/tr/p/Home/GetProductList?o=3&g=2&ct=1613&u=2000"
+    },
+    {
+        "name": "Aksesuar",
+        "url" : "/tr/p/Home/GetProductList?o=3&g=2&ct=5&u=2000"
+    },
+    {
+        "name": "Firsat-urunleri",
+        "url" : "/kampanyalar/firsat-urunleri"
+    },
+    {
+        "name": "Garanti-bankasi",
+        "url" : "/kampanyalar/garanti-bankasi-ozel-indirim/"
+    },
+    {
+        "name": "Spcial-taksin-elbise",
+        "url" : "/special-lines/sartoria/takim-elbise"
+    },
+    {
+        "name": "Spcial-ceket",
+        "url" : "/special-lines/sartoria/ceket/"
+    },
+    {
+        "name": "Spcial-gomlek",
+        "url" : "/special-lines/sartoria/gomlek"
+    },
+    {
+        "name": "Spcial-BOM",
+        "url" : "/special-lines/b-o-m-"
+    },
+    {
+        "name": "Zero Weight",
+        "url" : "/special-lines/innovative-fashion/zero-weight"
+    },
+    {
+        "name": "Zero Gravity",
+        "url" : "/special-lines/innovative-fashion/zero-gravity/"
+    },
+    {
+        "name": "Thin&Taller",
+        "url" : "/special-lines/innovative-fashion/thintaller/"
+    },
+    {
+        "name": "Shirt&Shoulder",
+        "url" : "/special-lines/innovative-fashion/shirtshoulder/"
+    },
+    {
+        "name": "Performance",
+        "url" : "/special-lines/innovative-fashion/performance/"
+    },
+    {
+        "name": "DOĞA DOSTU",
+        "url" : "/special-lines/sustainability/"
+    },
+    {
+        "name": "RAMSEY JEANS",
+        "url" : "/special-lines/ramsey-jeans/"
+    },
+    {
+        "name": "Jeans",
+        "url" : "/special-lines/ramsey-jeans/jeans/"
+    },
+    {
+        "name": "Sweat",
+        "url" : "/special-lines/ramsey-jeans/sweat/"
+    }
+]
