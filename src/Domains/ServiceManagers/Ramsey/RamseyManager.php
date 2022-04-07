@@ -26,7 +26,8 @@ class RamseyManager
      */
     public function getUrlsForGrab()
     {
-        $path = storage_path('app/public/categories/') . 'Ramsey.json';
+//        $path = storage_path('app/public/categories/') . 'Ramsey.json';
+        $path = base_path('public/url/') . 'Ramsey.json';
 
         $response = json_decode(file_get_contents($path), true);
 
