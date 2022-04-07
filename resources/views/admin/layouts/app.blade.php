@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Blank Page</title>
+    <title>Asman</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{asset('assets/lib/fontawesome-free/css/all.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/adminlte.css') }}">
+
 </head>
 <body class="hold-transition sidebar-mini" style="background-color: #f4f6f9">
 <!-- Site wrapper -->

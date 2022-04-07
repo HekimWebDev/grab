@@ -13,7 +13,7 @@ return [
 //            'link',
 //        ],
     ],
-    'Coton' => [
-        //
+    'Ramsey' => [
+        'base_url'  =>  'https://www.ramsey.com.tr'
     ],
 ];

@@ -10,14 +10,13 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1></h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Blank Page</li>
-                        </ol>
+                    <div class="col-sm-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb pl-2 pt-1 pb-1">
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
+                                <li class="breadcrumb-item active">Produc</li>
+                            </ol>
+                        </nav>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -29,50 +28,22 @@
             <div class="row">
                 <div class="col-12">
 
-                    <div class="p-3 mb-4 expor" style="background-color: #3bff5c52; border-radius: 3px;">
+                    <div class="p-3 mb-1 expor">
                         <form action="{{route('product.export')}}" method="post" class="mb-3 pt-2">
-
                             @csrf
-
-                            <div class="row">
-                                <div class="col">
-                                    <label for="Id">Id:</label>
-                                    <input type="number" class="form-control" name="id" id="Id" value="{{old('id')}}">
-                                </div>
-                                <div class="col">
-                                    <label for="Name">Имя товара:</label>
-                                    <input type="text" class="form-control" name="name" id="Name" value="{{old('name')}}">
-                                </div>
-                                <div class="col">
-                                    <label for="Product_code">Код продукта:</label>
-                                    <input type="text" class="form-control" name="code" id="Product_code" value="{{old('code')}}">
-                                </div>
-                                <div class="col">
-                                    <label for="brand">Бренд:</label>
-                                    <select class="form-control" name="service_type" id="brand">
-                                        <option value="">Все</option>
-                                        <option @if(old('service_type') == 1) selected @endif value="1">Altinyildiz Classics</option>
-{{--                                        <option @if(old('service_type') == 2) selected @endif value="2"></option>--}}
-{{--                                        <option @if(old('service_type') == 3) selected @endif value="3"></option>--}}
-{{--                                        <option @if(old('service_type') == 4) selected @endif value="4"></option>--}}
-{{--                                        <option @if(old('service_type') == 5) selected @endif value="5"></option>--}}
-                                    </select>
-                                </div>
-                                <div class="col-1 d-flex align-items-end">
-                                    <button type="reset" class="btn btn-light form-control" href="{{route('admin.products')}}">
-                                        <i class="fas fa-eraser"></i>
-                                    </button>
-                                </div>
-                                <div class="col d-flex align-items-end">
-                                    <button type="submit" class="btn-sm btn-success form-control">
-                                        <div class="d-flex justify-content-center">
-                                            <div class="d-flex align-items-center">
-                                                <h6 class="mb-0 mr-2" style="display: inline">Export to</h6>
-                                                <i class="fas fa-file-excel fa-2x"></i>
-                                            </div>
+                            <input type="hidden" class="form-control" name="id" id="Id" value="{{old('id')}}">
+                            <input type="hidden" class="form-control" name="name" id="Name" value="{{old('name')}}">
+                            <input type="hidden" class="form-control" name="code" id="Product_code" value="{{old('code')}}">
+                            <input type="hidden" name="service_type" value="{{old('service_type')}}">
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="col-2 btn-sm btn-success form-control">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <h6 class="mb-0 mr-2" style="display: inline">Export to</h6>
+                                            <i class="fas fa-file-excel fa-2x"></i>
                                         </div>
-                                    </button>
-                                </div>
+                                    </div>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -98,7 +69,7 @@
                                         <select class="form-control" name="service_type" id="brand">
                                             <option value="">Все</option>
                                             <option @if(old('service_type') == 1) selected @endif value="1">Altinyildiz Classics</option>
-{{--                                            <option @if(old('service_type') == 2) selected @endif value="2"></option>--}}
+                                            <option @if(old('service_type') == 2) selected @endif value="2">Ramsey</option>
 {{--                                            <option @if(old('service_type') == 3) selected @endif value="3"></option>--}}
 {{--                                            <option @if(old('service_type') == 4) selected @endif value="4"></option>--}}
 {{--                                            <option @if(old('service_type') == 5) selected @endif value="5"></option>--}}
@@ -134,7 +105,7 @@
                                 <tbody>
                                 @foreach($products as $product)
                                     <tr>
-                                        <td>{{$loop->index}}</td>
+                                        <td>{{($products->currentPage() - 1)*50 + $loop->index + 1}}</td>
                                         <td>{{$product->product_id}}</td>
                                         <td>
                                             <a href="{{ route('admin.product', $product->product_id) }}" class="none-decoration">{{$product->name}}</a>

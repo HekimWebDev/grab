@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\AltinyildizGrabJob;
 use App\Models\User;
+use Domains\Prices\Models\Price;
 use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Domains\Products\Models\Product;
+use Domains\ServiceManagers\Ramsey\RamseyManager;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -14,6 +17,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductsExport;
+use Service\AltinYildiz\AltinYildizClient;
+use Service\Ramsey\RamseyClient;
 
 class ProductsController extends Controller
 {
@@ -30,21 +35,59 @@ class ProductsController extends Controller
      */
     public function checkPrice($id, $serviceType): RedirectResponse
     {
-        $checkMessage = 'Цена изменена';
         $product = Product::whereProductId($id)
             ->whereServiceType($serviceType)
             ->first();
-//        dd($product);
-//        dd($product);
-        $maneger = new AltinYildizManager();
-        $check = $maneger->checkPrice($product);
-        if (!$check){
-            $checkMessage = 'Нет изменений в ценах';
+
+        $message = 'Нет изменений в ценах.';
+
+        switch ($product->service_type){
+            case 1:
+                $response = $this->altinyildizPrice($product->product_url);
+                break;
+            case 2:
+                $response = $this->ramseyPrice($product->product_url);
+                break;
         }
-        return redirect()->back()->with('message', $checkMessage);
+
+        $oldPrices = $product->price;
+
+        $originPrice = ayLiraFormatter($response['original_price']);
+
+        $salePrice = ayLiraFormatter($response['sale_price']);
+
+        if (empty($oldPrices) || !($oldPrices->original_price == $originPrice && $oldPrices->sale_price == $salePrice)) {
+
+            Price::create([
+                'product_id'        => $product->id,
+                'original_price'    => $originPrice,
+                'sale_price'        => $salePrice,
+                'internal_code'     => $product->internal_code
+            ]);
+
+            $message = 'Цена изменена!';
+        }
+
+        $product->touch();
+
+        return redirect()->back()->with('message', $message);
     }
 
-    public function altinYildiz(Request $request): Factory|View|Application
+    private function altinyildizPrice($url): array
+    {
+        $service = new AltinYildizClient();
+
+        return $service->getOnePrice($url);
+    }
+
+    private function ramseyPrice($url): array
+    {
+        $service = new RamseyClient();
+
+        return $service->getOnePrice($url);
+    }
+
+    public function products(Request $request): Factory|View|Application
     {
         $products = Product::when($request->service_type, function ($query, $v) {
                 $query->where('service_type', $v);
@@ -59,35 +102,36 @@ class ProductsController extends Controller
                 $query->where('product_code', "like", "%$v%");
             })
             ->whereInStock(1)
+            ->orderBy('service_type', 'desc')
             ->with('price')
-            ->select(['product_id', 'name', 'product_code'])
+            ->select(['id', 'product_id', 'name', 'product_code'])
+            ->orderBy('product_id')
             ->latest()
             ->paginate(50);
 
-//        dd($products);
+        session()->put(['prevUrl' => url()->full()]);
+        session()->flashInput($request->input());
 
-            session()->flashInput($request->input());
-//            dd($products->first()->price);
-            return view('admin.altinyildiz.altinyildiz', compact('products'));
+        return view('admin.altinyildiz.altinyildiz', compact('products'));
     }
 
-    public function altinYildizSingle($id): Factory|View|Application
+    public function productSingle($id): Factory|View|Application
     {
         $product = Product::with('prices')
             ->whereProductId($id)
-            ->whereServiceType(1)
             ->first();
-        return view('admin.altinyildiz.prices', compact('product'));
+
+        $base_urls = [
+            1 => 'https://www.altinyildizclassics.com',
+            2 => 'https://www.ramsey.com.tr/'
+        ];
+
+        return view('admin.altinyildiz.prices', compact('product','base_urls'));
     }
 
     public function export(Request $request)
     {
-        $header = [
-            '#',
-            'name',
-            'code',
-            'updated_at'
-        ];
+        // 29655
         return Excel::download(new ProductsExport($request), 'exported at ' . now() . '.xlsx');
 //        return (new ProductsExport($request))->download('exported at ' . now() . '.xlsx');
     }

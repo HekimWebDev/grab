@@ -21,11 +21,12 @@ class AltinyildizPriceGrabCommand extends Command
     {
         $manager = new AltinYildizManager();
 
-        $categories = Product::select('category_url')
-                        ->groupBy('category_url')
-                        ->get()
-                        ->map(fn($p) => $p->category_url)
-                        ->toArray();
+        $categories = Product::whereServiceType(1)
+            ->select('category_url')
+            ->groupBy('category_url')
+            ->get()
+            ->map(fn($p) => $p->category_url)
+            ->toArray();
 
         foreach ($categories as $categoryUrl) {
 
@@ -38,22 +39,22 @@ class AltinyildizPriceGrabCommand extends Command
 
             $data = [];
 
-            $this->info("getting prices from - $categoryUrl");
+            $this->info("Altinyildiz: getting prices from - $categoryUrl");
 
             $pricesFromHtml = $manager->getPrices($categoryUrl);
-            
+
             foreach ($pricesFromHtml as $newPrices){
-         
+
                 if( !isset($products[$newPrices['product_id']]) ) {
                     continue;
                 }
 
                 $latestPrice = $products[$newPrices['product_id']]->price;
 
-                $origin = liraCast($newPrices['original_price']);
-                $sale = liraCast($newPrices['sale_price']);
+                $origin = ayLiraFormatter($newPrices['original_price']);
+                $sale = ayLiraFormatter($newPrices['sale_price']);
 
-                if (empty($latestPrice) || $latestPrice->original_price !== $origin || $latestPrice->sale_price !== $sale){
+                if (empty($latestPrice) || $latestPrice->original_price != $origin || $latestPrice->sale_price != $sale){
                     $data[] = [
                         'product_id'     => $newPrices['product_id'],
                         'original_price' => $origin,

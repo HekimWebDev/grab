@@ -5,17 +5,18 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-
-
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1></h1>
-                    </div>
-                    <div class="col-sm-6">
-
+                    <div class="col-sm-12">
+                        <nav aria-label="breadcrumb" >
+                            <ol class="breadcrumb pl-2 pt-1 pb-1">
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{session('prevUrl')}}">Product</a></li>
+                                <li class="breadcrumb-item active">{{$product->product_id}}</li>
+                            </ol>
+                        </nav>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -56,7 +57,7 @@
                                     <b>Product ID: </b>{{$product->product_id}}<br>
                                     <strong>Код продукта: </strong>{{$product->product_code}}<br>
                                     <strong>URL продукта: </strong><br>
-                                    <a href="{{ 'https://www.altinyildizclassics.com'.$product->product_url }}" target="_blank">{{$product->product_url}}</a>
+                                    <a href="{{ $base_urls[$product->service_type].$product->product_url }}" target="_blank">{{$product->product_url}}</a>
                                 </div>
                                 <!-- /.col -->
                             </div>
@@ -80,7 +81,7 @@
                                             <tbody>
                                             @foreach($product->prices as $prod)
                                                 <tr>
-                                                    <td>{{ $prod->product_id }}</td>
+                                                    <td>{{ $product->product_id }}</td>
                                                     <td>{{ $product->name }}</td>
                                                     <td>{{ $product->product_code }}</td>
                                                     <td>{{ $prod->original_price }} TL</td>

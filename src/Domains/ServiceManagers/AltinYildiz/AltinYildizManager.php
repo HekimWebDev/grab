@@ -108,34 +108,8 @@ class AltinYildizManager
         return $this->service->getProductsPrices($category);
     }
 
-    public function checkPrice(Product $product) : Bool
+    public function checkPrice($category_url)
     {
-        $respone = false;
-//        dd($product->category_url);
-        $pricesFromHtml = $this->service->getOneProductPrices($product->category_url);
-//        dd($pricesFromHtml);
-        if( !isset($pricesFromHtml[$product->product_id]) ) {
-            return false;
-        }
-
-        $newPrices = $pricesFromHtml[$product->product_id];
-        $oldPrices = $product->price;
-        $newOriginPrice = liraCast($newPrices['original_price']);
-        $newSalePrice = liraCast($newPrices['sale_price']);
-
-        if (empty($oldPrices) || !($oldPrices->original_price == $newOriginPrice && $oldPrices->sale_price == $newSalePrice)) {
-
-            Price::create([
-                'product_id'     => $newPrices['product_id'],
-                'original_price' => $newPrices['original_price'],
-                'sale_price'     => $newPrices['sale_price'],
-            ]);
-
-            $respone = true;
-        }
-
-        $product->touch();
-
-        return $respone;
+        return $this->service->getOneProductPrices($category_url);
     }
 }
