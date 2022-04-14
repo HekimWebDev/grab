@@ -16,4 +16,8 @@ return [
     'Ramsey' => [
         'base_url'  =>  'https://www.ramsey.com.tr'
     ],
+
+    'Mavi'  => [
+        'base_url'  =>  'https://www.mavi.com'
+    ],
 ];
