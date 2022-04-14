@@ -5,9 +5,12 @@ namespace Service\Mavi;
 
 use Goutte\Client as GoutteClient;
 use GuzzleHttp\Client as GuzzleClient;
+use Service\Mavi\Request\CategoryRequest;
 
 class MaviClient
 {
+    use CategoryRequest;
+
     protected string $url;
 
     protected $baseUrl;

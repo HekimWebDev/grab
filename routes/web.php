@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', function () {
+    $client = new \Service\Mavi\MaviClient();
+
+    dd($client->getCategories());
+
     return redirect()->route('admin.index');
 });
 
