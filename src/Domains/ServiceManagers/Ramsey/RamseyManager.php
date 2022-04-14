@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ysmayyl
- * Date: 30.03.2022
- * Time: 13:50
- */
 
 namespace Domains\ServiceManagers\Ramsey;
 
