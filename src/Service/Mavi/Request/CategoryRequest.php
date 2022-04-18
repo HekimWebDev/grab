@@ -7,7 +7,7 @@ use function Symfony\Component\DomCrawler\first;
 
 trait CategoryRequest
 {
-    public function getCategories()
+    public function getCategoriesFromHtml()
     {
         $query = $this->getFromHtml('.drop-one.js-menu-item', '/kadin/c/1');
 
