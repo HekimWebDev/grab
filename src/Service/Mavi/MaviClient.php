@@ -7,12 +7,14 @@ use Goutte\Client as GoutteClient;
 use GuzzleHttp\Client as GuzzleClient;
 use phpDocumentor\Reflection\Types\Integer;
 use Service\Mavi\Request\CategoryRequest;
+use Service\Mavi\Request\PriceRequest;
 use Service\Mavi\Request\ProductRequest;
 
 class MaviClient
 {
     use CategoryRequest;
     use ProductRequest;
+    use PriceRequest;
 
     protected $baseUrl;
 
