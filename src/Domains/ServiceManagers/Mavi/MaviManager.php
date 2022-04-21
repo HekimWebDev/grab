@@ -2,8 +2,8 @@
 
 namespace Domains\ServiceManagers\Mavi;
 
-
 use Service\Mavi\MaviClient;
+use Service\Mavi\Response;
 
 class MaviManager
 {
@@ -56,5 +56,30 @@ class MaviManager
         }
 
         return $urls;
+    }
+
+    public function getUrl(): array
+    {
+        $path = storage_path('app/public/categories/') . 'Mavi.json';
+
+        $response = new Response(file_get_contents($path));
+
+        $urls = $response->body();
+
+        return $urls;
+    }
+
+    public function getProducts(string $url)
+    {
+        $response = $this->client->getProductsFromAPI($url);
+
+        return $response;
+    }
+
+    public function getPrices(string $url)
+    {
+        $response = $this->client->getPricesFromAPI($url);
+
+        return $response;
     }
 }
