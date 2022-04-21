@@ -7,19 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', function () {
-    $client = new \Service\Mavi\MaviClient();
-
-    $products = \Domains\Products\Models\Product::whereServiceType(3)
-        ->where('in_stock', 1)
-        ->with('price')
-        ->select('id', 'internal_code')
-        ->get()
-        ->keyBy('internal_code');
-    dd($products);
-    dd($client->getPricesFromAPI("/erkek/c/2/results?q=:relevance:categoryValue:Sweatshirt&page=0"));
-//    return ($client->getFromAPI("/erkek/c/2/results?q=:relevance:categoryValue:Sweatshirt&page=1000"));
-
-//    return redirect()->route('admin.index');
+    return redirect()->route('admin.index');
 });
 
 Route::group(['middleware' => 'guest'], function () {

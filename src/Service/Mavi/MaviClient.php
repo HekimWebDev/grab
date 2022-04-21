@@ -47,13 +47,4 @@ class MaviClient
 
         return $this->response;
     }
-
-    public function getFromHtml($tag, string $url = '')
-    {
-        $url = $this->baseUrl . $url;
-
-        $this->response = $this->goutteClient()->request('GET', $url);
-
-        return $this->response->filter($tag);
-    }
 }

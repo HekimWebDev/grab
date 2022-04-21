@@ -66,24 +66,19 @@ class MaviPriceGrabCommand extends Command
                 foreach ($pricesFromHtml as $newPrices) {
 
                     if (!isset($products[$newPrices['internal_code']])) {
-                        $emptyArr[] =  $newPrices['internal_code'];
                         continue;
                     }
 
-//                    dd($newPrices);
-
                     $latestPrice = $products[$newPrices['internal_code']]->price;
-
-//                    dd($latestPrice);
 
                     $origin = $newPrices['original_price'];
                     $sale = $newPrices['sale_price'];
-//                    dd($origin, $sale);
+
                     if (empty($latestPrice) || $latestPrice->original_price != $origin || $latestPrice->sale_price != $sale) {
 
                         $data[] = [
                             'product_id' => $products[$newPrices['internal_code']]->id,
-                            'internal_code' => $products[$newPrices['internal_code']]->internal_code,
+                            'internal_code' => $newPrices['internal_code'],
                             'original_price' => $origin,
                             'sale_price' => $sale,
                             'created_at' => now(),
@@ -108,6 +103,5 @@ class MaviPriceGrabCommand extends Command
         }
 
         $this->info('Mavi: grabing prices was successful!');
-        dd($emptyArr, count($emptyArr));
     }
 }
