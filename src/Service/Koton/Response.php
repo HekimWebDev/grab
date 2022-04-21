@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: Windows
  * Date: 21.04.2022
- * Time: 22:53
+ * Time: 23:06
  */
 
-namespace Service\Cotton;
+namespace Service\Koton;
 
 
-class CottonClient
+class Response
 {
 
 }

@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: Windows
  * Date: 21.04.2022
- * Time: 22:52
+ * Time: 23:07
  */
 
-namespace Domains\ServiceManagers\Cotton;
+namespace Service\Koton\Request;
 
 
-class CottonManager
+trait CategoryRequest
 {
 
 }
