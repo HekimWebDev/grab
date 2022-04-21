@@ -8,16 +8,16 @@ return [
             'Ayakkabı' => 'ayakkabi-c-2764',
             'Aksesuar' => 'aksesuar-c-2763',
         ]
-//        'response_attribute' => [
-//            'text',
-//            'link',
-//        ],
     ],
+
     'Ramsey' => [
-        'base_url'  =>  'https://www.ramsey.com.tr'
+        'base_url'  =>  'https://www.ramsey.com.tr',
     ],
 
     'Mavi'  => [
-        'base_url'  =>  'https://www.mavi.com'
+        'base_url'  =>  'https://www.mavi.com',
+    ],
+    'Koton'  => [
+        'base_url'  =>  'https://www.koton.com/',
     ],
 ];

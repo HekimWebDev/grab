@@ -14,8 +14,6 @@ class MaviClient
     use CategoryRequest;
     use ProductRequest;
 
-    protected string $url;
-
     protected $baseUrl;
 
     private $response;
