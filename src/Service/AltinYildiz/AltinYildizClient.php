@@ -5,6 +5,7 @@ namespace Service\AltinYildiz;
 use Goutte\Client as GoutteClient;
 use GuzzleHttp\Client as GuzzleClient;
 //use Service\AltinYildiz\Requests\CategoryRequests;
+use Service\AltinYildiz\Requests\PriceRequest;
 use Service\AltinYildiz\Requests\ProductRequests;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -12,7 +13,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class AltinYildizClient
 {
     use ProductRequests;
-//    use CategoryRequests;
+    use PriceRequest;
 
     protected string $url;
 
@@ -54,14 +55,6 @@ class AltinYildizClient
         return $this->response->filter($tag);
     }
 
-    public function getOnePrice($url): array
-    {
-        $query = $this->getFromHTML('.description', $url);
 
-        $prices['original_price'] = $query->filter('.data .price')->first()->text();
-        $prices['sale_price'] = $query->filter('.data .price')->last()->text();
-
-        return $prices;
-    }
 
 }

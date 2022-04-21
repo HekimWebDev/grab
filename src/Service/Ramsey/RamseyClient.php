@@ -10,7 +10,7 @@ use Service\Ramsey\Request\ProductRequest;
 class RamseyClient
 {
     use ProductRequest;
-    use PriceRequest
+    use PriceRequest;
 
     protected string $url;
 
