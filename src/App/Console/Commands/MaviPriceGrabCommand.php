@@ -53,6 +53,9 @@ class MaviPriceGrabCommand extends Command
 
         foreach ($categories as $key => $categoryUrl) {
 
+//            if ($key < 62)
+//                continue;
+
             $item = 0;
 
             while (1) {
@@ -61,7 +64,7 @@ class MaviPriceGrabCommand extends Command
 
                 $pricesFromHtml = $manager->getPrices($categoryUrl . $item);
 
-                $this->info("Mavi: getting prices from - $categoryUrl" . $item . " => " . count($pricesFromHtml));
+                $this->info("Mavi: getting prices from - $categoryUrl" . $item);
 
                 foreach ($pricesFromHtml as $newPrices) {
 
@@ -71,8 +74,8 @@ class MaviPriceGrabCommand extends Command
 
                     $latestPrice = $products[$newPrices['internal_code']]->price;
 
-                    $origin = $newPrices['original_price'];
-                    $sale = $newPrices['sale_price'];
+                    $origin = ayLiraFormatter($newPrices['original_price']);
+                    $sale = ayLiraFormatter($newPrices['sale_price']);
 
                     if (empty($latestPrice) || $latestPrice->original_price != $origin || $latestPrice->sale_price != $sale) {
 
@@ -93,7 +96,7 @@ class MaviPriceGrabCommand extends Command
 
                 Price::insert($data);
 
-                $this->info("$count prices inserted");
+                $this->info("Got " . count($pricesFromHtml) . " results, $count prices inserted!");
 
                 if (empty($pricesFromHtml))
                     break;

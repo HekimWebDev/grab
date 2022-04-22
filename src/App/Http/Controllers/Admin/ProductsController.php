@@ -123,7 +123,8 @@ class ProductsController extends Controller
 
         $base_urls = [
             1 => 'https://www.altinyildizclassics.com',
-            2 => 'https://www.ramsey.com.tr/'
+            2 => 'https://www.ramsey.com.tr/',
+            3 => 'https://www.mavi.com/',
         ];
 
         return view('admin.altinyildiz.prices', compact('product','base_urls'));

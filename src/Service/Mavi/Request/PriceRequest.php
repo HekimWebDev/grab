@@ -19,12 +19,12 @@ trait PriceRequest
 
         foreach ($body['results'] as $key => $item){
 
-            $product['original_price'] = $item['price']['value'];
+            $product['original_price'] = $item['price']['formattedValue'];
 
             if ($item['bestPrice'] == null)
                 $product['sale_price'] = $product['original_price'];
             else
-                $product['sale_price'] = $item['bestPrice']['value'];
+                $product['sale_price'] = $item['bestPrice']['formattedValue'];
 
             $product['internal_code'] = "mv_" .$item['code'];
 

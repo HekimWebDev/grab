@@ -23,10 +23,9 @@ class Product extends Model
     private $brands = [
         1   => 'Altinyildiz Classik',
         2   => 'Ramsey',
+        3   => 'Mavi',
     ];
 
-//    protected $primaryKey = 'product_id';
-//    public $incrementing = false;
     /**
      * @var mixed
      */
