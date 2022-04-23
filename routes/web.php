@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', function () {
+
     return redirect()->route('admin.index');
 });
 

@@ -13,7 +13,7 @@ class MaviProductGrabCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mv:product_code:grab';
+    protected $signature = 'mv:product:grab';
 
     /**
      * The console command description.

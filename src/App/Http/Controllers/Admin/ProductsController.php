@@ -132,9 +132,7 @@ class ProductsController extends Controller
 
     public function export(Request $request)
     {
-        // 29655
         return Excel::download(new ProductsExport($request), 'exported at ' . now() . '.xlsx');
-//        return (new ProductsExport($request))->download('exported at ' . now() . '.xlsx');
     }
 
 }

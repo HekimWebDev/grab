@@ -44,17 +44,7 @@ class MaviPriceGrabCommand extends Command
 
         $categories = $manager->getUrl();
 
-        $products = Product::whereServiceType(3)
-            ->where('in_stock', 1)
-            ->with('price')
-            ->select('id', 'internal_code')
-            ->get()
-            ->keyBy('internal_code');
-
         foreach ($categories as $key => $categoryUrl) {
-
-//            if ($key < 62)
-//                continue;
 
             $item = 0;
 
@@ -68,28 +58,27 @@ class MaviPriceGrabCommand extends Command
 
                 foreach ($pricesFromHtml as $newPrices) {
 
-                    if (!isset($products[$newPrices['internal_code']])) {
+                    $product = Product::whereInternalCode($newPrices['internal_code'])->with('price')->first();
+
+                    if (!$product) {
                         continue;
                     }
-
-                    $latestPrice = $products[$newPrices['internal_code']]->price;
 
                     $origin = ayLiraFormatter($newPrices['original_price']);
                     $sale = ayLiraFormatter($newPrices['sale_price']);
 
-                    if (empty($latestPrice) || $latestPrice->original_price != $origin || $latestPrice->sale_price != $sale) {
-
+                    if (empty($product->price) || $product->price->original_price != $origin || $product->price->sale_price != $sale) {
                         $data[] = [
-                            'product_id' => $products[$newPrices['internal_code']]->id,
-                            'internal_code' => $newPrices['internal_code'],
+                            'product_id'     => $product->id,
+                            'internal_code'  => $newPrices['internal_code'],
                             'original_price' => $origin,
-                            'sale_price' => $sale,
-                            'created_at' => now(),
-                            'updated_at' => now(),
+                            'sale_price'     => $sale,
+                            'created_at'     => now(),
+                            'updated_at'     => now(),
                         ];
                     }
 
-                    $products[$newPrices['internal_code']]->touch();
+                    $product->touch();
                 }
 
                 $count = count($data);
