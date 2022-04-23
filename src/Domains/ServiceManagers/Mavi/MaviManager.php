@@ -82,4 +82,11 @@ class MaviManager
 
         return $response;
     }
+
+    public function checkPriceFromHtml($url)
+    {
+        $arr = $this->client->getOnePrice($url);
+
+        return $arr;
+    }
 }

@@ -33,4 +33,18 @@ trait PriceRequest
 
         return $arr;
     }
+
+    public function getOnePrice(string $url)
+    {
+        $query = $this->getFromHtml('.product__pricing-info.js-product-price', $url);
+
+        $prices['sale_price'] = $query->filter('.price')->first()->text();
+
+        if (strpos($query->text(),'.nodiscount-price'))
+            $prices['original_price'] = $query->filter('.nodiscount-price')->first()->text();
+        else
+            $prices['original_price'] = $prices['sale_price'];
+
+        return $prices;
+    }
 }

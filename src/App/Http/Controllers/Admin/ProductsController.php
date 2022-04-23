@@ -8,6 +8,7 @@ use App\Models\User;
 use Domains\Prices\Models\Price;
 use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Domains\Products\Models\Product;
+use Domains\ServiceManagers\Mavi\MaviManager;
 use Domains\ServiceManagers\Ramsey\RamseyManager;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductsExport;
 use Service\AltinYildiz\AltinYildizClient;
+use Service\Mavi\MaviClient;
 use Service\Ramsey\RamseyClient;
 
 class ProductsController extends Controller
@@ -48,6 +50,10 @@ class ProductsController extends Controller
             case 2:
                 $response = $this->ramseyPrice($product->product_url);
                 break;
+            case 3:
+                $response = $this->MaviPrice($product->product_url);
+                break;
+
         }
 
         $oldPrices = $product->price;
@@ -85,6 +91,13 @@ class ProductsController extends Controller
         $service = new RamseyClient();
 
         return $service->getOnePrice($url);
+    }
+
+    private function maviPrice($url): array
+    {
+        $manager = new MaviClient();
+
+        return $manager->getOnePrice($url);
     }
 
     public function products(Request $request): Factory|View|Application
