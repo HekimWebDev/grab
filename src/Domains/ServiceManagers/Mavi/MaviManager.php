@@ -7,7 +7,7 @@ use Service\Mavi\Response;
 
 class MaviManager
 {
-    protected MaviClient $cilent;
+    protected $cilent;
 
     public function __construct()
     {
@@ -27,8 +27,6 @@ class MaviManager
                     $urlOfParent = $item;
                     continue;
                 }
-
-//                dd($url, $item);
 
                 foreach ($item as $key => $value){
 

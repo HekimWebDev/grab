@@ -17,6 +17,7 @@ return [
     'Mavi'  => [
         'base_url'  =>  'https://www.mavi.com',
     ],
+
     'Koton'  => [
         'base_url'  =>  'https://www.koton.com/',
     ],

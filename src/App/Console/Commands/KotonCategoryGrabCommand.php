@@ -2,19 +2,19 @@
 
 namespace App\Console\Commands;
 
-use Domains\AltinYildiz\Actions\Category;
-use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
-use http\Client\Response;
+use Domains\ServiceManagers\Koton\KotonManager;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
+use Service\Koton\Response;
 
-class AltinyildizCategoryGabCommand extends Command
+class KotonCategoryGrabCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ay:category:grab';
+    protected $signature = 'kt:category:grab';
 
     /**
      * The console command description.
@@ -40,11 +40,14 @@ class AltinyildizCategoryGabCommand extends Command
      */
     public function handle()
     {
-        $code = new AltinYildizManager();
-        $data = $code->grabCategoriesTreeFromHtml();
-        $response = new \Service\AltinYildiz\Response($data);
-        \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\AltinYildiz.json', $response->getJson());
+        $manager = new KotonManager();
 
-        $this->info('Grabing category tree was successful!');
+        $url = $manager->getCategories();
+
+        $response = new Response($url);
+
+        Storage::disk('public')->put('\categories\Koton.json', $response->getJson());
+
+        $this->info("Grabing category from Koton.com was successful!");
     }
 }
