@@ -40,7 +40,8 @@ trait PriceRequest
 
         $prices['sale_price'] = $query->filter('.price')->first()->text();
 
-        if (strpos($query->text(),'.nodiscount-price'))
+
+        if ($query->filter('.nodiscount-price')->count())
             $prices['original_price'] = $query->filter('.nodiscount-price')->first()->text();
         else
             $prices['original_price'] = $prices['sale_price'];

@@ -50,3 +50,18 @@ function ayLiraFormatter($value): float
 
     return $intValue + $floatValue;
 }
+
+function getProductsCount(string $s): int
+{
+    $count = 0;
+
+    for ($i = 0; $i < strlen($s); $i++)
+    {
+        if ($s[$i] >= '0' && $s[$i] <= '9'){
+            $count *= 10;
+            $count += ord($s[$i]) - 48;
+        }
+    }
+
+    return $count;
+}

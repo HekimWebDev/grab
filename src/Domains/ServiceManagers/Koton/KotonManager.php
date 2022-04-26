@@ -36,4 +36,32 @@ class KotonManager
 
         return $url;
     }
+
+    public function getProducts(string $url)
+    {
+        $products = $this->client->getProductsFromHtml($url);
+
+        for ($i = 0; $i < count($products); $i++){
+            $products[$i]['category_url'] = $url;
+        }
+
+        return $products;
+    }
+
+    public function getPrices(string $url)
+    {
+        $arr = $this->client->getPriceFromHtml($url);
+
+        return $arr;
+    }
+
+    public function getProductCount($url): int
+    {
+        $count = $this->client->getProductsCountFromHtml($url);
+
+        if (empty($count))
+            return -1;
+
+        return getProductsCount($count);
+    }
 }

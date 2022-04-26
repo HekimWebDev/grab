@@ -72,6 +72,6 @@ class MaviProductGrabCommand extends Command
 
         }
 
-        $this->info('Ramsey: Grabing products was successful!');
+        $this->info('Mavi: Grabing products was successful!');
     }
 }
