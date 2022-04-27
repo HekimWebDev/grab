@@ -30,4 +30,15 @@ trait PriceRequest
 
         return $arr[0];
     }
+
+    public function getOnePriceFromHtml(string $url): array
+    {
+        $query = $this->getFromHtml('price', $url);
+
+        $prices['sale_price'] = $query->filter('.newPrice')->first()->text();
+
+        $prices['original_price'] = $query->filter('.insteadPrice')->first()->text();
+
+        return $prices;
+    }
 }

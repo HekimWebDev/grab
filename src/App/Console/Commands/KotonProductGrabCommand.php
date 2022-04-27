@@ -73,7 +73,6 @@ class KotonProductGrabCommand extends Command
                 $this->info("$count upserted");
 
                 if (empty($products) || $producsCount >= $countFromHtml){
-//                    dump('yapdy');
                     break;
                 }
 

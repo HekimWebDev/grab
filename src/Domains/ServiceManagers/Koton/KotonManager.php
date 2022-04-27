@@ -64,4 +64,14 @@ class KotonManager
 
         return getProductsCount($count);
     }
+
+    public function getOnePrice(string $url): array
+    {
+        $arr = $this->client->getOnePriceFromHtml($url);
+
+        $arr['sale_price'] = ktLiraFormatter($arr['sale_price']);
+        $arr['original_price'] = ktLiraFormatter($arr['original_price']);
+
+        return $arr;
+    }
 }

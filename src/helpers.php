@@ -65,3 +65,39 @@ function getProductsCount(string $s): int
 
     return $count;
 }
+
+
+function ktLiraFormatter(string $s): float
+{
+    $intValue = $floatValue = $check = 0;
+    $helpValue = 1;
+
+    for ($i = 0; $i < strlen($s); $i++){
+
+        if ($s[$i] == ','){
+
+            $check = true;
+            continue;
+
+        }
+
+        if ($s[$i] >= '0' && $s[$i] <= '9'){
+
+            if ($check){
+                $helpValue *= 10;
+                $floatValue *= 10;
+                $floatValue += ord($s[$i]) - 48;
+
+            } else {
+
+                $intValue *= 10;
+                $intValue += ord($s[$i]) - 48;
+
+            }
+        }
+    }
+
+    $floatValue /= $helpValue;
+
+    return $intValue + $floatValue;
+}

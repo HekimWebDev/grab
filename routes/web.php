@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Auth\UserController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
+use Domains\Products\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 

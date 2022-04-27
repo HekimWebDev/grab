@@ -8,6 +8,7 @@ use App\Models\User;
 use Domains\Prices\Models\Price;
 use Domains\ServiceManagers\AltinYildiz\AltinYildizManager;
 use Domains\Products\Models\Product;
+use Domains\ServiceManagers\Koton\KotonManager;
 use Domains\ServiceManagers\Mavi\MaviManager;
 use Domains\ServiceManagers\Ramsey\RamseyManager;
 use GuzzleHttp\Exception\GuzzleException;
@@ -19,6 +20,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductsExport;
 use Service\AltinYildiz\AltinYildizClient;
+use Service\Koton\KotonClient;
 use Service\Mavi\MaviClient;
 use Service\Ramsey\RamseyClient;
 
@@ -53,14 +55,23 @@ class ProductsController extends Controller
             case 3:
                 $response = $this->MaviPrice($product->product_url);
                 break;
+            case 4:
+                $response = $this->KotonPrice($product->product_url);
+                break;
 
         }
 
         $oldPrices = $product->price;
 
-        $originPrice = ayLiraFormatter($response['original_price']);
+        if ($product->service_type < 4) {
+            $originPrice = ayLiraFormatter($response['original_price']);
 
-        $salePrice = ayLiraFormatter($response['sale_price']);
+            $salePrice = ayLiraFormatter($response['sale_price']);
+        } else {
+            $originPrice = $response['original_price'];
+
+            $salePrice = $response['sale_price'];
+        }
 
         if (empty($oldPrices) || !($oldPrices->original_price == $originPrice && $oldPrices->sale_price == $salePrice)) {
 
@@ -77,6 +88,15 @@ class ProductsController extends Controller
         $product->touch();
 
         return redirect()->back()->with('message', $message);
+    }
+
+    private function KotonPrice(string $url): array
+    {
+        $manager = new KotonManager();
+
+        return $manager->getOnePrice($url);
+
+
     }
 
     private function altinyildizPrice($url): array
@@ -138,6 +158,7 @@ class ProductsController extends Controller
             1 => 'https://www.altinyildizclassics.com',
             2 => 'https://www.ramsey.com.tr/',
             3 => 'https://www.mavi.com/',
+            4 => 'https://www.koton.com/',
         ];
 
         return view('admin.altinyildiz.prices', compact('product','base_urls'));

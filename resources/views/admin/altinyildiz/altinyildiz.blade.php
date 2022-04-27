@@ -71,7 +71,7 @@
                                             <option @if(old('service_type') == 1) selected @endif value="1">Altinyildiz Classics</option>
                                             <option @if(old('service_type') == 2) selected @endif value="2">Ramsey</option>
                                             <option @if(old('service_type') == 3) selected @endif value="3">Mavi</option>
-{{--                                            <option @if(old('service_type') == 4) selected @endif value="4"></option>--}}
+                                            <option @if(old('service_type') == 4) selected @endif value="4">Koton</option>
 {{--                                            <option @if(old('service_type') == 5) selected @endif value="5"></option>--}}
                                         </select>
                                     </div>
