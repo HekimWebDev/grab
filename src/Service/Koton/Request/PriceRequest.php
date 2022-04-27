@@ -35,9 +35,16 @@ trait PriceRequest
     {
         $query = $this->getFromHtml('price', $url);
 
-        $prices['sale_price'] = $query->filter('.newPrice')->first()->text();
+        if ($query->filter('.normalPrice')->count()) {
 
-        $prices['original_price'] = $query->filter('.insteadPrice')->first()->text();
+            $prices['sale_price'] = $prices['original_price'] = $query->filter('.normalPrice')->first()->text();
+
+        } else {
+
+            $prices['sale_price'] = $query->filter('.newPrice')->first()->text();
+
+            $prices['original_price'] = $query->filter('.insteadPrice')->first()->text();
+        }
 
         return $prices;
     }
