@@ -46,6 +46,8 @@ class MaviPriceGrabCommand extends Command
 
         foreach ($categories as $key => $categoryUrl) {
 
+            if ($key < 31) continue;
+
             $item = 0;
 
             while (1) {
@@ -54,7 +56,7 @@ class MaviPriceGrabCommand extends Command
 
                 $pricesFromHtml = $manager->getPrices($categoryUrl . $item);
 
-                $this->info("Mavi: getting prices from - $categoryUrl" . $item);
+                $this->info("$key) Mavi: getting prices from - $categoryUrl" . $item);
 
                 foreach ($pricesFromHtml as $newPrices) {
 

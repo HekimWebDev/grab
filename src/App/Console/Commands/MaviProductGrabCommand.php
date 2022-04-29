@@ -52,11 +52,13 @@ class MaviProductGrabCommand extends Command
 
             $item = 0;
 
+//            if ($key < 31) continue;
+
             while (1){
 
                 $products = $manager->getProducts($category . $item);
 
-                $this->info("Mavi: Grabing products from - $category" . $item);
+                $this->info("$key) Mavi: Grabing products from - $category" . $item);
 
                 Product::upsert($products, ['internal_code', 'service_type'], ['name', 'category_url', 'product_url', 'in_stock']);
 
