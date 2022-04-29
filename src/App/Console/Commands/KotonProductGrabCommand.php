@@ -62,7 +62,7 @@ class KotonProductGrabCommand extends Command
 
                 $products = $manager->getProducts($category . "?q=%3Arelevance&psize=500&page=$item");
 
-                $this->info("Koton: Grabing products from - $category" . "?q=%3Arelevance&psize=500&page=$item");
+                $this->info("$key) " . "Koton: Grabing products from - $category" . "?q=%3Arelevance&psize=500&page=$item");
 
                 Product::upsert($products, ['internal_code', 'service_type'], ['name', 'category_url', 'product_url', 'in_stock']);
 

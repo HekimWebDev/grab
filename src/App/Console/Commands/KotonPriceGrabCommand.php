@@ -41,10 +41,11 @@ class KotonPriceGrabCommand extends Command
         $categoryies = $manager->getUrl();
 
         foreach ($categoryies as $key => $category){
-            if ($key < 175) continue;
 
             $countFromHtml = $manager->getProductCount($category);
-//            dump($countFromHtml);
+
+//            item = 233
+
             if ($countFromHtml == -1)
                 continue;
 
@@ -58,15 +59,14 @@ class KotonPriceGrabCommand extends Command
 
                 $products = Product::select('id', 'internal_code', 'product_id')
                     ->where('category_url', 'like', "$category?q=%3Arelevance&psize=500&page=$item")
+                    ->whereInStock(1)
                     ->with('price')
                     ->get()
                     ->keyBy('internal_code');
-//                dd($products);
 
                 $prices = $manager->getPrices($category . "?q=%3Arelevance&psize=500&page=$item");
-//                dd($prices);
 
-                $this->info("Koton: Grabing products from - $category" . "?q=%3Arelevance&psize=500&page=$item");
+                $this->info("$key) " . "Koton: Grabing products from - $category" . "?q=%3Arelevance&psize=500&page=$item");
 
                 foreach ($prices as $price){
 
@@ -100,8 +100,7 @@ class KotonPriceGrabCommand extends Command
                 Price::insert($data);
 
                 $this->info("Got " . $count . " results, " . count($data) . " prices inserted!");
-//                $this->info( count($data) . "upserted");
-//                dump($producsCount);
+
                 if (empty($prices) || $producsCount >= $countFromHtml){
                     break;
                 }
