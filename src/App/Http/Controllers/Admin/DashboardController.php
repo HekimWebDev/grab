@@ -16,7 +16,7 @@ class DashboardController extends Controller
                 ->has('price')
                 ->count();
         }
-//        dd($counts);
+
         return view('admin.altinyildiz.dashboard', compact('counts'));
     }
 }
