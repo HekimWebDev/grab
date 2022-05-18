@@ -11,14 +11,6 @@ Route::get('/', function () {
     return redirect()->route('admin.index');
 });
 
-Route::get('/instock/{id}', function ($id) {
-    Product::whereServiceType($id)
-        ->has('price')
-        ->update(['in_stock' => 1]);
-
-    return redirect(route('admin.dashboard'));
-});
-
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', fn() => view('admin.auth.login'))->name('login');
     Route::post('/login', [UserController::class, 'login'])->name('login.post');
