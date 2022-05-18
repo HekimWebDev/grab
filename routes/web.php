@@ -24,7 +24,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/login', [UserController::class, 'login'])->name('login.post');
 });
 
-Route::group(['prefix' => 'admin.', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', [ProductsController::class, 'index'])->name('admin.index');
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
     Route::post('/changePassword', [NewPasswordController::class, 'changePassword'])->name('changePassword');
