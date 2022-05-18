@@ -44,8 +44,6 @@ class KotonPriceGrabCommand extends Command
 
             $countFromHtml = $manager->getProductCount($category);
 
-//            item = 233
-
             if ($countFromHtml == -1)
                 continue;
 
