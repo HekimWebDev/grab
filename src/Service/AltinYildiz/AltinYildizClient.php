@@ -5,6 +5,7 @@ namespace Service\AltinYildiz;
 use Goutte\Client as GoutteClient;
 use GuzzleHttp\Client as GuzzleClient;
 //use Service\AltinYildiz\Requests\CategoryRequests;
+use Service\AltinYildiz\Requests\CategoryRequest;
 use Service\AltinYildiz\Requests\PriceRequest;
 use Service\AltinYildiz\Requests\ProductRequests;
 use Symfony\Component\DomCrawler\Crawler;
@@ -14,6 +15,7 @@ class AltinYildizClient
 {
     use ProductRequests;
     use PriceRequest;
+    use CategoryRequest;
 
     protected string $url;
 
