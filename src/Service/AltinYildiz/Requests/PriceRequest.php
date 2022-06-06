@@ -44,6 +44,10 @@ trait PriceRequest
             ->each(function ($node) {
                 $product['product_id'] = intval($node->filter('a')->attr('data-id'));
 
+                $product['product_code'] = $node->filter('a')->attr('data-code');
+
+                $product['internal_code'] = "ay_" . $product['product_id'] . '_' . $product['product_code'];
+
                 if ($node->filter('.data')->children()->count() < 2) {
                     $product['original_price'] = $node->filter('.data span')->text();
                     $product['sale_price'] = $node->filter('.data span')->text();

@@ -31,7 +31,8 @@ class AltinyildizProductGrabCommand extends Command
 
                 $products = $manager->getProducts([$category]);
 
-                Product::upsert($products, ['product_id']);
+                Product::upsert($products, ['internal_code', 'service_type'], ['name', 'category_url', 'product_url', 'in_stock']);
+//                Product::upsert($products, ['product_id', 'internal_code'], ['name', 'category_url', 'product_url', 'in_stock']);
 
                 $count = count($products);
 
