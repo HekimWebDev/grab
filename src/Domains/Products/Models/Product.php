@@ -24,6 +24,7 @@ class Product extends Model
         1   => 'Altinyildiz Classik',
         2   => 'Ramsey',
         3   => 'Mavi',
+        4   => 'Koton',
     ];
 
     /**
