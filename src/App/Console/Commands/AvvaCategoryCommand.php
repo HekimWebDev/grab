@@ -42,7 +42,7 @@ class AvvaCategoryCommand extends Command
 
         $data = $manager->getCategories();
 
-        $response = new \Service\AltinYildiz\Response($data);
+        $response = new \Service\Avva\Response($data);
 
         \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\Avva.json', $response->getJson());
 
