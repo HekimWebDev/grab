@@ -14,6 +14,6 @@ trait CategoryRequest
             });
         });
 
-        return $arr[0][0];
+        return $arr;
     }
 }

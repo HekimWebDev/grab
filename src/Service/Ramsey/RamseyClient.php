@@ -4,11 +4,13 @@ namespace Service\Ramsey;
 
 use Goutte\Client as GoutteClient;
 use Illuminate\Support\Str;
+use Service\Ramsey\Request\CategoryRequest;
 use Service\Ramsey\Request\PriceRequest;
 use Service\Ramsey\Request\ProductRequest;
 
 class RamseyClient
 {
+    use CategoryRequest;
     use ProductRequest;
     use PriceRequest;
 
@@ -31,6 +33,7 @@ class RamseyClient
 
     public function getFromHtml($tag, string $url = '')
     {
+
         $url = $this->baseUrl . $url;
 
         $this->response = $this->goutteClient()->request('GET', $url);

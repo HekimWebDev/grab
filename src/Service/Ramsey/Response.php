@@ -12,4 +12,15 @@ namespace Service\Ramsey;
 class Response
 {
 
+    protected $response;
+
+    public function __construct($response)
+    {
+        $this->response = $response;
+    }
+
+    public function getJson()
+    {
+        return json_encode($this->response);
+    }
 }

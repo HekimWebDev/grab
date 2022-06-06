@@ -15,6 +15,19 @@ class RamseyManager
         $this->service = new RamseyClient();
     }
 
+    public function getCategories(): array
+    {
+        $categories = $this->service->getCategoriesFromHtml();
+
+        foreach ($categories as $category){
+            foreach ($category as $item){
+                $urls[] = $item;
+            }
+        }
+
+        return $urls;
+    }
+
     /**
      * @return array
      */
