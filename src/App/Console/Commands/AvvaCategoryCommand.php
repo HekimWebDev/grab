@@ -53,7 +53,7 @@ class AvvaCategoryCommand extends Command
 
 //        get pageId for each url
         foreach ($data as $url){
-            $pagesId[] = $manager->getPageId($url);
+            $pagesId[] = $manager->getPageIdFromHtml($url);
         }
 
         Storage::disk('public')->put('\categories\AvvaPagesId.json', $response->getJson($pagesId));
