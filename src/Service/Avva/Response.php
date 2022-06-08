@@ -12,8 +12,11 @@ class Response
         $this->response = $response;
     }
 
-    public function getJson()
+    public function getJson($response = null)
     {
-        return json_encode($this->response);
+        if (empty($response))
+            $response = $this->response;
+
+        return json_encode($response);
     }
 }

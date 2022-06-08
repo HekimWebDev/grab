@@ -13,6 +13,11 @@ class AvvaManager
         $this->service = new AvvaClient();
     }
 
+    public function getPageId($url): null|int
+    {
+        return $this->service->getPageIdFromHtml($url);
+    }
+
     public function getCategories()
     {
         $categories = $this->service->getCategoriesFromHtml();

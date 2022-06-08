@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Domains\ServiceManagers\Avva\AvvaManager;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class AvvaCategoryCommand extends Command
 {
@@ -40,12 +41,23 @@ class AvvaCategoryCommand extends Command
     {
         $manager = new AvvaManager();
 
+//        get category ulr and write it to AvvaUrls.json
         $data = $manager->getCategories();
 
         $response = new \Service\Avva\Response($data);
 
-        \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\Avva.json', $response->getJson());
+        \Illuminate\Support\Facades\Storage::disk('public')->put('\categories\AvvaUrls.json', $response->getJson());
 
         $this->info('Grabing category was successful!');
+        $this->info('...');
+
+//        get pageId for each url
+        foreach ($data as $url){
+            $pagesId[] = $manager->getPageId($url);
+        }
+
+        Storage::disk('public')->put('\categories\AvvaPagesId.json', $response->getJson($pagesId));
+
+        $this->info('Grabing PageId was successful!');
     }
 }
