@@ -72,7 +72,7 @@
                                             <option @if(old('service_type') == 2) selected @endif value="2">Ramsey</option>
                                             <option @if(old('service_type') == 3) selected @endif value="3">Mavi</option>
                                             <option @if(old('service_type') == 4) selected @endif value="4">Koton</option>
-{{--                                            <option @if(old('service_type') == 5) selected @endif value="5"></option>--}}
+                                            <option @if(old('service_type') == 5) selected @endif value="5">Avva</option>
                                         </select>
                                     </div>
                                     <div class="col-1 d-flex align-items-end">

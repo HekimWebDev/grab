@@ -94,7 +94,7 @@
                             <div class="inner">
                                 <h3>{{$counts[5]}}</h3>
 
-                                <p>LC Waikiki</p>
+                                <p>Avva</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
