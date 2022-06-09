@@ -5,12 +5,14 @@ namespace Service\Avva;
 use Goutte\Client as GoutteClient;
 use GuzzleHttp\Client as GuzzleClient;
 use Service\Avva\Request\CategoryRequest;
+use Service\Avva\Request\PriceRequest;
 use Service\Avva\Request\ProductRequest;
 
 class AvvaClient
 {
     use CategoryRequest;
     use ProductRequest;
+    use PriceRequest;
 
     protected $baseUrl;
     private $response;

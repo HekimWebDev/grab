@@ -159,6 +159,7 @@ class ProductsController extends Controller
             2 => 'https://www.ramsey.com.tr/',
             3 => 'https://www.mavi.com/',
             4 => 'https://www.koton.com/',
+            5 => 'https://www.avva.com.tr/',
         ];
 
         return view('admin.altinyildiz.prices', compact('product','base_urls'));
