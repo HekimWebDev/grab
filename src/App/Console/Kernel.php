@@ -46,6 +46,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('kt:product:grab')->dailyAt('05:15');
         $schedule->command('kt:price:grab')->dailyAt('06:00');
 
+        $schedule->command('av:category:grab')->weekly()->sundays()->at('06:30');
+        $schedule->command('av:product:grab')->dailyAt('06:45');
+        $schedule->command('av:price:grab')->dailyAt('07:00');
+
     }
 
     /**
