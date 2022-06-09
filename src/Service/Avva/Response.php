@@ -19,4 +19,9 @@ class Response
 
         return json_encode($response);
     }
+
+    public function body()
+    {
+        return json_decode($this->response);
+    }
 }
